@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Bir Bahadur Singh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 3rem 1.5rem;
+      background-color: #1c1714;
+      background-image:
+        radial-gradient(ellipse at 30% 20%, rgba(201, 169, 110, 0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 80%, rgba(201, 169, 110, 0.04) 0%, transparent 60%);
+      color: #f5efe6;
+      font-family: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+
+    .memorial {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      text-align: center;
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .portrait {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 1.5px solid rgba(201, 169, 110, 0.55);
+      box-shadow:
+        0 0 0 6px rgba(201, 169, 110, 0.08),
+        0 20px 60px rgba(0, 0, 0, 0.55);
+      margin-bottom: 2.2rem;
+    }
+
+    .name-primary {
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      line-height: 1.15;
+      color: #f5efe6;
+      margin-bottom: 0.45rem;
+    }
+
+    .name-secondary {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: rgba(201, 169, 110, 0.75);
+      margin-bottom: 1.8rem;
+    }
+
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.6), transparent);
+      margin-bottom: 1.8rem;
+    }
+
+    .years {
+      font-size: clamp(1.15rem, 3vw, 1.45rem);
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: rgba(245, 239, 230, 0.7);
+      margin-bottom: 1.8rem;
+    }
+
+    .quote {
+      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.6;
+      color: rgba(245, 239, 230, 0.55);
+      max-width: 34ch;
+    }
+  </style>
+</head>
+<body>
+  <div class="memorial">
+    <img class="portrait" src="drbbsingh.jpeg" alt="Dr. Bir Bahadur Singh">
+    <h1 class="name-primary">Dr. Bir Bahadur Singh</h1>
+    <p class="name-secondary">Dr. B.B. Singh</p>
+    <div class="divider"></div>
+    <p class="years">1944 &nbsp;—&nbsp; 2024</p>
+    <div class="divider"></div>
+    <p class="quote">&ldquo;God helps those who help themselves&rdquo;</p>
+  </div>
+</body>
+</html>
