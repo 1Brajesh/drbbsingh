@@ -42,8 +42,8 @@
     }
 
     .portrait {
-      width: 200px;
-      height: 200px;
+      width: clamp(200px, 30vw, 320px);
+      height: clamp(200px, 30vw, 320px);
       border-radius: 50%;
       object-fit: cover;
       object-position: center top;
@@ -52,6 +52,15 @@
         0 0 0 6px rgba(201, 169, 110, 0.08),
         0 20px 60px rgba(0, 0, 0, 0.55);
       margin-bottom: 2.2rem;
+    }
+
+    .in-loving-memory {
+      font-size: clamp(0.85rem, 1.8vw, 1rem);
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.55);
+      margin-bottom: 2.4rem;
     }
 
     .name-primary {
@@ -99,6 +108,7 @@
 <body>
   <div class="memorial">
     <img class="portrait" src="drbbsingh.jpeg" alt="Dr. Bir Bahadur Singh">
+    <p class="in-loving-memory">In loving memory of</p>
     <h1 class="name-primary">Dr. Bir Bahadur Singh</h1>
     <p class="name-secondary">Dr. B.B. Singh</p>
     <div class="divider"></div>
