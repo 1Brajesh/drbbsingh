@@ -35,10 +35,20 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0;
       text-align: center;
-      max-width: 480px;
+      max-width: 560px;
       width: 100%;
+    }
+
+    /* Portrait + flower wreath */
+    .portrait-wrap {
+      position: relative;
+      width: clamp(290px, 50vw, 490px);
+      height: clamp(290px, 50vw, 490px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2.2rem;
     }
 
     .portrait {
@@ -51,15 +61,30 @@
       box-shadow:
         0 0 0 6px rgba(201, 169, 110, 0.08),
         0 20px 60px rgba(0, 0, 0, 0.55);
-      margin-bottom: 2.2rem;
+      position: relative;
+      z-index: 1;
     }
 
+    .petal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+      line-height: 1;
+      /* Center on anchor, rotate to angle, push outward */
+      transform:
+        translate(-50%, -50%)
+        rotate(var(--a))
+        translateY(clamp(-235px, -23vw, -140px));
+    }
+
+    /* Text elements */
     .in-loving-memory {
       font-size: clamp(0.85rem, 1.8vw, 1rem);
-      font-weight: 400;
+      font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(201, 169, 110, 0.55);
+      color: rgba(201, 169, 110, 0.7);
       margin-bottom: 2.4rem;
     }
 
@@ -74,9 +99,9 @@
 
     .name-secondary {
       font-size: clamp(1rem, 2.5vw, 1.2rem);
-      font-weight: 400;
+      font-weight: 600;
       letter-spacing: 0.12em;
-      color: rgba(201, 169, 110, 0.75);
+      color: rgba(201, 169, 110, 0.8);
       margin-bottom: 1.8rem;
     }
 
@@ -107,7 +132,23 @@
 </head>
 <body>
   <div class="memorial">
-    <img class="portrait" src="drbbsingh.jpeg" alt="Dr. Bir Bahadur Singh">
+
+    <div class="portrait-wrap">
+      <span class="petal" style="--a:0deg">🌸</span>
+      <span class="petal" style="--a:30deg">🌸</span>
+      <span class="petal" style="--a:60deg">🌸</span>
+      <span class="petal" style="--a:90deg">🌸</span>
+      <span class="petal" style="--a:120deg">🌸</span>
+      <span class="petal" style="--a:150deg">🌸</span>
+      <span class="petal" style="--a:180deg">🌸</span>
+      <span class="petal" style="--a:210deg">🌸</span>
+      <span class="petal" style="--a:240deg">🌸</span>
+      <span class="petal" style="--a:270deg">🌸</span>
+      <span class="petal" style="--a:300deg">🌸</span>
+      <span class="petal" style="--a:330deg">🌸</span>
+      <img class="portrait" src="drbbsingh.jpeg" alt="Dr. Bir Bahadur Singh">
+    </div>
+
     <p class="in-loving-memory">In loving memory of</p>
     <h1 class="name-primary">Dr. Bir Bahadur Singh</h1>
     <p class="name-secondary">Dr. B.B. Singh</p>
@@ -115,6 +156,7 @@
     <p class="years">1944 &nbsp;—&nbsp; 2024</p>
     <div class="divider"></div>
     <p class="quote">&ldquo;God helps those who help themselves&rdquo;</p>
+
   </div>
 </body>
 </html>
