@@ -19,16 +19,21 @@
     }
 
     body {
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      padding: 3rem 1.5rem;
       background-color: #1c1714;
       background-image:
         radial-gradient(ellipse at 30% 20%, rgba(201, 169, 110, 0.06) 0%, transparent 60%),
         radial-gradient(ellipse at 70% 80%, rgba(201, 169, 110, 0.04) 0%, transparent 60%);
       color: #f5efe6;
       font-family: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+
+    /* ── Hero ──────────────────────────────────────────── */
+
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 3rem 1.5rem;
     }
 
     .memorial {
@@ -71,7 +76,6 @@
       left: 50%;
       font-size: clamp(1.8rem, 3.6vw, 2.6rem);
       line-height: 1;
-      /* Center on anchor, rotate to angle, push outward */
       transform:
         translate(-50%, -50%)
         rotate(var(--a))
@@ -127,42 +131,238 @@
       line-height: 1.6;
       color: rgba(245, 239, 230, 0.55);
       max-width: 34ch;
+      margin-bottom: 1.6rem;
+    }
+
+    .credentials {
+      font-size: clamp(0.75rem, 1.6vw, 0.88rem);
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.55);
+    }
+
+    /* ── Legacy section ────────────────────────────────── */
+
+    .legacy-section {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+
+    .legacy-intro {
+      font-size: clamp(1.1rem, 2.4vw, 1.3rem);
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.75;
+      color: rgba(245, 239, 230, 0.75);
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .legacy-rule {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.5), transparent);
+      margin: 0 auto 4rem;
+    }
+
+    .legacy-heading {
+      font-size: clamp(1.3rem, 3vw, 1.65rem);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.85);
+      text-align: center;
+      margin-bottom: 2.8rem;
+    }
+
+    .legacy-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .legacy-body p {
+      font-size: clamp(1rem, 2.2vw, 1.15rem);
+      font-weight: 400;
+      line-height: 1.85;
+      color: rgba(245, 239, 230, 0.65);
+    }
+
+    /* Learn More */
+    .learn-more {
+      margin-top: 3.5rem;
+      padding-top: 2.8rem;
+      border-top: 1px solid rgba(201, 169, 110, 0.15);
+    }
+
+    .learn-more-heading {
+      font-size: clamp(0.78rem, 1.5vw, 0.88rem);
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.6);
+      margin-bottom: 1.4rem;
+    }
+
+    .learn-more-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .learn-more-links a {
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      font-weight: 400;
+      color: rgba(201, 169, 110, 0.75);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .learn-more-links a:hover {
+      color: rgba(201, 169, 110, 1);
+    }
+
+    .learn-more-links .link-label {
+      display: block;
+      font-size: clamp(0.78rem, 1.5vw, 0.85rem);
+      letter-spacing: 0.05em;
+      color: rgba(245, 239, 230, 0.3);
+      margin-top: 0.1rem;
     }
   </style>
 </head>
 <body>
-  <div class="memorial">
 
-    <div class="portrait-wrap">
-      <!-- Garland: 2 o'clock → bottom → 10 o'clock, leaving top open -->
-      <span class="petal" style="--a:60deg">🌼</span>
-      <span class="petal" style="--a:75deg">🌼</span>
-      <span class="petal" style="--a:90deg">🌼</span>
-      <span class="petal" style="--a:105deg">🌼</span>
-      <span class="petal" style="--a:120deg">🌼</span>
-      <span class="petal" style="--a:135deg">🌼</span>
-      <span class="petal" style="--a:150deg">🌼</span>
-      <span class="petal" style="--a:165deg">🌼</span>
-      <span class="petal" style="--a:180deg">🌼</span>
-      <span class="petal" style="--a:195deg">🌼</span>
-      <span class="petal" style="--a:210deg">🌼</span>
-      <span class="petal" style="--a:225deg">🌼</span>
-      <span class="petal" style="--a:240deg">🌼</span>
-      <span class="petal" style="--a:255deg">🌼</span>
-      <span class="petal" style="--a:270deg">🌼</span>
-      <span class="petal" style="--a:285deg">🌼</span>
-      <span class="petal" style="--a:300deg">🌼</span>
-      <img class="portrait" src="drbbsingh.jpeg" alt="Dr. Bir Bahadur Singh">
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="memorial">
+
+      <div class="portrait-wrap">
+        <span class="petal" style="--a:60deg">🌼</span>
+        <span class="petal" style="--a:75deg">🌼</span>
+        <span class="petal" style="--a:90deg">🌼</span>
+        <span class="petal" style="--a:105deg">🌼</span>
+        <span class="petal" style="--a:120deg">🌼</span>
+        <span class="petal" style="--a:135deg">🌼</span>
+        <span class="petal" style="--a:150deg">🌼</span>
+        <span class="petal" style="--a:165deg">🌼</span>
+        <span class="petal" style="--a:180deg">🌼</span>
+        <span class="petal" style="--a:195deg">🌼</span>
+        <span class="petal" style="--a:210deg">🌼</span>
+        <span class="petal" style="--a:225deg">🌼</span>
+        <span class="petal" style="--a:240deg">🌼</span>
+        <span class="petal" style="--a:255deg">🌼</span>
+        <span class="petal" style="--a:270deg">🌼</span>
+        <span class="petal" style="--a:285deg">🌼</span>
+        <span class="petal" style="--a:300deg">🌼</span>
+        <img class="portrait" src="drbbsingh.jpeg" alt="Dr. Bir Bahadur Singh">
+      </div>
+
+      <p class="in-loving-memory">In loving memory of</p>
+      <h1 class="name-primary">Dr. Bir Bahadur Singh</h1>
+      <p class="name-secondary">Dr. B.B. Singh</p>
+      <div class="divider"></div>
+      <p class="years">1944 &nbsp;—&nbsp; 2024</p>
+      <div class="divider"></div>
+      <p class="quote">&ldquo;God helps those who help themselves&rdquo;</p>
+      <p class="credentials">World Food Prize Nominee &nbsp;·&nbsp; AAAS Fellow &nbsp;·&nbsp; Plant Breeder</p>
+
+    </div>
+  </section>
+
+  <!-- ── Legacy ── -->
+  <section class="legacy-section">
+
+    <p class="legacy-intro">
+      Dr. B.B. Singh was a World Food Prize nominee, AAAS Fellow, plant breeder, teacher, author,
+      and humanitarian whose work helped transform cowpea into a major food legume for the tropics.
+      He developed short-duration, high-yielding cowpea varieties released in more than 45 countries,
+      authored about 245 scientific publications, and dedicated his career to improving food security,
+      nutrition, and farmer livelihoods across Africa, Asia, and the Americas.
+    </p>
+
+    <div class="legacy-rule"></div>
+
+    <h2 class="legacy-heading">Life &amp; Legacy</h2>
+
+    <div class="legacy-body">
+      <p>
+        Dr. Bir Bahadur &ldquo;B.B.&rdquo; Singh was a World Food Prize nominee, AAAS Fellow, and plant
+        breeder whose life&rsquo;s work helped make cowpea one of the world&rsquo;s most important food
+        legumes. Trained at G.B. Pant University and the University of Illinois, he devoted his career to
+        developing short-duration, protein-rich legumes that could fit into cereal-based farming systems
+        and improve food security, nutrition, and farmer income.
+      </p>
+      <p>
+        At the International Institute of Tropical Agriculture, G.B. Pant University, and Texas A&amp;M
+        University, Dr. Singh worked on cowpea, soybean, and pigeonpea improvement. His breeding emphasized
+        early maturity, high yield, nutritional quality, and resistance to drought, diseases, insect pests,
+        and parasitic weeds such as <em>Striga</em> and <em>Alectra</em>. His work helped farmers grow
+        legumes in the short windows between wheat, rice, maize, and other cereal crops.
+      </p>
+      <p>
+        Dr. Singh developed more than 40 high-yielding cowpea varieties with 60&ndash;70 day maturity that
+        were released in more than 45 countries. These varieties contributed to the global rise of cowpea
+        production from about 1 million tons in 1980 to more than 7 million tons by 2014. He also developed
+        the early pigeonpea variety UPAS-120 in India and helped establish systematic soybean breeding in
+        India, contributing to the expansion of soybean as a protein-rich crop.
+      </p>
+      <p>
+        Over his lifetime, Dr. Singh authored or coauthored approximately 245 scientific publications and
+        wrote <em>Cowpea: The Food Legume of the 21st Century</em>, a major synthesis of cowpea breeding,
+        production, nutrition, and use. His scientific legacy includes not only published research, but also
+        improved seeds in farmers&rsquo; fields, trained students and breeders across continents, and
+        practical crop systems that helped families produce more food from the same land.
+      </p>
+      <p>
+        Dr. Singh was elected a Fellow of the American Association for the Advancement of Science and was
+        recognized by the American Society of Agronomy, the Crop Science Society of America, the Indian
+        Society of Genetics and Plant Breeding, CGIAR, and other institutions. He was nominated for the
+        World Food Prize in recognition of his contributions to global food security. In 2023, he received
+        the inaugural Dr. Tai R. Shin and Mrs. You H. Shin Humanitarian Award from the University of
+        Illinois System for his humanitarian impact through agricultural science.
+      </p>
+      <p>
+        His work joined science with service. Through cowpea, soybean, and pigeonpea, Dr. B.B. Singh helped
+        close the protein gap for millions of people and left behind a legacy of knowledge, resilience,
+        and hope.
+      </p>
     </div>
 
-    <p class="in-loving-memory">In loving memory of</p>
-    <h1 class="name-primary">Dr. Bir Bahadur Singh</h1>
-    <p class="name-secondary">Dr. B.B. Singh</p>
-    <div class="divider"></div>
-    <p class="years">1944 &nbsp;—&nbsp; 2024</p>
-    <div class="divider"></div>
-    <p class="quote">&ldquo;God helps those who help themselves&rdquo;</p>
+    <div class="learn-more">
+      <p class="learn-more-heading">Learn More</p>
+      <ul class="learn-more-links">
+        <li>
+          <a href="https://soilcrop.tamu.edu/department-updates/b-b-singh-honored-by-the-american-association-for-advancement-of-science-aaas/" target="_blank" rel="noopener">
+            B.B. Singh honored by the AAAS
+            <span class="link-label">Texas A&amp;M University &mdash; Soil &amp; Crop Sciences</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://aces.illinois.edu/news/u-i-alum-receives-first-ever-shin-humanitarian-award-pays-it-forward-college-aces" target="_blank" rel="noopener">
+            Inaugural Shin Humanitarian Award recipient
+            <span class="link-label">University of Illinois, College of ACES</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.crops.org/news/media-releases/releases/2014/0922/640" target="_blank" rel="noopener">
+            <em>Cowpea: The Food Legume of the 21st Century</em> &mdash; Book release
+            <span class="link-label">Crop Science Society of America</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://doi.org/10.2135/2014.cowpea" target="_blank" rel="noopener">
+            <em>Cowpea: The Food Legume of the 21st Century</em> &mdash; Full text
+            <span class="link-label">American Society of Agronomy &mdash; DOI: 10.2135/2014.cowpea</span>
+          </a>
+        </li>
+      </ul>
+    </div>
 
-  </div>
+  </section>
+
 </body>
 </html>
