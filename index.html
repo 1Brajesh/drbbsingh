@@ -6,7 +6,7 @@
   <title>Dr. Bir Bahadur Singh</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Tiro+Devanagari:ital@0;1&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -27,6 +27,30 @@
       font-family: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
     }
 
+    /* ── Language toggle ──────────────────────────────── */
+
+    .lang-toggle {
+      position: fixed;
+      top: 1.2rem;
+      right: 1.5rem;
+      z-index: 200;
+      background: transparent;
+      border: 1px solid rgba(201, 169, 110, 0.35);
+      color: rgba(201, 169, 110, 0.65);
+      padding: 0.28rem 0.85rem;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      font-family: "Tiro Devanagari", "Cormorant Garamond", serif;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .lang-toggle:hover {
+      border-color: rgba(201, 169, 110, 0.75);
+      color: rgba(201, 169, 110, 1);
+    }
+
     /* ── Hero ──────────────────────────────────────────── */
 
     .hero {
@@ -45,7 +69,6 @@
       width: 100%;
     }
 
-    /* Portrait + flower wreath */
     .portrait-wrap {
       position: relative;
       width: clamp(290px, 50vw, 490px);
@@ -82,7 +105,6 @@
         translateY(clamp(-235px, -23vw, -140px));
     }
 
-    /* Text elements */
     .in-loving-memory {
       font-size: clamp(0.85rem, 1.8vw, 1rem);
       font-weight: 600;
@@ -140,6 +162,13 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: rgba(201, 169, 110, 0.55);
+    }
+
+    /* ── Legacy wrapper ────────────────────────────────── */
+
+    .legacy-wrapper {
+      position: relative;
+      overflow: hidden;
     }
 
     /* ── Legacy section ────────────────────────────────── */
@@ -242,7 +271,7 @@
       border-bottom: 1px solid rgba(201, 169, 110, 0.2);
     }
 
-    /* Closing paragraph — slightly brighter to feel like resolution */
+    /* Closing paragraph */
     .closing-para {
       color: rgba(245, 239, 230, 0.75) !important;
     }
@@ -258,29 +287,6 @@
     .legacy-body a:hover {
       color: rgba(201, 169, 110, 0.9);
       text-decoration-color: rgba(201, 169, 110, 0.8);
-    }
-
-    /* Cowpea botanical background */
-    .legacy-section {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cowpea-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: auto;
-      opacity: 0.07;
-      color: #f5efe6;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      pointer-events: none;
-      user-select: none;
     }
 
     /* Learn More */
@@ -325,9 +331,61 @@
       color: rgba(245, 239, 230, 0.3);
       margin-top: 0.1rem;
     }
+
+    /* ── Cowpea botanical background ──────────────────── */
+
+    .cowpea-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      opacity: 0.07;
+      color: #f5efe6;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ── Hindi typography ─────────────────────────────── */
+
+    /* Reset letter-spacing / text-transform for Devanagari glyphs */
+    .l-hi {
+      font-family: "Tiro Devanagari", serif;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    .l-hi.legacy-section .legacy-intro {
+      font-style: normal;
+      line-height: 1.95;
+    }
+
+    .l-hi.legacy-section .legacy-body p {
+      line-height: 2.05;
+    }
+
+    .l-hi.legacy-section .pull-quote {
+      font-style: normal;
+      line-height: 1.9;
+    }
+
+    .l-hi.legacy-section .legacy-heading,
+    .l-hi.legacy-section .section-heading,
+    .l-hi.legacy-section .learn-more-heading {
+      text-transform: none;
+      letter-spacing: 0.05em;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Language toggle -->
+  <button class="lang-toggle" id="langToggle" aria-label="Switch to Hindi">हि</button>
 
   <!-- ── Hero ── -->
   <section class="hero">
@@ -354,20 +412,35 @@
         <img class="portrait" src="drbbsingh.jpeg" alt="Dr. Bir Bahadur Singh">
       </div>
 
-      <p class="in-loving-memory">In loving memory of</p>
-      <h1 class="name-primary">Dr. Bir Bahadur Singh</h1>
-      <p class="name-secondary">Dr. B.B. Singh</p>
+      <p class="in-loving-memory">
+        <span class="l-en">In loving memory of</span>
+        <span class="l-hi" hidden>स्नेहपूर्ण स्मृति में</span>
+      </p>
+      <h1 class="name-primary">
+        <span class="l-en">Dr. Bir Bahadur Singh</span>
+        <span class="l-hi" hidden>डॉ. बीर बहादुर सिंह</span>
+      </h1>
+      <p class="name-secondary">
+        <span class="l-en">Dr. B.B. Singh</span>
+        <span class="l-hi" hidden>डॉ. बी.बी. सिंह</span>
+      </p>
       <div class="divider"></div>
       <p class="years">1944 &nbsp;—&nbsp; 2024</p>
       <div class="divider"></div>
-      <p class="quote">&ldquo;God helps those who help themselves&rdquo;</p>
-      <p class="credentials">World Food Prize Nominee &nbsp;·&nbsp; AAAS Fellow &nbsp;·&nbsp; Plant Breeder</p>
+      <p class="quote">
+        <span class="l-en">&ldquo;God helps those who help themselves&rdquo;</span>
+        <span class="l-hi" hidden>&ldquo;ईश्वर उनकी सहायता करता है, जो अपनी सहायता स्वयं करते हैं।&rdquo;</span>
+      </p>
+      <p class="credentials">
+        <span class="l-en">World Food Prize Nominee &nbsp;·&nbsp; AAAS Fellow &nbsp;·&nbsp; Plant Breeder</span>
+        <span class="l-hi" hidden>वर्ल्ड फूड प्राइज़ नामांकित &nbsp;·&nbsp; एएएएस फेलो &nbsp;·&nbsp; पादप प्रजनक</span>
+      </p>
 
     </div>
   </section>
 
-  <!-- ── Legacy ── -->
-  <section class="legacy-section">
+  <!-- ── Legacy wrapper: SVG background + both language versions ── -->
+  <div class="legacy-wrapper">
 
     <!-- Cowpea botanical silhouette, full background -->
     <svg class="cowpea-bg" viewBox="0 0 1000 1600"
@@ -438,11 +511,11 @@
       <path d="M 574 193 L 566 181" stroke-width="0.7"/>
       <path d="M 574 193 L 580 205" stroke-width="0.7"/>
 
-      <!-- Leaf cluster at vine tip (396, 25) -->
+      <!-- Leaf cluster at vine tip -->
       <ellipse cx="378" cy="16" rx="16" ry="9" transform="rotate(-55 378 16)"/>
       <ellipse cx="396" cy="8"  rx="12" ry="7" transform="rotate(-78 396 8)"/>
 
-      <!-- Pod 1: hanging near branch 1 (~115px) -->
+      <!-- Pod 1: hanging near branch 1 -->
       <path d="M 868 1353 C 872 1378 875 1415 872 1452
                C 871 1463 867 1470 863 1467
                C 859 1465 858 1458 859 1447
@@ -450,7 +523,7 @@
                C 865 1344 866 1345 868 1353 Z"/>
       <path d="M 866 1354 C 869 1380 871 1417 868 1453" stroke-width="1"/>
 
-      <!-- Pod 2: hanging near branch 2 (~100px) -->
+      <!-- Pod 2: hanging near branch 2 -->
       <path d="M 812 1108 C 816 1130 818 1162 816 1196
                C 815 1206 811 1213 807 1211
                C 803 1209 802 1202 803 1191
@@ -458,7 +531,7 @@
                C 809 1099 810 1100 812 1108 Z"/>
       <path d="M 810 1109 C 813 1132 814 1164 812 1197" stroke-width="1"/>
 
-      <!-- Pod 3: hanging near branch 3 (~90px) -->
+      <!-- Pod 3: hanging near branch 3 -->
       <path d="M 700 896 C 704 916 706 944 704 970
                C 703 979 699 985 695 983
                C 691 981 690 975 691 966
@@ -520,11 +593,11 @@
       <path d="M 200 604 L 190 593" stroke-width="0.7"/>
       <path d="M 200 604 L 189 612" stroke-width="0.7"/>
 
-      <!-- Leaf cluster at secondary vine tip (388, 482) -->
+      <!-- Leaf cluster at secondary vine tip -->
       <ellipse cx="368" cy="472" rx="16" ry="9" transform="rotate(-38 368 472)"/>
       <ellipse cx="385" cy="463" rx="12" ry="7" transform="rotate(-65 385 463)"/>
 
-      <!-- Pod 4: hanging from secondary vine near branch A (~95px) -->
+      <!-- Pod 4: hanging from secondary vine near branch A -->
       <path d="M 78 1372 C 82 1396 84 1428 82 1460
                C 81 1470 77 1477 73 1475
                C 69 1473 68 1466 69 1455
@@ -534,119 +607,257 @@
 
     </svg>
 
-    <p class="legacy-intro">
-      Dr. B.B. Singh was a World Food Prize nominee, AAAS Fellow, plant breeder, teacher, author,
-      and humanitarian whose work helped transform cowpea into a major food legume for the tropics.
-      He developed short-duration, high-yielding cowpea varieties released in more than 45 countries,
-      authored about 245 scientific publications, and dedicated his career to improving food security,
-      nutrition, and farmer livelihoods across Africa, Asia, and the Americas.
-    </p>
+    <!-- ── English legacy section ── -->
+    <section class="legacy-section l-en">
 
-    <div class="legacy-rule"></div>
-
-    <h2 class="legacy-heading">Life &amp; Legacy</h2>
-
-    <div class="legacy-body">
-
-      <!-- Section 1 -->
-      <div class="bio-section">
-        <h3 class="section-heading">The Scientist</h3>
-        <p class="drop-cap">
-          Dr. Bir Bahadur &ldquo;B.B.&rdquo; Singh was a <span class="stat">World Food Prize nominee</span>
-          and <span class="stat">AAAS Fellow</span> whose life&rsquo;s work helped make cowpea one of the
-          world&rsquo;s most important food legumes. Trained at
-          <a href="https://www.gbpuat.ac.in" target="_blank" rel="noopener">G.B. Pant University</a> and the
-          <a href="https://illinois.edu" target="_blank" rel="noopener">University of Illinois</a>, he devoted
-          his career to developing short-duration, protein-rich legumes that could fit into cereal-based
-          farming systems and improve food security, nutrition, and farmer income.
-        </p>
-        <p>
-          At the <a href="https://www.iita.org" target="_blank" rel="noopener">International Institute of Tropical Agriculture</a>,
-          <a href="https://www.gbpuat.ac.in" target="_blank" rel="noopener">G.B. Pant University</a>, and
-          <a href="https://www.tamu.edu" target="_blank" rel="noopener">Texas A&amp;M University</a>, Dr. Singh
-          worked on cowpea, soybean, and pigeonpea improvement. His breeding emphasized early maturity, high
-          yield, nutritional quality, and resistance to drought, diseases, insect pests, and parasitic weeds
-          such as <em>Striga</em> and <em>Alectra</em>. His work helped farmers grow legumes in the short
-          windows between wheat, rice, maize, and other cereal crops.
-        </p>
-      </div>
-
-      <!-- Section 2 -->
-      <div class="bio-section">
-        <h3 class="section-heading">Seeds Across Continents</h3>
-        <p class="drop-cap">
-          Dr. Singh developed <span class="stat">more than 40 high-yielding cowpea varieties</span> with
-          60&ndash;70 day maturity that were released in
-          <span class="stat">more than 45 countries</span>. These varieties contributed to the global rise
-          of cowpea production from <span class="stat">about 1 million tons in 1980 to more than 7 million
-          tons by 2014</span>. He also developed the early pigeonpea variety UPAS-120 in India and helped
-          establish systematic soybean breeding in India, contributing to the expansion of soybean as a
-          protein-rich crop.
-        </p>
-      </div>
-
-      <!-- Section 3 -->
-      <div class="bio-section">
-        <h3 class="section-heading">A Scientific Legacy</h3>
-        <p class="drop-cap">
-          Over his lifetime, Dr. Singh authored or coauthored
-          <span class="stat">approximately 245 scientific publications</span> and wrote
-          <em>Cowpea: The Food Legume of the 21st Century</em>, a major synthesis of cowpea breeding,
-          production, nutrition, and use. His scientific legacy includes not only published research, but
-          also improved seeds in farmers&rsquo; fields, trained students and breeders across continents, and
-          practical crop systems that helped families produce more food from the same land.
-        </p>
-        <p>
-          Dr. Singh was elected a Fellow of the American Association for the Advancement of Science and
-          recognized by the American Society of Agronomy, the Crop Science Society of America, the Indian
-          Society of Genetics and Plant Breeding, CGIAR, and other institutions. He was nominated for the
-          <span class="stat">World Food Prize</span> in recognition of his contributions to global food
-          security. In 2023, he received the
-          <span class="stat">inaugural Shin Humanitarian Award</span> from the University of Illinois System
-          for his humanitarian impact through agricultural science.
-        </p>
-      </div>
-
-      <blockquote class="pull-quote">His work joined science with service.</blockquote>
-
-      <p class="closing-para">
-        Through cowpea, soybean, and pigeonpea, Dr. B.B. Singh helped close the protein gap for millions of
-        people and left behind a legacy of knowledge, resilience, and hope.
+      <p class="legacy-intro">
+        Dr. B.B. Singh was a World Food Prize nominee, AAAS Fellow, plant breeder, teacher, author,
+        and humanitarian whose work helped transform cowpea into a major food legume for the tropics.
+        He developed short-duration, high-yielding cowpea varieties released in more than 45 countries,
+        authored about 245 scientific publications, and dedicated his career to improving food security,
+        nutrition, and farmer livelihoods across Africa, Asia, and the Americas.
       </p>
 
-    </div>
+      <div class="legacy-rule"></div>
+      <h2 class="legacy-heading">Life &amp; Legacy</h2>
 
-    <div class="learn-more">
-      <p class="learn-more-heading">Learn More</p>
-      <ul class="learn-more-links">
-        <li>
-          <a href="https://soilcrop.tamu.edu/department-updates/b-b-singh-honored-by-the-american-association-for-advancement-of-science-aaas/" target="_blank" rel="noopener">
-            B.B. Singh honored by the AAAS
-            <span class="link-label">Texas A&amp;M University &mdash; Soil &amp; Crop Sciences</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://aces.illinois.edu/news/u-i-alum-receives-first-ever-shin-humanitarian-award-pays-it-forward-college-aces" target="_blank" rel="noopener">
-            Inaugural Shin Humanitarian Award recipient
-            <span class="link-label">University of Illinois, College of ACES</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.crops.org/news/media-releases/releases/2014/0922/640" target="_blank" rel="noopener">
-            <em>Cowpea: The Food Legume of the 21st Century</em> &mdash; Book release
-            <span class="link-label">Crop Science Society of America</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://doi.org/10.2135/2014.cowpea" target="_blank" rel="noopener">
-            <em>Cowpea: The Food Legume of the 21st Century</em> &mdash; Full text
-            <span class="link-label">American Society of Agronomy &mdash; DOI: 10.2135/2014.cowpea</span>
-          </a>
-        </li>
-      </ul>
-    </div>
+      <div class="legacy-body">
 
-  </section>
+        <div class="bio-section">
+          <h3 class="section-heading">The Scientist</h3>
+          <p class="drop-cap">
+            Dr. Bir Bahadur &ldquo;B.B.&rdquo; Singh was a <span class="stat">World Food Prize nominee</span>
+            and <span class="stat">AAAS Fellow</span> whose life&rsquo;s work helped make cowpea one of the
+            world&rsquo;s most important food legumes. Trained at
+            <a href="https://www.gbpuat.ac.in" target="_blank" rel="noopener">G.B. Pant University</a> and the
+            <a href="https://illinois.edu" target="_blank" rel="noopener">University of Illinois</a>, he devoted
+            his career to developing short-duration, protein-rich legumes that could fit into cereal-based
+            farming systems and improve food security, nutrition, and farmer income.
+          </p>
+          <p>
+            At the <a href="https://www.iita.org" target="_blank" rel="noopener">International Institute of Tropical Agriculture</a>,
+            <a href="https://www.gbpuat.ac.in" target="_blank" rel="noopener">G.B. Pant University</a>, and
+            <a href="https://www.tamu.edu" target="_blank" rel="noopener">Texas A&amp;M University</a>, Dr. Singh
+            worked on cowpea, soybean, and pigeonpea improvement. His breeding emphasized early maturity, high
+            yield, nutritional quality, and resistance to drought, diseases, insect pests, and parasitic weeds
+            such as <em>Striga</em> and <em>Alectra</em>. His work helped farmers grow legumes in the short
+            windows between wheat, rice, maize, and other cereal crops.
+          </p>
+        </div>
+
+        <div class="bio-section">
+          <h3 class="section-heading">Seeds Across Continents</h3>
+          <p class="drop-cap">
+            Dr. Singh developed <span class="stat">more than 40 high-yielding cowpea varieties</span> with
+            60&ndash;70 day maturity that were released in
+            <span class="stat">more than 45 countries</span>. These varieties contributed to the global rise
+            of cowpea production from <span class="stat">about 1 million tons in 1980 to more than 7 million
+            tons by 2014</span>. He also developed the early pigeonpea variety UPAS-120 in India and helped
+            establish systematic soybean breeding in India, contributing to the expansion of soybean as a
+            protein-rich crop.
+          </p>
+        </div>
+
+        <div class="bio-section">
+          <h3 class="section-heading">A Scientific Legacy</h3>
+          <p class="drop-cap">
+            Over his lifetime, Dr. Singh authored or coauthored
+            <span class="stat">approximately 245 scientific publications</span> and wrote
+            <em>Cowpea: The Food Legume of the 21st Century</em>, a major synthesis of cowpea breeding,
+            production, nutrition, and use. His scientific legacy includes not only published research, but
+            also improved seeds in farmers&rsquo; fields, trained students and breeders across continents, and
+            practical crop systems that helped families produce more food from the same land.
+          </p>
+          <p>
+            Dr. Singh was elected a Fellow of the American Association for the Advancement of Science and
+            recognized by the American Society of Agronomy, the Crop Science Society of America, the Indian
+            Society of Genetics and Plant Breeding, CGIAR, and other institutions. He was nominated for the
+            <span class="stat">World Food Prize</span> in recognition of his contributions to global food
+            security. In 2023, he received the
+            <span class="stat">inaugural Shin Humanitarian Award</span> from the University of Illinois System
+            for his humanitarian impact through agricultural science.
+          </p>
+        </div>
+
+        <blockquote class="pull-quote">His work joined science with service.</blockquote>
+
+        <p class="closing-para">
+          Through cowpea, soybean, and pigeonpea, Dr. B.B. Singh helped close the protein gap for millions of
+          people and left behind a legacy of knowledge, resilience, and hope.
+        </p>
+
+      </div>
+
+      <div class="learn-more">
+        <p class="learn-more-heading">Learn More</p>
+        <ul class="learn-more-links">
+          <li>
+            <a href="https://soilcrop.tamu.edu/department-updates/b-b-singh-honored-by-the-american-association-for-advancement-of-science-aaas/" target="_blank" rel="noopener">
+              B.B. Singh honored by the AAAS
+              <span class="link-label">Texas A&amp;M University &mdash; Soil &amp; Crop Sciences</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://aces.illinois.edu/news/u-i-alum-receives-first-ever-shin-humanitarian-award-pays-it-forward-college-aces" target="_blank" rel="noopener">
+              Inaugural Shin Humanitarian Award recipient
+              <span class="link-label">University of Illinois, College of ACES</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.crops.org/news/media-releases/releases/2014/0922/640" target="_blank" rel="noopener">
+              <em>Cowpea: The Food Legume of the 21st Century</em> &mdash; Book release
+              <span class="link-label">Crop Science Society of America</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://doi.org/10.2135/2014.cowpea" target="_blank" rel="noopener">
+              <em>Cowpea: The Food Legume of the 21st Century</em> &mdash; Full text
+              <span class="link-label">American Society of Agronomy &mdash; DOI: 10.2135/2014.cowpea</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </section>
+
+    <!-- ── Hindi legacy section ── -->
+    <section class="legacy-section l-hi" hidden lang="hi">
+
+      <p class="legacy-intro">
+        डॉ. बी.बी. सिंह वर्ल्ड फूड प्राइज़ के नामांकित, एएएएस फेलो, पादप प्रजनक, शिक्षक,
+        लेखक और मानवतावादी थे। उनके कार्य ने लोबिया को उष्णकटिबंधीय क्षेत्रों के लिए एक
+        प्रमुख खाद्य दलहन में बदलने में महत्वपूर्ण भूमिका निभाई। उन्होंने कम अवधि में तैयार
+        होने वाली, अधिक उपज देने वाली लोबिया की किस्में विकसित कीं, जिन्हें 45 से अधिक देशों
+        में जारी किया गया। उन्होंने लगभग 245 वैज्ञानिक प्रकाशनों का लेखन या सह-लेखन किया और
+        अपना पूरा जीवन अफ्रीका, एशिया और अमेरिका में खाद्य सुरक्षा, पोषण और किसानों की
+        आजीविका सुधारने के लिए समर्पित किया।
+      </p>
+
+      <div class="legacy-rule"></div>
+      <h2 class="legacy-heading">जीवन और विरासत</h2>
+
+      <div class="legacy-body">
+
+        <div class="bio-section">
+          <h3 class="section-heading">वैज्ञानिक</h3>
+          <p class="drop-cap">
+            डॉ. बीर बहादुर &ldquo;बी.बी.&rdquo; सिंह <span class="stat">वर्ल्ड फूड प्राइज़ के नामांकित</span>
+            और <span class="stat">एएएएस फेलो</span> थे, जिनके जीवनकार्य ने लोबिया को विश्व की
+            सबसे महत्वपूर्ण खाद्य दलहनी फसलों में स्थान दिलाने में मदद की।
+            <a href="https://www.gbpuat.ac.in" target="_blank" rel="noopener">जी.बी. पंत विश्वविद्यालय</a>
+            और <a href="https://illinois.edu" target="_blank" rel="noopener">यूनिवर्सिटी ऑफ इलिनॉय</a>
+            में शिक्षा प्राप्त करने के बाद उन्होंने अपना करियर ऐसी कम-अवधि, प्रोटीन-समृद्ध दलहनी
+            फसलों के विकास को समर्पित किया, जिन्हें अनाज-आधारित खेती प्रणालियों में सफलतापूर्वक
+            शामिल किया जा सके और जो खाद्य सुरक्षा, पोषण तथा किसानों की आय में वृद्धि कर सकें।
+          </p>
+          <p>
+            <a href="https://www.iita.org" target="_blank" rel="noopener">इंटरनेशनल इंस्टीट्यूट ऑफ ट्रॉपिकल एग्रीकल्चर</a>,
+            <a href="https://www.gbpuat.ac.in" target="_blank" rel="noopener">जी.बी. पंत विश्वविद्यालय</a>
+            और <a href="https://www.tamu.edu" target="_blank" rel="noopener">टेक्सास ए एंड एम विश्वविद्यालय</a>
+            में कार्य करते हुए डॉ. सिंह ने लोबिया, सोयाबीन और अरहर के सुधार पर काम किया।
+            उनके प्रजनन कार्यक्रम में शीघ्र परिपक्वता, उच्च उपज, पोषण गुणवत्ता, तथा सूखा, रोग,
+            कीटों और <em>Striga</em> एवं <em>Alectra</em> जैसे परजीवी खरपतवारों के प्रति प्रतिरोध
+            पर विशेष बल दिया गया। उनके कार्य से किसानों को गेहूँ, धान, मक्का और अन्य अनाज
+            फसलों के बीच उपलब्ध कम समय में भी दलहनी फसलें उगाने में सहायता मिली।
+          </p>
+        </div>
+
+        <div class="bio-section">
+          <h3 class="section-heading">महाद्वीपों में फैले बीज</h3>
+          <p class="drop-cap">
+            डॉ. सिंह ने लोबिया की <span class="stat">40 से अधिक उच्च उपज वाली किस्में</span>
+            विकसित कीं, जो 60&ndash;70 दिनों में पक जाती थीं और
+            <span class="stat">45 से अधिक देशों</span> में जारी की गईं। इन किस्मों ने
+            <span class="stat">1980 में लगभग 10 लाख टन से बढ़कर 2014 तक 70 लाख टन से अधिक</span>
+            के वैश्विक लोबिया उत्पादन में योगदान दिया। उन्होंने भारत में अरहर की प्रारम्भिक
+            किस्म UPAS-120 भी विकसित की और भारत में व्यवस्थित सोयाबीन प्रजनन की नींव मजबूत
+            करने में मदद की, जिससे सोयाबीन एक प्रोटीन-समृद्ध फसल के रूप में और अधिक फैला।
+          </p>
+        </div>
+
+        <div class="bio-section">
+          <h3 class="section-heading">एक वैज्ञानिक विरासत</h3>
+          <p class="drop-cap">
+            अपने जीवनकाल में डॉ. सिंह ने
+            <span class="stat">लगभग 245 वैज्ञानिक प्रकाशन</span>
+            का लेखन या सह-लेखन किया और
+            <em>Cowpea: The Food Legume of the 21st Century</em> नामक पुस्तक लिखी,
+            जो लोबिया के प्रजनन, उत्पादन, पोषण और उपयोग पर एक महत्वपूर्ण समग्र कृति है।
+            उनकी वैज्ञानिक विरासत केवल प्रकाशित शोध तक सीमित नहीं है, बल्कि किसानों के
+            खेतों तक पहुँचे उन्नत बीजों, विभिन्न महाद्वीपों में प्रशिक्षित छात्रों और
+            प्रजनकों, तथा ऐसी व्यावहारिक फसल प्रणालियों में भी दिखाई देती है जिन्होंने
+            परिवारों को उसी भूमि से अधिक भोजन उत्पादन में मदद दी।
+          </p>
+          <p>
+            डॉ. सिंह को American Association for the Advancement of Science का फेलो चुना
+            गया था, और उन्हें American Society of Agronomy, Crop Science Society of America,
+            Indian Society of Genetics and Plant Breeding, CGIAR तथा अन्य संस्थानों द्वारा
+            सम्मानित किया गया। वैश्विक खाद्य सुरक्षा में उनके योगदान के लिए उन्हें
+            <span class="stat">World Food Prize</span> के लिए नामांकित किया गया था।
+            2023 में उन्हें कृषि विज्ञान के माध्यम से मानवता पर उनके प्रभाव के लिए
+            University of Illinois System का पहला
+            <span class="stat">Shin Humanitarian Award</span> प्रदान किया गया।
+          </p>
+        </div>
+
+        <blockquote class="pull-quote">उनका कार्य विज्ञान और सेवा का अद्भुत संगम था।</blockquote>
+
+        <p class="closing-para">
+          लोबिया, सोयाबीन और अरहर के माध्यम से डॉ. बी.बी. सिंह ने लाखों लोगों के प्रोटीन
+          अभाव को कम करने में मदद की और ज्ञान, धैर्य तथा आशा की एक स्थायी विरासत छोड़ी।
+        </p>
+
+      </div>
+
+      <div class="learn-more">
+        <p class="learn-more-heading">और जानें</p>
+        <ul class="learn-more-links">
+          <li>
+            <a href="https://soilcrop.tamu.edu/department-updates/b-b-singh-honored-by-the-american-association-for-advancement-of-science-aaas/" target="_blank" rel="noopener">
+              बी.बी. सिंह को एएएएस द्वारा सम्मान
+              <span class="link-label">Texas A&amp;M University &mdash; Soil &amp; Crop Sciences</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://aces.illinois.edu/news/u-i-alum-receives-first-ever-shin-humanitarian-award-pays-it-forward-college-aces" target="_blank" rel="noopener">
+              उद्घाटन शिन ह्यूमैनिटेरियन अवॉर्ड प्राप्तकर्ता
+              <span class="link-label">University of Illinois, College of ACES</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.crops.org/news/media-releases/releases/2014/0922/640" target="_blank" rel="noopener">
+              <em>Cowpea: The Food Legume of the 21st Century</em> &mdash; पुस्तक विमोचन
+              <span class="link-label">Crop Science Society of America</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://doi.org/10.2135/2014.cowpea" target="_blank" rel="noopener">
+              <em>Cowpea: The Food Legume of the 21st Century</em> &mdash; पूर्ण पाठ
+              <span class="link-label">American Society of Agronomy &mdash; DOI: 10.2135/2014.cowpea</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </section>
+
+  </div><!-- /.legacy-wrapper -->
+
+  <script>
+    const toggle = document.getElementById('langToggle');
+    const hiEls = document.querySelectorAll('.l-hi');
+    const enEls = document.querySelectorAll('.l-en');
+    let isHindi = false;
+
+    toggle.addEventListener('click', () => {
+      isHindi = !isHindi;
+      toggle.textContent = isHindi ? 'EN' : 'हि';
+      toggle.setAttribute('aria-label', isHindi ? 'Switch to English' : 'Switch to Hindi');
+      document.documentElement.lang = isHindi ? 'hi' : 'en';
+      hiEls.forEach(el => { el.hidden = !isHindi; });
+      enEls.forEach(el => { el.hidden = isHindi; });
+    });
+  </script>
 
 </body>
 </html>
