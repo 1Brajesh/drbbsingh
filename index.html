@@ -203,6 +203,28 @@
       text-decoration-color: rgba(201, 169, 110, 0.8);
     }
 
+    /* Cowpea botanical background */
+    .legacy-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cowpea-bg {
+      position: absolute;
+      bottom: 0;
+      right: -10px;
+      width: clamp(200px, 32vw, 340px);
+      opacity: 0.055;
+      color: #f5efe6;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      pointer-events: none;
+      user-select: none;
+    }
+
     /* Learn More */
     .learn-more {
       margin-top: 3.5rem;
@@ -288,6 +310,73 @@
 
   <!-- ── Legacy ── -->
   <section class="legacy-section">
+
+    <!-- Cowpea botanical silhouette, bottom-right corner -->
+    <svg class="cowpea-bg" viewBox="0 0 300 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+
+      <!-- Main vine, winding from bottom-right upward -->
+      <path d="M 275 500 C 252 458 234 428 220 388
+               C 204 345 220 310 202 267
+               C 184 224 158 197 144 154
+               C 130 111 148 74 132 32"/>
+
+      <!-- Branch 1: left, from vine at ~(220,388) -->
+      <path d="M 220 388 C 200 376 182 367 165 360"/>
+      <!-- Trifoliate leaf group 1 -->
+      <ellipse cx="148" cy="350" rx="20" ry="11" transform="rotate(-20 148 350)"/>
+      <ellipse cx="165" cy="337" rx="14" ry="8"  transform="rotate(-50 165 337)"/>
+      <ellipse cx="132" cy="357" rx="14" ry="8"  transform="rotate(10 132 357)"/>
+      <!-- Leaf veins -->
+      <path d="M 165 360 L 148 350" stroke-width="0.8"/>
+      <path d="M 148 350 L 136 344" stroke-width="0.6"/>
+      <path d="M 148 350 L 140 358" stroke-width="0.6"/>
+
+      <!-- Branch 2: right, from vine at ~(202,267) -->
+      <path d="M 202 267 C 222 254 240 246 258 240"/>
+      <!-- Trifoliate leaf group 2 -->
+      <ellipse cx="274" cy="230" rx="20" ry="11" transform="rotate(25 274 230)"/>
+      <ellipse cx="262" cy="218" rx="14" ry="8"  transform="rotate(-5 262 218)"/>
+      <ellipse cx="282" cy="244" rx="14" ry="8"  transform="rotate(50 282 244)"/>
+      <!-- Leaf veins -->
+      <path d="M 258 240 L 274 230" stroke-width="0.8"/>
+      <path d="M 274 230 L 268 220" stroke-width="0.6"/>
+      <path d="M 274 230 L 278 242" stroke-width="0.6"/>
+
+      <!-- Branch 3: left, from vine at ~(144,154) -->
+      <path d="M 144 154 C 122 143 104 134 88 128"/>
+      <!-- Trifoliate leaf group 3 -->
+      <ellipse cx="70"  cy="118" rx="20" ry="11" transform="rotate(-35 70 118)"/>
+      <ellipse cx="88"  cy="106" rx="14" ry="8"  transform="rotate(-65 88 106)"/>
+      <ellipse cx="55"  cy="125" rx="14" ry="8"  transform="rotate(-5 55 125)"/>
+      <!-- Leaf veins -->
+      <path d="M 88 128 L 70 118"  stroke-width="0.8"/>
+      <path d="M 70 118 L 62 109"  stroke-width="0.6"/>
+      <path d="M 70 118 L 61 126"  stroke-width="0.6"/>
+
+      <!-- Tiny leaf at vine tip -->
+      <ellipse cx="130" cy="22" rx="13" ry="7" transform="rotate(-55 130 22)"/>
+
+      <!-- Pod 1: hanging near branch 1 junction (~90px long) -->
+      <path d="M 214 366
+               C 218 386 220 418 218 448
+               C 217 457 214 461 211 459
+               C 208 457 207 452 208 443
+               C 210 413 208 381 212 362
+               C 212 359 213 360 214 366 Z"/>
+      <!-- Pod 1 suture line -->
+      <path d="M 213 367 C 216 390 217 422 215 450" stroke-width="0.7"/>
+
+      <!-- Pod 2: hanging from vine between branches 1 and 2 (~85px long) -->
+      <path d="M 204 303
+               C 208 326 211 356 209 388
+               C 208 397 205 402 202 400
+               C 199 398 198 393 199 384
+               C 201 352 199 322 202 299
+               C 203 296 203 297 204 303 Z"/>
+      <!-- Pod 2 suture line -->
+      <path d="M 203 304 C 206 328 208 358 206 387" stroke-width="0.7"/>
+
+    </svg>
 
     <p class="legacy-intro">
       Dr. B.B. Singh was a World Food Prize nominee, AAAS Fellow, plant breeder, teacher, author,
