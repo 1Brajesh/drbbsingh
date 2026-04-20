@@ -180,7 +180,30 @@
     .legacy-body {
       display: flex;
       flex-direction: column;
-      gap: 1.8rem;
+      gap: 0;
+    }
+
+    .bio-section {
+      margin-top: 2.8rem;
+    }
+
+    .bio-section:first-child {
+      margin-top: 0;
+    }
+
+    .bio-section p + p {
+      margin-top: 1.6rem;
+    }
+
+    .section-heading {
+      font-size: clamp(0.72rem, 1.4vw, 0.82rem);
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.62);
+      margin-bottom: 1.25rem;
+      padding-left: 0.85rem;
+      border-left: 1.5px solid rgba(201, 169, 110, 0.35);
     }
 
     .legacy-body p {
@@ -425,49 +448,65 @@
     <h2 class="legacy-heading">Life &amp; Legacy</h2>
 
     <div class="legacy-body">
-      <p class="drop-cap">
-        Dr. Bir Bahadur &ldquo;B.B.&rdquo; Singh was a <span class="stat">World Food Prize nominee</span>
-        and <span class="stat">AAAS Fellow</span> whose life&rsquo;s work helped make cowpea one of the
-        world&rsquo;s most important food legumes. Trained at
-        <a href="https://www.gbpuat.ac.in" target="_blank" rel="noopener">G.B. Pant University</a> and the
-        <a href="https://illinois.edu" target="_blank" rel="noopener">University of Illinois</a>, he devoted
-        his career to developing short-duration, protein-rich legumes that could fit into cereal-based farming
-        systems and improve food security, nutrition, and farmer income.
-      </p>
-      <p>
-        At the <a href="https://www.iita.org" target="_blank" rel="noopener">International Institute of Tropical Agriculture</a>,
-        <a href="https://www.gbpuat.ac.in" target="_blank" rel="noopener">G.B. Pant University</a>, and
-        <a href="https://www.tamu.edu" target="_blank" rel="noopener">Texas A&amp;M University</a>, Dr. Singh
-        worked on cowpea, soybean, and pigeonpea improvement. His breeding emphasized early maturity, high
-        yield, nutritional quality, and resistance to drought, diseases, insect pests, and parasitic weeds
-        such as <em>Striga</em> and <em>Alectra</em>. His work helped farmers grow legumes in the short
-        windows between wheat, rice, maize, and other cereal crops.
-      </p>
-      <p>
-        Dr. Singh developed <span class="stat">more than 40 high-yielding cowpea varieties</span> with
-        60&ndash;70 day maturity that were released in
-        <span class="stat">more than 45 countries</span>. These varieties contributed to the global rise of
-        cowpea production from <span class="stat">about 1 million tons in 1980 to more than 7 million tons
-        by 2014</span>. He also developed the early pigeonpea variety UPAS-120 in India and helped establish
-        systematic soybean breeding in India, contributing to the expansion of soybean as a protein-rich crop.
-      </p>
-      <p>
-        Over his lifetime, Dr. Singh authored or coauthored
-        <span class="stat">approximately 245 scientific publications</span> and wrote
-        <em>Cowpea: The Food Legume of the 21st Century</em>, a major synthesis of cowpea breeding,
-        production, nutrition, and use. His scientific legacy includes not only published research, but also
-        improved seeds in farmers&rsquo; fields, trained students and breeders across continents, and
-        practical crop systems that helped families produce more food from the same land.
-      </p>
-      <p>
-        Dr. Singh was elected a Fellow of the American Association for the Advancement of Science and
-        recognized by the American Society of Agronomy, the Crop Science Society of America, the Indian
-        Society of Genetics and Plant Breeding, CGIAR, and other institutions. He was nominated for the
-        <span class="stat">World Food Prize</span> in recognition of his contributions to global food
-        security. In 2023, he received the
-        <span class="stat">inaugural Shin Humanitarian Award</span> from the University of Illinois System
-        for his humanitarian impact through agricultural science.
-      </p>
+
+      <!-- Section 1 -->
+      <div class="bio-section">
+        <h3 class="section-heading">The Scientist</h3>
+        <p class="drop-cap">
+          Dr. Bir Bahadur &ldquo;B.B.&rdquo; Singh was a <span class="stat">World Food Prize nominee</span>
+          and <span class="stat">AAAS Fellow</span> whose life&rsquo;s work helped make cowpea one of the
+          world&rsquo;s most important food legumes. Trained at
+          <a href="https://www.gbpuat.ac.in" target="_blank" rel="noopener">G.B. Pant University</a> and the
+          <a href="https://illinois.edu" target="_blank" rel="noopener">University of Illinois</a>, he devoted
+          his career to developing short-duration, protein-rich legumes that could fit into cereal-based
+          farming systems and improve food security, nutrition, and farmer income.
+        </p>
+        <p>
+          At the <a href="https://www.iita.org" target="_blank" rel="noopener">International Institute of Tropical Agriculture</a>,
+          <a href="https://www.gbpuat.ac.in" target="_blank" rel="noopener">G.B. Pant University</a>, and
+          <a href="https://www.tamu.edu" target="_blank" rel="noopener">Texas A&amp;M University</a>, Dr. Singh
+          worked on cowpea, soybean, and pigeonpea improvement. His breeding emphasized early maturity, high
+          yield, nutritional quality, and resistance to drought, diseases, insect pests, and parasitic weeds
+          such as <em>Striga</em> and <em>Alectra</em>. His work helped farmers grow legumes in the short
+          windows between wheat, rice, maize, and other cereal crops.
+        </p>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="bio-section">
+        <h3 class="section-heading">Seeds Across Continents</h3>
+        <p class="drop-cap">
+          Dr. Singh developed <span class="stat">more than 40 high-yielding cowpea varieties</span> with
+          60&ndash;70 day maturity that were released in
+          <span class="stat">more than 45 countries</span>. These varieties contributed to the global rise
+          of cowpea production from <span class="stat">about 1 million tons in 1980 to more than 7 million
+          tons by 2014</span>. He also developed the early pigeonpea variety UPAS-120 in India and helped
+          establish systematic soybean breeding in India, contributing to the expansion of soybean as a
+          protein-rich crop.
+        </p>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="bio-section">
+        <h3 class="section-heading">A Scientific Legacy</h3>
+        <p class="drop-cap">
+          Over his lifetime, Dr. Singh authored or coauthored
+          <span class="stat">approximately 245 scientific publications</span> and wrote
+          <em>Cowpea: The Food Legume of the 21st Century</em>, a major synthesis of cowpea breeding,
+          production, nutrition, and use. His scientific legacy includes not only published research, but
+          also improved seeds in farmers&rsquo; fields, trained students and breeders across continents, and
+          practical crop systems that helped families produce more food from the same land.
+        </p>
+        <p>
+          Dr. Singh was elected a Fellow of the American Association for the Advancement of Science and
+          recognized by the American Society of Agronomy, the Crop Science Society of America, the Indian
+          Society of Genetics and Plant Breeding, CGIAR, and other institutions. He was nominated for the
+          <span class="stat">World Food Prize</span> in recognition of his contributions to global food
+          security. In 2023, he received the
+          <span class="stat">inaugural Shin Humanitarian Award</span> from the University of Illinois System
+          for his humanitarian impact through agricultural science.
+        </p>
+      </div>
 
       <blockquote class="pull-quote">His work joined science with service.</blockquote>
 
@@ -475,6 +514,7 @@
         Through cowpea, soybean, and pigeonpea, Dr. B.B. Singh helped close the protein gap for millions of
         people and left behind a legacy of knowledge, resilience, and hope.
       </p>
+
     </div>
 
     <div class="learn-more">
