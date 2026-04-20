@@ -271,7 +271,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: auto;
       opacity: 0.07;
       color: #f5efe6;
       fill: none;
@@ -370,107 +370,167 @@
   <section class="legacy-section">
 
     <!-- Cowpea botanical silhouette, full background -->
-    <svg class="cowpea-bg" viewBox="0 0 1000 750" preserveAspectRatio="xMidYMid slice"
+    <svg class="cowpea-bg" viewBox="0 0 1000 1600"
+         preserveAspectRatio="xMidYMin meet"
          xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
 
       <!-- ── Main vine: bottom-right → upper-left ── -->
-      <path d="M 980 750 C 945 690 900 648 865 588
-               C 830 526 845 472 808 402
-               C 771 332 728 296 695 230
-               C 662 164 672 108 635 52"/>
+      <path d="M 980 1580
+               C 948 1498 910 1455 875 1370
+               C 838 1282 856 1210 818 1124
+               C 780 1038 742 996  706 912
+               C 670 828  685 755  648 672
+               C 611 589  573 546  535 464
+               C 500 385  514 310  476 230
+               C 450 165  424 95   396 25"/>
 
-      <!-- Branch 1: left, from (865, 588) -->
-      <path d="M 865 588 C 840 576 815 566 790 558"/>
-      <ellipse cx="768" cy="546" rx="22" ry="12" transform="rotate(-18 768 546)"/>
-      <ellipse cx="785" cy="532" rx="15" ry="9"  transform="rotate(-48 785 532)"/>
-      <ellipse cx="752" cy="556" rx="15" ry="9"  transform="rotate(12 752 556)"/>
-      <path d="M 790 558 L 768 546" stroke-width="1"/>
-      <path d="M 768 546 L 758 537" stroke-width="0.7"/>
-      <path d="M 768 546 L 757 554" stroke-width="0.7"/>
+      <!-- Branch 1: LEFT from (875, 1370) -->
+      <path d="M 875 1370 C 848 1357 820 1347 792 1340"/>
+      <ellipse cx="770" cy="1328" rx="24" ry="13" transform="rotate(-20 770 1328)"/>
+      <ellipse cx="788" cy="1313" rx="17" ry="10" transform="rotate(-50 788 1313)"/>
+      <ellipse cx="752" cy="1337" rx="17" ry="10" transform="rotate(10 752 1337)"/>
+      <path d="M 792 1340 L 770 1328" stroke-width="1.1"/>
+      <path d="M 770 1328 L 759 1318" stroke-width="0.8"/>
+      <path d="M 770 1328 L 759 1337" stroke-width="0.8"/>
 
-      <!-- Branch 2: right, from (808, 402) -->
-      <path d="M 808 402 C 836 389 864 380 892 374"/>
-      <ellipse cx="912" cy="363" rx="22" ry="12" transform="rotate(22 912 363)"/>
-      <ellipse cx="898" cy="349" rx="15" ry="9"  transform="rotate(-8 898 349)"/>
-      <ellipse cx="922" cy="378" rx="15" ry="9"  transform="rotate(48 922 378)"/>
-      <path d="M 892 374 L 912 363" stroke-width="1"/>
-      <path d="M 912 363 L 904 352" stroke-width="0.7"/>
-      <path d="M 912 363 L 918 375" stroke-width="0.7"/>
+      <!-- Branch 2: RIGHT from (818, 1124) -->
+      <path d="M 818 1124 C 848 1110 878 1101 908 1094"/>
+      <ellipse cx="929" cy="1082" rx="24" ry="13" transform="rotate(24 929 1082)"/>
+      <ellipse cx="914" cy="1067" rx="17" ry="10" transform="rotate(-6 914 1067)"/>
+      <ellipse cx="938" cy="1098" rx="17" ry="10" transform="rotate(50 938 1098)"/>
+      <path d="M 908 1094 L 929 1082" stroke-width="1.1"/>
+      <path d="M 929 1082 L 921 1070" stroke-width="0.8"/>
+      <path d="M 929 1082 L 935 1094" stroke-width="0.8"/>
 
-      <!-- Branch 3: left, from (695, 230) -->
-      <path d="M 695 230 C 668 218 640 210 612 204"/>
-      <ellipse cx="590" cy="192" rx="22" ry="12" transform="rotate(-32 590 192)"/>
-      <ellipse cx="608" cy="178" rx="15" ry="9"  transform="rotate(-62 608 178)"/>
-      <ellipse cx="575" cy="200" rx="15" ry="9"  transform="rotate(-2 575 200)"/>
-      <path d="M 612 204 L 590 192" stroke-width="1"/>
-      <path d="M 590 192 L 580 182" stroke-width="0.7"/>
-      <path d="M 590 192 L 580 200" stroke-width="0.7"/>
+      <!-- Branch 3: LEFT from (706, 912) -->
+      <path d="M 706 912 C 677 900 648 890 620 883"/>
+      <ellipse cx="597" cy="871" rx="24" ry="13" transform="rotate(-26 597 871)"/>
+      <ellipse cx="615" cy="856" rx="17" ry="10" transform="rotate(-56 615 856)"/>
+      <ellipse cx="580" cy="880" rx="17" ry="10" transform="rotate(4 580 880)"/>
+      <path d="M 620 883 L 597 871" stroke-width="1.1"/>
+      <path d="M 597 871 L 587 860" stroke-width="0.8"/>
+      <path d="M 597 871 L 586 880" stroke-width="0.8"/>
 
-      <!-- Branch 4: right, from (635, 52) — vine tip area -->
-      <path d="M 635 52 C 658 42 682 34 705 28"/>
-      <ellipse cx="722" cy="18" rx="18" ry="10" transform="rotate(18 722 18)"/>
-      <ellipse cx="708" cy="6"  rx="13" ry="7"  transform="rotate(-12 708 6)"/>
+      <!-- Branch 4: RIGHT from (648, 672) -->
+      <path d="M 648 672 C 678 659 708 650 738 643"/>
+      <ellipse cx="760" cy="631" rx="24" ry="13" transform="rotate(22 760 631)"/>
+      <ellipse cx="745" cy="616" rx="17" ry="10" transform="rotate(-8 745 616)"/>
+      <ellipse cx="768" cy="647" rx="17" ry="10" transform="rotate(48 768 647)"/>
+      <path d="M 738 643 L 760 631" stroke-width="1.1"/>
+      <path d="M 760 631 L 752 619" stroke-width="0.8"/>
+      <path d="M 760 631 L 766 643" stroke-width="0.8"/>
 
-      <!-- Pod 1: hanging near branch 1 (~100px long) -->
-      <path d="M 858 572 C 862 596 865 632 862 665 C 861 675 857 681 853 679
-               C 849 677 848 671 849 661 C 852 628 850 592 854 568
-               C 855 564 856 565 858 572 Z"/>
-      <path d="M 856 573 C 859 598 861 635 858 666" stroke-width="0.9"/>
+      <!-- Branch 5: LEFT from (535, 464) -->
+      <path d="M 535 464 C 505 452 475 443 446 436"/>
+      <ellipse cx="423" cy="424" rx="22" ry="12" transform="rotate(-24 423 424)"/>
+      <ellipse cx="440" cy="409" rx="15" ry="9"  transform="rotate(-54 440 409)"/>
+      <ellipse cx="406" cy="432" rx="15" ry="9"  transform="rotate(6 406 432)"/>
+      <path d="M 446 436 L 423 424" stroke-width="1.1"/>
+      <path d="M 423 424 L 413 413" stroke-width="0.8"/>
+      <path d="M 423 424 L 412 432" stroke-width="0.8"/>
 
-      <!-- Pod 2: hanging from vine between branches 1 and 2 (~90px long) -->
-      <path d="M 835 490 C 839 514 841 548 839 580 C 838 590 834 596 830 594
-               C 826 592 825 586 826 576 C 828 544 826 510 830 486
-               C 831 482 832 483 835 490 Z"/>
-      <path d="M 833 491 C 836 516 837 550 835 581" stroke-width="0.9"/>
+      <!-- Branch 6: RIGHT from (476, 230) -->
+      <path d="M 476 230 C 502 219 528 211 554 205"/>
+      <ellipse cx="574" cy="193" rx="20" ry="11" transform="rotate(20 574 193)"/>
+      <ellipse cx="558" cy="179" rx="14" ry="8"  transform="rotate(-10 558 179)"/>
+      <ellipse cx="582" cy="208" rx="14" ry="8"  transform="rotate(46 582 208)"/>
+      <path d="M 554 205 L 574 193" stroke-width="1"/>
+      <path d="M 574 193 L 566 181" stroke-width="0.7"/>
+      <path d="M 574 193 L 580 205" stroke-width="0.7"/>
 
-      <!-- Pod 3: hanging near branch 3 (~85px long) -->
-      <path d="M 688 248 C 692 268 694 296 692 324 C 691 333 688 338 684 336
-               C 680 334 679 328 680 319 C 682 291 680 263 684 244
-               C 685 240 686 241 688 248 Z"/>
-      <path d="M 686 249 C 689 270 690 298 688 325" stroke-width="0.9"/>
+      <!-- Leaf cluster at vine tip (396, 25) -->
+      <ellipse cx="378" cy="16" rx="16" ry="9" transform="rotate(-55 378 16)"/>
+      <ellipse cx="396" cy="8"  rx="12" ry="7" transform="rotate(-78 396 8)"/>
 
-      <!-- ── Secondary vine: bottom-left → upper-right ── -->
-      <path d="M 25 750 C 46 705 65 672 84 635
-               C 103 596 86 562 106 522
-               C 126 482 150 462 170 425
-               C 190 388 178 355 196 318"/>
+      <!-- Pod 1: hanging near branch 1 (~115px) -->
+      <path d="M 868 1353 C 872 1378 875 1415 872 1452
+               C 871 1463 867 1470 863 1467
+               C 859 1465 858 1458 859 1447
+               C 862 1410 860 1373 864 1348
+               C 865 1344 866 1345 868 1353 Z"/>
+      <path d="M 866 1354 C 869 1380 871 1417 868 1453" stroke-width="1"/>
 
-      <!-- Branch A: right, from (84, 635) -->
-      <path d="M 84 635 C 108 622 132 614 158 608"/>
-      <ellipse cx="178" cy="597" rx="21" ry="11" transform="rotate(28 178 597)"/>
-      <ellipse cx="164" cy="583" rx="14" ry="8"  transform="rotate(-2 164 583)"/>
-      <ellipse cx="188" cy="613" rx="14" ry="8"  transform="rotate(52 188 613)"/>
-      <path d="M 158 608 L 178 597" stroke-width="1"/>
-      <path d="M 178 597 L 170 585" stroke-width="0.7"/>
-      <path d="M 178 597 L 184 609" stroke-width="0.7"/>
+      <!-- Pod 2: hanging near branch 2 (~100px) -->
+      <path d="M 812 1108 C 816 1130 818 1162 816 1196
+               C 815 1206 811 1213 807 1211
+               C 803 1209 802 1202 803 1191
+               C 806 1157 804 1125 808 1103
+               C 809 1099 810 1100 812 1108 Z"/>
+      <path d="M 810 1109 C 813 1132 814 1164 812 1197" stroke-width="1"/>
 
-      <!-- Branch B: right, from (106, 522) -->
-      <path d="M 106 522 C 130 509 154 502 178 496"/>
-      <ellipse cx="198" cy="484" rx="21" ry="11" transform="rotate(25 198 484)"/>
-      <ellipse cx="184" cy="470" rx="14" ry="8"  transform="rotate(-5 184 470)"/>
-      <ellipse cx="208" cy="499" rx="14" ry="8"  transform="rotate(50 208 499)"/>
-      <path d="M 178 496 L 198 484" stroke-width="1"/>
-      <path d="M 198 484 L 190 472" stroke-width="0.7"/>
-      <path d="M 198 484 L 205 496" stroke-width="0.7"/>
+      <!-- Pod 3: hanging near branch 3 (~90px) -->
+      <path d="M 700 896 C 704 916 706 944 704 970
+               C 703 979 699 985 695 983
+               C 691 981 690 975 691 966
+               C 693 940 691 912 695 892
+               C 696 888 697 889 700 896 Z"/>
+      <path d="M 698 897 C 701 918 702 946 700 972" stroke-width="1"/>
 
-      <!-- Branch C: left, from (170, 425) -->
-      <path d="M 170 425 C 148 413 126 405 104 399"/>
-      <ellipse cx="84"  cy="388" rx="21" ry="11" transform="rotate(-22 84 388)"/>
-      <ellipse cx="100" cy="374" rx="14" ry="8"  transform="rotate(-52 100 374)"/>
-      <ellipse cx="70"  cy="395" rx="14" ry="8"  transform="rotate(8 70 395)"/>
-      <path d="M 104 399 L 84 388" stroke-width="1"/>
-      <path d="M 84 388 L 75 378"  stroke-width="0.7"/>
-      <path d="M 84 388 L 74 396"  stroke-width="0.7"/>
+      <!-- ── Secondary vine: bottom-left upward ── -->
+      <path d="M 20 1580
+               C 42 1505 62 1462 84  1388
+               C 106 1314 88  1258 112 1185
+               C 136 1112 162 1075 188 1004
+               C 214 933  238 898  265 828
+               C 292 758  278 710  306 642
+               C 330 578  360 548  388 482"/>
 
-      <!-- Small leaf cluster at secondary vine tip -->
-      <ellipse cx="196" cy="318" rx="17" ry="9" transform="rotate(-42 196 318)"/>
-      <ellipse cx="210" cy="308" rx="12" ry="7" transform="rotate(-68 210 308)"/>
+      <!-- Branch A: RIGHT from (84, 1388) -->
+      <path d="M 84 1388 C 110 1375 136 1366 162 1359"/>
+      <ellipse cx="182" cy="1347" rx="22" ry="12" transform="rotate(28 182 1347)"/>
+      <ellipse cx="167" cy="1332" rx="15" ry="9"  transform="rotate(-2 167 1332)"/>
+      <ellipse cx="192" cy="1362" rx="15" ry="9"  transform="rotate(52 192 1362)"/>
+      <path d="M 162 1359 L 182 1347" stroke-width="1.1"/>
+      <path d="M 182 1347 L 174 1335" stroke-width="0.8"/>
+      <path d="M 182 1347 L 188 1359" stroke-width="0.8"/>
 
-      <!-- Pod 4: hanging from secondary vine near branch A (~80px long) -->
-      <path d="M 92 620 C 96 642 98 670 96 698 C 95 707 91 712 87 710
-               C 83 708 82 703 83 694 C 85 666 83 638 87 616
-               C 88 612 89 613 92 620 Z"/>
-      <path d="M 90 621 C 93 644 94 672 92 699" stroke-width="0.9"/>
+      <!-- Branch B: RIGHT from (112, 1185) -->
+      <path d="M 112 1185 C 138 1172 164 1163 190 1157"/>
+      <ellipse cx="210" cy="1145" rx="22" ry="12" transform="rotate(26 210 1145)"/>
+      <ellipse cx="195" cy="1130" rx="15" ry="9"  transform="rotate(-4 195 1130)"/>
+      <ellipse cx="220" cy="1160" rx="15" ry="9"  transform="rotate(52 220 1160)"/>
+      <path d="M 190 1157 L 210 1145" stroke-width="1.1"/>
+      <path d="M 210 1145 L 202 1133" stroke-width="0.8"/>
+      <path d="M 210 1145 L 216 1157" stroke-width="0.8"/>
+
+      <!-- Branch C: LEFT from (188, 1004) -->
+      <path d="M 188 1004 C 160 992 132 984 104 978"/>
+      <ellipse cx="82"  cy="966" rx="22" ry="12" transform="rotate(-22 82 966)"/>
+      <ellipse cx="98"  cy="951" rx="15" ry="9"  transform="rotate(-52 98 951)"/>
+      <ellipse cx="66"  cy="974" rx="15" ry="9"  transform="rotate(8 66 974)"/>
+      <path d="M 104 978 L 82 966"  stroke-width="1.1"/>
+      <path d="M 82  966 L 72 955"  stroke-width="0.8"/>
+      <path d="M 82  966 L 71 974"  stroke-width="0.8"/>
+
+      <!-- Branch D: RIGHT from (265, 828) -->
+      <path d="M 265 828 C 292 816 320 808 348 802"/>
+      <ellipse cx="368" cy="790" rx="22" ry="12" transform="rotate(24 368 790)"/>
+      <ellipse cx="352" cy="775" rx="15" ry="9"  transform="rotate(-6 352 775)"/>
+      <ellipse cx="378" cy="805" rx="15" ry="9"  transform="rotate(50 378 805)"/>
+      <path d="M 348 802 L 368 790" stroke-width="1.1"/>
+      <path d="M 368 790 L 360 778" stroke-width="0.8"/>
+      <path d="M 368 790 L 374 802" stroke-width="0.8"/>
+
+      <!-- Branch E: LEFT from (306, 642) -->
+      <path d="M 306 642 C 278 630 250 622 222 616"/>
+      <ellipse cx="200" cy="604" rx="20" ry="11" transform="rotate(-22 200 604)"/>
+      <ellipse cx="216" cy="589" rx="14" ry="8"  transform="rotate(-52 216 589)"/>
+      <ellipse cx="184" cy="612" rx="14" ry="8"  transform="rotate(8 184 612)"/>
+      <path d="M 222 616 L 200 604" stroke-width="1"/>
+      <path d="M 200 604 L 190 593" stroke-width="0.7"/>
+      <path d="M 200 604 L 189 612" stroke-width="0.7"/>
+
+      <!-- Leaf cluster at secondary vine tip (388, 482) -->
+      <ellipse cx="368" cy="472" rx="16" ry="9" transform="rotate(-38 368 472)"/>
+      <ellipse cx="385" cy="463" rx="12" ry="7" transform="rotate(-65 385 463)"/>
+
+      <!-- Pod 4: hanging from secondary vine near branch A (~95px) -->
+      <path d="M 78 1372 C 82 1396 84 1428 82 1460
+               C 81 1470 77 1477 73 1475
+               C 69 1473 68 1466 69 1455
+               C 71 1423 69 1391 73 1368
+               C 74 1364 75 1365 78 1372 Z"/>
+      <path d="M 76 1373 C 79 1398 80 1430 78 1461" stroke-width="1"/>
 
     </svg>
 
