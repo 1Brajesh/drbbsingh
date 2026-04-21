@@ -139,6 +139,34 @@
 
     .pub-list li:first-child { border-top: 1px solid rgba(201,169,110,0.07); }
 
+    /* ── Lead-in ── */
+
+    .pub-lead {
+      max-width: 680px;
+      margin: 0 auto 3rem;
+      text-align: center;
+    }
+
+    .pub-lead p {
+      font-size: clamp(1.05rem, 2.2vw, 1.22rem);
+      font-style: italic;
+      line-height: 1.85;
+      color: rgba(245,239,230,0.6);
+    }
+
+    .pub-lead strong {
+      font-style: normal;
+      font-weight: 600;
+      color: rgba(201,169,110,0.82);
+    }
+
+    .pub-lead-rule {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,169,110,0.3), transparent);
+      margin: 2rem auto;
+    }
+
     /* ── Visible count ── */
     .showing {
       font-size: 0.82rem;
@@ -161,6 +189,11 @@
       <div class="pub-rule"></div>
       <a class="back-link" href="/">&larr; Back to site</a>
     </header>
+
+    <div class="pub-lead">
+      <p>For <strong>more than fifty years</strong>, Dr. Singh showed up where the hunger was. He followed cowpea &mdash; a modest, heat-tolerant legume &mdash; across <strong>four continents</strong>, working alongside farmers, breeders, and students in India, Tanzania, Nigeria, West Africa, Brazil, and beyond. His papers registered new varieties, mapped resistances, and asked the harder question: did any of this actually reach the people who needed it? The 245 publications below are the record of <strong>a life spent trying to feed the world one crop at a time.</strong></p>
+    </div>
+    <div class="pub-lead-rule"></div>
 
     <nav class="decade-tabs" aria-label="Filter by decade">
       <button class="decade-btn active" data-filter="all">All &nbsp;<small style="opacity:.6">245</small></button>
