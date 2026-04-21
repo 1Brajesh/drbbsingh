@@ -25,6 +25,7 @@
         radial-gradient(ellipse at 70% 80%, rgba(201, 169, 110, 0.04) 0%, transparent 60%);
       color: #f5efe6;
       font-family: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      padding-bottom: 60px;
     }
 
     /* ── Language toggle ──────────────────────────────── */
@@ -379,6 +380,269 @@
     .l-hi.legacy-section .learn-more-heading {
       text-transform: none;
       letter-spacing: 0.05em;
+    }
+
+    /* ── Sticky bar ────────────────────────────────────── */
+
+    .sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(28, 23, 20, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(201, 169, 110, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 2rem;
+    }
+
+    .sticky-bar a {
+      font-size: clamp(0.75rem, 1.5vw, 0.84rem);
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .sticky-bar a:hover {
+      color: rgba(201, 169, 110, 1);
+    }
+
+    /* ── Guestbook ─────────────────────────────────────── */
+
+    .guestbook {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 3rem 8rem;
+    }
+
+    .gb-separator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 4rem 0 0;
+    }
+
+    .gb-separator-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.3), transparent);
+    }
+
+    .gb-separator-ornament {
+      font-size: 1.3rem;
+      color: rgba(201, 169, 110, 0.35);
+      line-height: 1;
+    }
+
+    .gb-heading {
+      font-size: clamp(1.3rem, 3vw, 1.65rem);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.85);
+      text-align: center;
+      margin: 2.5rem 0 0.75rem;
+    }
+
+    .gb-subheading {
+      font-size: clamp(0.88rem, 1.8vw, 1rem);
+      font-style: italic;
+      color: rgba(245, 239, 230, 0.4);
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .gb-entries {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gb-entry {
+      padding: 2.4rem 0;
+      border-bottom: 1px solid rgba(201, 169, 110, 0.12);
+    }
+
+    .gb-entry:first-child {
+      border-top: 1px solid rgba(201, 169, 110, 0.12);
+    }
+
+    .gb-message {
+      font-size: clamp(1.05rem, 2.2vw, 1.22rem);
+      font-style: italic;
+      line-height: 1.85;
+      color: rgba(245, 239, 230, 0.72);
+      margin-bottom: 1.2rem;
+    }
+
+    .gb-message::before { content: '\201C'; }
+    .gb-message::after  { content: '\201D'; }
+
+    .gb-attribution {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      padding-left: 1.2rem;
+      border-left: 1.5px solid rgba(201, 169, 110, 0.3);
+    }
+
+    .gb-name {
+      font-size: clamp(0.88rem, 1.8vw, 0.98rem);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: rgba(201, 169, 110, 0.85);
+    }
+
+    .gb-connection {
+      font-size: clamp(0.78rem, 1.5vw, 0.86rem);
+      color: rgba(245, 239, 230, 0.35);
+      letter-spacing: 0.04em;
+    }
+
+    .gb-empty {
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      font-style: italic;
+      color: rgba(245, 239, 230, 0.3);
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .gb-form-wrap {
+      margin-top: 4rem;
+      padding-top: 3.5rem;
+      border-top: 1px solid rgba(201, 169, 110, 0.15);
+    }
+
+    .gb-form-heading {
+      font-size: clamp(0.78rem, 1.5vw, 0.88rem);
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.6);
+      margin-bottom: 2rem;
+    }
+
+    .gb-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .gb-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+    }
+
+    @media (max-width: 540px) {
+      .gb-row { grid-template-columns: 1fr; }
+      .guestbook { padding-left: 1.5rem; padding-right: 1.5rem; }
+    }
+
+    .gb-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .gb-label {
+      font-size: clamp(0.72rem, 1.4vw, 0.8rem);
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.55);
+    }
+
+    .gb-input,
+    .gb-textarea {
+      background: rgba(245, 239, 230, 0.04);
+      border: 1px solid rgba(201, 169, 110, 0.2);
+      border-radius: 3px;
+      color: rgba(245, 239, 230, 0.8);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      padding: 0.65rem 0.9rem;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .gb-input:focus,
+    .gb-textarea:focus {
+      outline: none;
+      border-color: rgba(201, 169, 110, 0.5);
+    }
+
+    .gb-input::placeholder,
+    .gb-textarea::placeholder {
+      color: rgba(245, 239, 230, 0.2);
+    }
+
+    .gb-textarea {
+      resize: vertical;
+      min-height: 140px;
+      line-height: 1.65;
+    }
+
+    .gb-form-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .gb-note {
+      font-size: clamp(0.78rem, 1.5vw, 0.86rem);
+      font-style: italic;
+      color: rgba(245, 239, 230, 0.28);
+    }
+
+    .gb-submit {
+      background: transparent;
+      border: 1px solid rgba(201, 169, 110, 0.4);
+      border-radius: 3px;
+      color: rgba(201, 169, 110, 0.75);
+      cursor: pointer;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(0.88rem, 1.8vw, 0.98rem);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      padding: 0.65rem 2rem;
+      text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .gb-submit:hover {
+      border-color: rgba(201, 169, 110, 0.75);
+      color: rgba(201, 169, 110, 1);
+      background: rgba(201, 169, 110, 0.06);
+    }
+
+    .gb-submit:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    .gb-thankyou {
+      font-size: clamp(1rem, 2.2vw, 1.15rem);
+      font-style: italic;
+      color: rgba(245, 239, 230, 0.55);
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .gb-error {
+      font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+      color: rgba(201, 110, 110, 0.75);
+      margin-top: 0.5rem;
     }
   </style>
 </head>
@@ -849,6 +1113,60 @@
 
   </div><!-- /.legacy-wrapper -->
 
+  <!-- ── Guestbook ── -->
+  <section class="guestbook" id="remembrances">
+
+    <div class="gb-separator">
+      <div class="gb-separator-rule"></div>
+      <span class="gb-separator-ornament">&#10087;</span>
+      <div class="gb-separator-rule"></div>
+    </div>
+
+    <h2 class="gb-heading">Remembrances</h2>
+    <p class="gb-subheading">Words left by those who knew him</p>
+
+    <div class="gb-entries" id="gb-entries"></div>
+
+    <div class="gb-form-wrap">
+      <p class="gb-form-heading">Leave a remembrance</p>
+      <form class="gb-form" id="gb-form">
+        <div class="gb-row">
+          <div class="gb-field">
+            <label class="gb-label" for="gb-name">Your name</label>
+            <input class="gb-input" id="gb-name" type="text"
+                   placeholder="Full name" required autocomplete="name">
+          </div>
+          <div class="gb-field">
+            <label class="gb-label" for="gb-connection">Your connection</label>
+            <input class="gb-input" id="gb-connection" type="text"
+                   placeholder="e.g. former student, colleague">
+          </div>
+        </div>
+        <div class="gb-field">
+          <label class="gb-label" for="gb-message">Message</label>
+          <textarea class="gb-textarea" id="gb-message"
+                    placeholder="Share a memory or a few words…" required></textarea>
+        </div>
+        <div class="gb-form-footer">
+          <p class="gb-note">Messages are reviewed before appearing.</p>
+          <button class="gb-submit" type="submit" id="gb-submit">Submit</button>
+        </div>
+        <p class="gb-error" id="gb-error" hidden>
+          Something went wrong — please try again.
+        </p>
+      </form>
+      <p class="gb-thankyou" id="gb-thankyou" hidden>
+        Thank you &mdash; your remembrance has been submitted for review.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ── Sticky bar ── -->
+  <div class="sticky-bar">
+    <a href="#remembrances">Remembrances</a>
+  </div>
+
   <script>
     const toggle = document.getElementById('langToggle');
     const hiEls = document.querySelectorAll('.l-hi');
@@ -863,6 +1181,113 @@
       hiEls.forEach(el => { el.hidden = !isHindi; });
       enEls.forEach(el => { el.hidden = isHindi; });
     });
+
+    // ── Guestbook ─────────────────────────────────────────
+    (function () {
+      'use strict';
+
+      var REPO = '1Brajesh/drbbsingh';
+      // Replace with the real fine-grained PAT (Issues: Write only) after Brajesh creates it
+      var SUBMISSION_TOKEN = 'SUBMISSION_TOKEN_HERE';
+
+      // ── Render approved entries ──────────────────────────
+      function buildEntry(e) {
+        var wrap = document.createElement('div');
+        wrap.className = 'gb-entry';
+
+        var msg = document.createElement('p');
+        msg.className = 'gb-message';
+        msg.appendChild(document.createTextNode(e.message));
+
+        var attr = document.createElement('div');
+        attr.className = 'gb-attribution';
+
+        var name = document.createElement('span');
+        name.className = 'gb-name';
+        name.appendChild(document.createTextNode(e.name));
+
+        var conn = document.createElement('span');
+        conn.className = 'gb-connection';
+        var connText = e.connection
+          ? e.connection + ' \u00B7 ' + e.date
+          : e.date;
+        conn.appendChild(document.createTextNode(connText));
+
+        attr.appendChild(name);
+        attr.appendChild(conn);
+        wrap.appendChild(msg);
+        wrap.appendChild(attr);
+        return wrap;
+      }
+
+      var container = document.getElementById('gb-entries');
+      if (container) {
+        fetch('remembrances.json?v=' + Date.now())
+          .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+          .then(function (data) {
+            var entries = Array.isArray(data) ? data : (data.entries || []);
+            if (!entries.length) {
+              var empty = document.createElement('p');
+              empty.className = 'gb-empty';
+              empty.textContent = 'Be the first to leave a remembrance.';
+              container.appendChild(empty);
+              return;
+            }
+            entries.forEach(function (e) {
+              container.appendChild(buildEntry(e));
+            });
+          })
+          .catch(function () {});
+      }
+
+      // ── Form submit → GitHub Issues API ─────────────────
+      var form = document.getElementById('gb-form');
+      var submitBtn = document.getElementById('gb-submit');
+      var errorEl = document.getElementById('gb-error');
+      var thankyou = document.getElementById('gb-thankyou');
+
+      if (form) {
+        form.addEventListener('submit', function (ev) {
+          ev.preventDefault();
+          var name    = document.getElementById('gb-name').value.trim();
+          var conn    = document.getElementById('gb-connection').value.trim();
+          var message = document.getElementById('gb-message').value.trim();
+          if (!name || !message) { return; }
+
+          submitBtn.disabled = true;
+          if (errorEl) { errorEl.hidden = true; }
+
+          var payload = { name: name, connection: conn, message: message };
+
+          fetch('https://api.github.com/repos/' + REPO + '/issues', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer ' + SUBMISSION_TOKEN,
+              'Content-Type': 'application/json',
+              'Accept': 'application/vnd.github+json'
+            },
+            body: JSON.stringify({
+              title: 'Remembrance from ' + name,
+              body: JSON.stringify(payload),
+              labels: ['remembrance-pending']
+            })
+          })
+          .then(function (r) {
+            if (r.ok) {
+              form.hidden = true;
+              if (thankyou) { thankyou.hidden = false; }
+            } else {
+              submitBtn.disabled = false;
+              if (errorEl) { errorEl.hidden = false; }
+            }
+          })
+          .catch(function () {
+            submitBtn.disabled = false;
+            if (errorEl) { errorEl.hidden = false; }
+          });
+        });
+      }
+    }());
   </script>
 
 </body>

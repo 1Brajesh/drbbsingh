@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Dr. B.B. Singh Remembrances</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1c1714;
+      color: #f5efe6;
+      font-family: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+      min-height: 100svh;
+      padding: 3rem 1.5rem 6rem;
+    }
+
+    .admin-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+
+    .admin-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .admin-title {
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.85);
+      margin-bottom: 0.4rem;
+    }
+
+    .admin-subtitle {
+      font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+      font-style: italic;
+      color: rgba(245, 239, 230, 0.35);
+    }
+
+    .admin-rule {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.4), transparent);
+      margin: 1.5rem auto 0;
+    }
+
+    /* ── Token gate ── */
+
+    .token-gate {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 3rem 0;
+    }
+
+    .token-label {
+      font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.55);
+    }
+
+    .token-input {
+      background: rgba(245, 239, 230, 0.04);
+      border: 1px solid rgba(201, 169, 110, 0.2);
+      border-radius: 3px;
+      color: rgba(245, 239, 230, 0.8);
+      font-family: monospace;
+      font-size: 0.9rem;
+      padding: 0.65rem 1rem;
+      width: 100%;
+      max-width: 420px;
+      transition: border-color 0.2s;
+    }
+
+    .token-input:focus {
+      outline: none;
+      border-color: rgba(201, 169, 110, 0.5);
+    }
+
+    .token-btn {
+      background: transparent;
+      border: 1px solid rgba(201, 169, 110, 0.4);
+      border-radius: 3px;
+      color: rgba(201, 169, 110, 0.75);
+      cursor: pointer;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      padding: 0.6rem 2rem;
+      text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .token-btn:hover {
+      border-color: rgba(201, 169, 110, 0.75);
+      color: rgba(201, 169, 110, 1);
+      background: rgba(201, 169, 110, 0.06);
+    }
+
+    .token-note {
+      font-size: 0.82rem;
+      font-style: italic;
+      color: rgba(245, 239, 230, 0.25);
+      text-align: center;
+      max-width: 380px;
+    }
+
+    .token-error {
+      font-size: 0.88rem;
+      color: rgba(220, 100, 100, 0.8);
+    }
+
+    /* ── Pending list ── */
+
+    .pending-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .pending-title {
+      font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.6);
+    }
+
+    .signout-btn {
+      background: transparent;
+      border: none;
+      color: rgba(245, 239, 230, 0.25);
+      cursor: pointer;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0;
+      transition: color 0.2s;
+    }
+
+    .signout-btn:hover { color: rgba(245, 239, 230, 0.6); }
+
+    .pending-empty {
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      font-style: italic;
+      color: rgba(245, 239, 230, 0.3);
+      text-align: center;
+      padding: 3rem 0;
+    }
+
+    /* ── Submission card ── */
+
+    .submission-card {
+      border: 1px solid rgba(201, 169, 110, 0.15);
+      border-radius: 4px;
+      padding: 1.8rem;
+      margin-bottom: 1.4rem;
+      background: rgba(245, 239, 230, 0.02);
+    }
+
+    .card-meta {
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: rgba(245, 239, 230, 0.25);
+      margin-bottom: 1.1rem;
+    }
+
+    .card-name {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      font-weight: 600;
+      color: rgba(201, 169, 110, 0.85);
+      margin-bottom: 0.2rem;
+    }
+
+    .card-connection {
+      font-size: clamp(0.82rem, 1.6vw, 0.9rem);
+      color: rgba(245, 239, 230, 0.4);
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+
+    .card-message {
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      font-style: italic;
+      line-height: 1.75;
+      color: rgba(245, 239, 230, 0.65);
+      margin-bottom: 1.5rem;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: transparent;
+      border-radius: 3px;
+      cursor: pointer;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(0.78rem, 1.5vw, 0.86rem);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      padding: 0.45rem 1.2rem;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+
+    .btn-approve {
+      border: 1px solid rgba(120, 180, 120, 0.4);
+      color: rgba(120, 200, 120, 0.75);
+    }
+
+    .btn-approve:hover {
+      border-color: rgba(120, 180, 120, 0.8);
+      color: rgba(120, 200, 120, 1);
+      background: rgba(120, 180, 120, 0.06);
+    }
+
+    .btn-edit {
+      border: 1px solid rgba(201, 169, 110, 0.3);
+      color: rgba(201, 169, 110, 0.65);
+    }
+
+    .btn-edit:hover {
+      border-color: rgba(201, 169, 110, 0.7);
+      color: rgba(201, 169, 110, 1);
+      background: rgba(201, 169, 110, 0.05);
+    }
+
+    .btn-reject {
+      border: 1px solid rgba(200, 80, 80, 0.25);
+      color: rgba(200, 100, 100, 0.55);
+    }
+
+    .btn-reject:hover {
+      border-color: rgba(200, 80, 80, 0.6);
+      color: rgba(220, 100, 100, 0.9);
+      background: rgba(200, 80, 80, 0.04);
+    }
+
+    .btn:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+
+    /* ── Inline edit form ── */
+
+    .edit-form {
+      margin-top: 1.4rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid rgba(201, 169, 110, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .edit-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .edit-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.45);
+    }
+
+    .edit-input,
+    .edit-textarea {
+      background: rgba(245, 239, 230, 0.04);
+      border: 1px solid rgba(201, 169, 110, 0.2);
+      border-radius: 3px;
+      color: rgba(245, 239, 230, 0.8);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1rem;
+      padding: 0.55rem 0.8rem;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .edit-input:focus,
+    .edit-textarea:focus {
+      outline: none;
+      border-color: rgba(201, 169, 110, 0.5);
+    }
+
+    .edit-textarea {
+      min-height: 100px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .edit-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .card-status {
+      font-size: 0.82rem;
+      font-style: italic;
+      color: rgba(245, 239, 230, 0.3);
+      margin-top: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-wrap">
+
+    <header class="admin-header">
+      <h1 class="admin-title">Remembrances</h1>
+      <p class="admin-subtitle">drbbsingh.com &mdash; admin panel</p>
+      <div class="admin-rule"></div>
+    </header>
+
+    <!-- Token gate -->
+    <div id="tokenGate" class="token-gate">
+      <label class="token-label" for="tokenInput">GitHub personal access token</label>
+      <input class="token-input" id="tokenInput" type="password"
+             placeholder="github_pat_…" autocomplete="off" spellcheck="false">
+      <button class="token-btn" id="tokenBtn" type="button">Enter</button>
+      <p class="token-note">
+        Token is stored in this browser session only and sent directly to GitHub.
+        It is never stored on the server.
+      </p>
+      <p class="token-error" id="tokenError" hidden>Invalid token or access denied.</p>
+    </div>
+
+    <!-- Pending submissions (shown after auth) -->
+    <div id="pendingPanel" hidden>
+      <div class="pending-header">
+        <span class="pending-title" id="pendingTitle">Pending</span>
+        <button class="signout-btn" id="signoutBtn" type="button">Sign out</button>
+      </div>
+      <div id="pendingList"></div>
+    </div>
+
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var REPO = '1Brajesh/drbbsingh';
+      var BRANCH = 'main';
+      var API = 'https://api.github.com';
+
+      var tokenGate   = document.getElementById('tokenGate');
+      var tokenInput  = document.getElementById('tokenInput');
+      var tokenBtn    = document.getElementById('tokenBtn');
+      var tokenError  = document.getElementById('tokenError');
+      var pendingPanel = document.getElementById('pendingPanel');
+      var pendingList  = document.getElementById('pendingList');
+      var pendingTitle = document.getElementById('pendingTitle');
+      var signoutBtn   = document.getElementById('signoutBtn');
+
+      // ── Auth ──────────────────────────────────────────────
+      function getToken() {
+        return sessionStorage.getItem('admin_token') || '';
+      }
+
+      function authHeaders() {
+        return {
+          'Authorization': 'Bearer ' + getToken(),
+          'Accept': 'application/vnd.github+json',
+          'Content-Type': 'application/json'
+        };
+      }
+
+      tokenBtn.addEventListener('click', function () {
+        var tok = tokenInput.value.trim();
+        if (!tok) { return; }
+        tokenBtn.disabled = true;
+        tokenError.hidden = true;
+
+        // Verify token by fetching the repo — low-cost check
+        fetch(API + '/repos/' + REPO, {
+          headers: { 'Authorization': 'Bearer ' + tok, 'Accept': 'application/vnd.github+json' }
+        })
+        .then(function (r) {
+          if (!r.ok) { throw new Error('auth'); }
+          sessionStorage.setItem('admin_token', tok);
+          showPanel();
+        })
+        .catch(function () {
+          tokenBtn.disabled = false;
+          tokenError.hidden = false;
+        });
+      });
+
+      tokenInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { tokenBtn.click(); }
+      });
+
+      signoutBtn.addEventListener('click', function () {
+        sessionStorage.removeItem('admin_token');
+        pendingPanel.hidden = true;
+        tokenGate.hidden = false;
+        tokenInput.value = '';
+        pendingList.innerHTML = '';
+      });
+
+      // ── Load panel ────────────────────────────────────────
+      function showPanel() {
+        tokenGate.hidden = true;
+        pendingPanel.hidden = false;
+        loadPending();
+      }
+
+      function loadPending() {
+        pendingList.innerHTML = '<p class="pending-empty" style="color:rgba(245,239,230,0.2)">Loading…</p>';
+        // Reading public issues — no auth needed, but we send the token anyway since we have it
+        fetch(API + '/repos/' + REPO + '/issues?labels=remembrance-pending&state=open&per_page=50', {
+          headers: authHeaders()
+        })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+        .then(function (issues) {
+          pendingTitle.textContent = 'Pending (' + issues.length + ')';
+          pendingList.innerHTML = '';
+          if (!issues.length) {
+            pendingList.innerHTML = '<p class="pending-empty">No pending remembrances.</p>';
+            return;
+          }
+          issues.forEach(function (issue) {
+            pendingList.appendChild(buildCard(issue));
+          });
+        })
+        .catch(function () {
+          pendingList.innerHTML = '<p class="pending-empty" style="color:rgba(220,100,100,0.7)">Failed to load — check your token.</p>';
+        });
+      }
+
+      // ── Build card ────────────────────────────────────────
+      function buildCard(issue) {
+        var data = {};
+        try { data = JSON.parse(issue.body); } catch (e) { data = { name: '(unknown)', connection: '', message: issue.body || '' }; }
+
+        var card = document.createElement('div');
+        card.className = 'submission-card';
+        card.dataset.issue = issue.number;
+
+        var date = new Date(issue.created_at);
+        var dateStr = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+        card.innerHTML =
+          '<p class="card-meta">Issue #' + issue.number + ' &nbsp;&middot;&nbsp; Submitted ' + dateStr + '</p>' +
+          '<p class="card-name"></p>' +
+          '<p class="card-connection"></p>' +
+          '<p class="card-message"></p>' +
+          '<div class="card-actions">' +
+            '<button class="btn btn-approve" type="button">Approve</button>' +
+            '<button class="btn btn-edit" type="button">Edit &amp; Approve</button>' +
+            '<button class="btn btn-reject" type="button">Reject</button>' +
+          '</div>' +
+          '<p class="card-status" hidden></p>';
+
+        card.querySelector('.card-name').textContent = data.name || '(no name)';
+        card.querySelector('.card-connection').textContent = data.connection || '';
+        card.querySelector('.card-message').textContent = data.message || '';
+
+        var approveBtn = card.querySelector('.btn-approve');
+        var editBtn    = card.querySelector('.btn-edit');
+        var rejectBtn  = card.querySelector('.btn-reject');
+        var statusEl   = card.querySelector('.card-status');
+
+        // ── Approve ──
+        approveBtn.addEventListener('click', function () {
+          setCardBusy(card, true);
+          approveEntry(issue.number, data.name, data.connection, data.message, card, statusEl);
+        });
+
+        // ── Edit & Approve ──
+        editBtn.addEventListener('click', function () {
+          if (card.querySelector('.edit-form')) { return; }
+          var editForm = buildEditForm(data, function (edited) {
+            setCardBusy(card, true);
+            approveEntry(issue.number, edited.name, edited.connection, edited.message, card, statusEl);
+          });
+          card.appendChild(editForm);
+        });
+
+        // ── Reject ──
+        rejectBtn.addEventListener('click', function () {
+          if (!confirm('Reject this submission from ' + (data.name || 'unknown') + '?')) { return; }
+          setCardBusy(card, true);
+          rejectIssue(issue.number, card, statusEl);
+        });
+
+        return card;
+      }
+
+      // ── Inline edit form ──────────────────────────────────
+      function buildEditForm(data, onSave) {
+        var form = document.createElement('div');
+        form.className = 'edit-form';
+        form.innerHTML =
+          '<div class="edit-field"><label class="edit-label">Name</label><input class="edit-input" id="ef-name"></div>' +
+          '<div class="edit-field"><label class="edit-label">Connection</label><input class="edit-input" id="ef-conn"></div>' +
+          '<div class="edit-field"><label class="edit-label">Message</label><textarea class="edit-textarea" id="ef-msg"></textarea></div>' +
+          '<div class="edit-actions">' +
+            '<button class="btn btn-approve" type="button">Approve with edits</button>' +
+            '<button class="btn btn-reject" type="button" style="border-color:rgba(245,239,230,0.15);color:rgba(245,239,230,0.3)">Cancel</button>' +
+          '</div>';
+
+        form.querySelector('#ef-name').value = data.name || '';
+        form.querySelector('#ef-conn').value = data.connection || '';
+        form.querySelector('#ef-msg').value  = data.message || '';
+
+        var btns = form.querySelectorAll('.btn');
+        btns[0].addEventListener('click', function () {
+          onSave({
+            name:       form.querySelector('#ef-name').value.trim(),
+            connection: form.querySelector('#ef-conn').value.trim(),
+            message:    form.querySelector('#ef-msg').value.trim()
+          });
+        });
+        btns[1].addEventListener('click', function () {
+          form.parentNode.removeChild(form);
+        });
+
+        return form;
+      }
+
+      // ── Approve: write to remembrances.json + close issue ─
+      function approveEntry(issueNum, name, connection, message, card, statusEl) {
+        var year = String(new Date().getFullYear());
+        var newEntry = { name: name, connection: connection, message: message, date: year };
+
+        statusEl.textContent = 'Reading remembrances.json…';
+        statusEl.hidden = false;
+
+        fetch(API + '/repos/' + REPO + '/contents/remembrances.json', { headers: authHeaders() })
+          .then(function (r) { return r.ok ? r.json() : Promise.reject('read-failed'); })
+          .then(function (file) {
+            var current = JSON.parse(atob(file.content.replace(/\n/g, '')));
+            var entries = Array.isArray(current) ? current : (current.entries || []);
+            entries.unshift(newEntry);
+            var updated = JSON.stringify({ entries: entries }, null, 2);
+
+            statusEl.textContent = 'Saving entry…';
+
+            return fetch(API + '/repos/' + REPO + '/contents/remembrances.json', {
+              method: 'PUT',
+              headers: authHeaders(),
+              body: JSON.stringify({
+                message: 'Add remembrance from ' + name,
+                content: btoa(unescape(encodeURIComponent(updated))),
+                sha: file.sha,
+                branch: BRANCH
+              })
+            });
+          })
+          .then(function (r) { return r.ok ? r.json() : Promise.reject('write-failed'); })
+          .then(function () {
+            statusEl.textContent = 'Closing issue…';
+            return fetch(API + '/repos/' + REPO + '/issues/' + issueNum, {
+              method: 'PATCH',
+              headers: authHeaders(),
+              body: JSON.stringify({ state: 'closed', labels: ['remembrance-approved'] })
+            });
+          })
+          .then(function () {
+            statusEl.textContent = '✓ Published. Will appear on site within a minute.';
+            setCardBusy(card, false);
+            card.style.opacity = '0.4';
+            card.querySelectorAll('.btn').forEach(function (b) { b.disabled = true; });
+            pendingTitle.textContent = 'Pending (' + (pendingList.querySelectorAll('.submission-card:not([style*="opacity"])').length) + ')';
+          })
+          .catch(function (err) {
+            statusEl.textContent = 'Error: ' + (err || 'something went wrong') + '. Please try again.';
+            setCardBusy(card, false);
+          });
+      }
+
+      // ── Reject: close issue ───────────────────────────────
+      function rejectIssue(issueNum, card, statusEl) {
+        statusEl.textContent = 'Rejecting…';
+        statusEl.hidden = false;
+
+        fetch(API + '/repos/' + REPO + '/issues/' + issueNum, {
+          method: 'PATCH',
+          headers: authHeaders(),
+          body: JSON.stringify({ state: 'closed', labels: ['remembrance-rejected'] })
+        })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+        .then(function () {
+          card.style.opacity = '0.3';
+          statusEl.textContent = 'Rejected and closed.';
+          card.querySelectorAll('.btn').forEach(function (b) { b.disabled = true; });
+        })
+        .catch(function () {
+          statusEl.textContent = 'Failed to reject. Please try again.';
+          setCardBusy(card, false);
+        });
+      }
+
+      // ── Helpers ───────────────────────────────────────────
+      function setCardBusy(card, busy) {
+        card.querySelectorAll('.btn').forEach(function (b) { b.disabled = busy; });
+      }
+
+      // Auto-restore session if token in sessionStorage
+      if (getToken()) { showPanel(); }
+
+    }());
+  </script>
+
+</body>
+</html>
