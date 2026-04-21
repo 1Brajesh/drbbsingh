@@ -634,9 +634,11 @@
       // ── Load published entries ────────────────────────────
       function loadPublished() {
         publishedList.innerHTML = '<p class="pending-empty" style="color:rgba(245,239,230,0.2)">Loading…</p>';
-        fetch('https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/remembrances.json?v=' + Date.now())
+        // Use GitHub API (not raw CDN) — always returns the current version, no caching delay
+        fetch(API + '/repos/' + REPO + '/contents/remembrances.json', { headers: authHeaders() })
           .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-          .then(function (data) {
+          .then(function (file) {
+            var data = JSON.parse(atob(file.content.replace(/\n/g, '')));
             var entries = Array.isArray(data) ? data : (data.entries || []);
             publishedTitle.textContent = 'Published (' + entries.length + ')';
             publishedList.innerHTML = '';
@@ -644,8 +646,8 @@
               publishedList.innerHTML = '<p class="pending-empty">No published remembrances.</p>';
               return;
             }
-            entries.forEach(function (e, idx) {
-              publishedList.appendChild(buildPublishedCard(e, idx));
+            entries.forEach(function (e) {
+              publishedList.appendChild(buildPublishedCard(e));
             });
           })
           .catch(function () {
@@ -653,7 +655,7 @@
           });
       }
 
-      function buildPublishedCard(e, idx) {
+      function buildPublishedCard(e) {
         var card = document.createElement('div');
         card.className = 'submission-card';
 
@@ -683,10 +685,11 @@
 
         delBtn.addEventListener('click', function () {
           if (!confirm('Delete remembrance from ' + (e.name || 'unknown') + '? This cannot be undone.')) { return; }
-          delBtn.disabled = true;
+          // Disable ALL delete buttons to prevent concurrent deletes with stale indices
+          publishedList.querySelectorAll('.btn-reject').forEach(function (b) { b.disabled = true; });
           statusEl.textContent = 'Deleting\u2026';
           statusEl.hidden = false;
-          deleteEntry(idx, card, statusEl, delBtn);
+          deleteEntry(e, card, statusEl);
         });
 
         actions.appendChild(delBtn);
@@ -698,14 +701,19 @@
         return card;
       }
 
-      function deleteEntry(idx, card, statusEl, delBtn) {
+      // Match by content, not index — safe even if array has shifted
+      function deleteEntry(target, card, statusEl) {
         fetch(API + '/repos/' + REPO + '/contents/remembrances.json', { headers: authHeaders() })
           .then(function (r) { return r.ok ? r.json() : Promise.reject('read-failed'); })
           .then(function (file) {
             var current = JSON.parse(atob(file.content.replace(/\n/g, '')));
             var entries = Array.isArray(current) ? current : (current.entries || []);
-            entries.splice(idx, 1);
-            var updated = JSON.stringify({ entries: entries }, null, 2);
+            // Find by matching all fields
+            var filtered = entries.filter(function (e) {
+              return !(e.name === target.name && e.connection === target.connection &&
+                       e.message === target.message && e.date === target.date);
+            });
+            var updated = JSON.stringify({ entries: filtered }, null, 2);
             return fetch(API + '/repos/' + REPO + '/contents/remembrances.json', {
               method: 'PUT',
               headers: authHeaders(),
@@ -721,11 +729,11 @@
           .then(function () {
             card.style.opacity = '0.3';
             statusEl.textContent = '\u2713 Deleted.';
-            setTimeout(loadPublished, 1200);
+            setTimeout(loadPublished, 800);
           })
           .catch(function () {
             statusEl.textContent = 'Error \u2014 please try again.';
-            delBtn.disabled = false;
+            publishedList.querySelectorAll('.btn-reject').forEach(function (b) { b.disabled = false; });
           });
       }
 
