@@ -321,6 +321,86 @@
       color: rgba(245, 239, 230, 0.3);
       margin-top: 0.8rem;
     }
+
+    /* ── Published entry checkboxes ── */
+
+    .submission-card.selectable {
+      position: relative;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .submission-card.selectable:hover {
+      border-color: rgba(201, 169, 110, 0.3);
+      background: rgba(245, 239, 230, 0.03);
+    }
+
+    .submission-card.selectable.selected {
+      border-color: rgba(201, 169, 110, 0.5);
+      background: rgba(201, 169, 110, 0.05);
+    }
+
+    .card-checkbox {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid rgba(201, 169, 110, 0.35);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(201, 169, 110, 0.9);
+      font-size: 0.75rem;
+      transition: border-color 0.15s, background 0.15s;
+      flex-shrink: 0;
+    }
+
+    .submission-card.selected .card-checkbox {
+      background: rgba(201, 169, 110, 0.15);
+      border-color: rgba(201, 169, 110, 0.75);
+    }
+
+    .delete-selected-wrap {
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .delete-selected-btn {
+      background: transparent;
+      border: 1px solid rgba(200, 80, 80, 0.3);
+      border-radius: 3px;
+      color: rgba(200, 100, 100, 0.6);
+      cursor: pointer;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(0.78rem, 1.5vw, 0.86rem);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      padding: 0.5rem 1.4rem;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+
+    .delete-selected-btn:not(:disabled):hover {
+      border-color: rgba(200, 80, 80, 0.7);
+      color: rgba(220, 100, 100, 0.95);
+      background: rgba(200, 80, 80, 0.05);
+    }
+
+    .delete-selected-btn:disabled {
+      opacity: 0.25;
+      cursor: default;
+    }
+
+    .delete-status {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: rgba(245, 239, 230, 0.35);
+    }
   </style>
 </head>
 <body>
@@ -361,6 +441,12 @@
           <span class="pending-title" id="publishedTitle">Published</span>
         </div>
         <div id="publishedList"></div>
+        <div class="delete-selected-wrap" id="deleteSelectedWrap" hidden>
+          <button class="delete-selected-btn" id="deleteSelectedBtn" type="button" disabled>
+            Delete Selected
+          </button>
+          <span class="delete-status" id="deleteStatus"></span>
+        </div>
       </div>
     </div>
 
@@ -379,11 +465,14 @@
       var tokenBtn    = document.getElementById('tokenBtn');
       var tokenError  = document.getElementById('tokenError');
       var pendingPanel = document.getElementById('pendingPanel');
-      var pendingList    = document.getElementById('pendingList');
-      var pendingTitle   = document.getElementById('pendingTitle');
-      var publishedList  = document.getElementById('publishedList');
-      var publishedTitle = document.getElementById('publishedTitle');
-      var signoutBtn     = document.getElementById('signoutBtn');
+      var pendingList        = document.getElementById('pendingList');
+      var pendingTitle       = document.getElementById('pendingTitle');
+      var publishedList      = document.getElementById('publishedList');
+      var publishedTitle     = document.getElementById('publishedTitle');
+      var deleteSelectedWrap = document.getElementById('deleteSelectedWrap');
+      var deleteSelectedBtn  = document.getElementById('deleteSelectedBtn');
+      var deleteStatus       = document.getElementById('deleteStatus');
+      var signoutBtn         = document.getElementById('signoutBtn');
 
       // ── Auth ──────────────────────────────────────────────
       function getToken() {
@@ -633,8 +722,10 @@
 
       // ── Load published entries ────────────────────────────
       function loadPublished() {
-        publishedList.innerHTML = '<p class="pending-empty" style="color:rgba(245,239,230,0.2)">Loading…</p>';
-        // Use GitHub API (not raw CDN) — always returns the current version, no caching delay
+        publishedList.innerHTML = '<p class="pending-empty" style="color:rgba(245,239,230,0.2)">Loading\u2026</p>';
+        deleteSelectedWrap.hidden = true;
+        deleteStatus.textContent = '';
+
         fetch(API + '/repos/' + REPO + '/contents/remembrances.json', { headers: authHeaders() })
           .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
           .then(function (file) {
@@ -649,15 +740,28 @@
             entries.forEach(function (e) {
               publishedList.appendChild(buildPublishedCard(e));
             });
+            deleteSelectedWrap.hidden = false;
+            updateDeleteBtn();
           })
           .catch(function () {
             publishedList.innerHTML = '<p class="pending-empty" style="color:rgba(220,100,100,0.7)">Failed to load.</p>';
           });
       }
 
+      function updateDeleteBtn() {
+        var checked = publishedList.querySelectorAll('.submission-card.selected').length;
+        deleteSelectedBtn.disabled = checked === 0;
+        deleteSelectedBtn.textContent = checked > 0
+          ? 'Delete Selected (' + checked + ')'
+          : 'Delete Selected';
+      }
+
       function buildPublishedCard(e) {
         var card = document.createElement('div');
-        card.className = 'submission-card';
+        card.className = 'submission-card selectable';
+
+        var checkbox = document.createElement('div');
+        checkbox.className = 'card-checkbox';
 
         var nameEl = document.createElement('p');
         nameEl.className = 'card-name';
@@ -671,77 +775,76 @@
         msgEl.className = 'card-message';
         msgEl.textContent = e.message || '';
 
-        var actions = document.createElement('div');
-        actions.className = 'card-actions';
-
-        var delBtn = document.createElement('button');
-        delBtn.className = 'btn btn-reject';
-        delBtn.textContent = 'Delete';
-        delBtn.type = 'button';
-
-        var statusEl = document.createElement('p');
-        statusEl.className = 'card-status';
-        statusEl.hidden = true;
-
-        delBtn.addEventListener('click', function () {
-          if (!confirm('Delete remembrance from ' + (e.name || 'unknown') + '? This cannot be undone.')) { return; }
-          // Disable ALL delete buttons to prevent concurrent deletes with stale indices
-          publishedList.querySelectorAll('.btn-reject').forEach(function (b) { b.disabled = true; });
-          statusEl.textContent = 'Deleting\u2026';
-          statusEl.hidden = false;
-          deleteEntry(e, card, statusEl);
-        });
-
-        actions.appendChild(delBtn);
+        card.appendChild(checkbox);
         card.appendChild(nameEl);
         card.appendChild(connEl);
         card.appendChild(msgEl);
-        card.appendChild(actions);
-        card.appendChild(statusEl);
+
+        card.addEventListener('click', function () {
+          card.classList.toggle('selected');
+          checkbox.textContent = card.classList.contains('selected') ? '\u2713' : '';
+          updateDeleteBtn();
+        });
+
         return card;
       }
 
-      // Match by content, not index — retries automatically on SHA conflict
-      function deleteEntry(target, card, statusEl, attempt) {
-        attempt = attempt || 1;
+      // ── Delete selected — one read, one write, no race condition ──
+      deleteSelectedBtn.addEventListener('click', function () {
+        var selectedCards = Array.from(publishedList.querySelectorAll('.submission-card.selected'));
+        if (!selectedCards.length) { return; }
+
+        var count = selectedCards.length;
+        if (!confirm('Delete ' + count + ' remembrance' + (count > 1 ? 's' : '') + '? This cannot be undone.')) { return; }
+
+        deleteSelectedBtn.disabled = true;
+        deleteStatus.textContent = 'Deleting\u2026';
+
+        // Collect the text content of selected cards to match against
+        var targets = selectedCards.map(function (card) {
+          return {
+            name:       card.querySelector('.card-name').textContent,
+            connection: card.querySelector('.card-connection').textContent,
+            message:    card.querySelector('.card-message').textContent
+          };
+        });
+
         fetch(API + '/repos/' + REPO + '/contents/remembrances.json', { headers: authHeaders() })
           .then(function (r) { return r.ok ? r.json() : Promise.reject('read-failed'); })
           .then(function (file) {
             var current = JSON.parse(atob(file.content.replace(/\n/g, '')));
             var entries = Array.isArray(current) ? current : (current.entries || []);
+
+            // Filter out any entry that matches a selected card
             var filtered = entries.filter(function (e) {
-              return !(e.name === target.name && e.connection === target.connection &&
-                       e.message === target.message && e.date === target.date);
+              return !targets.some(function (t) {
+                var connYear = (e.connection ? e.connection + ' \u00B7 ' : '') + (e.date || '');
+                return e.name === t.name && connYear === t.connection && e.message === t.message;
+              });
             });
+
             var updated = JSON.stringify({ entries: filtered }, null, 2);
             return fetch(API + '/repos/' + REPO + '/contents/remembrances.json', {
               method: 'PUT',
               headers: authHeaders(),
               body: JSON.stringify({
-                message: 'Delete remembrance entry',
+                message: 'Delete ' + count + ' remembrance' + (count > 1 ? 's' : ''),
                 content: btoa(unescape(encodeURIComponent(updated))),
                 sha: file.sha,
                 branch: BRANCH
               })
             });
           })
-          .then(function (r) {
-            if (r.status === 409 && attempt < 4) {
-              // SHA conflict — another write just happened, retry with fresh read
-              statusEl.textContent = 'Retrying\u2026';
-              setTimeout(function () { deleteEntry(target, card, statusEl, attempt + 1); }, 500);
-              return;
-            }
-            if (!r.ok) { return Promise.reject('write-failed'); }
-            card.style.opacity = '0.3';
-            statusEl.textContent = '\u2713 Deleted.';
+          .then(function (r) { return r.ok ? r.json() : Promise.reject('write-failed'); })
+          .then(function () {
+            deleteStatus.textContent = '\u2713 Deleted. Reloading\u2026';
             setTimeout(loadPublished, 800);
           })
           .catch(function () {
-            statusEl.textContent = 'Error \u2014 please try again.';
-            publishedList.querySelectorAll('.btn-reject').forEach(function (b) { b.disabled = false; });
+            deleteStatus.textContent = 'Error \u2014 please try again.';
+            deleteSelectedBtn.disabled = false;
           });
-      }
+      });
 
       // Auto-restore session if token in localStorage
       if (getToken()) { showPanel(); }
