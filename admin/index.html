@@ -701,14 +701,14 @@
         return card;
       }
 
-      // Match by content, not index — safe even if array has shifted
-      function deleteEntry(target, card, statusEl) {
+      // Match by content, not index — retries automatically on SHA conflict
+      function deleteEntry(target, card, statusEl, attempt) {
+        attempt = attempt || 1;
         fetch(API + '/repos/' + REPO + '/contents/remembrances.json', { headers: authHeaders() })
           .then(function (r) { return r.ok ? r.json() : Promise.reject('read-failed'); })
           .then(function (file) {
             var current = JSON.parse(atob(file.content.replace(/\n/g, '')));
             var entries = Array.isArray(current) ? current : (current.entries || []);
-            // Find by matching all fields
             var filtered = entries.filter(function (e) {
               return !(e.name === target.name && e.connection === target.connection &&
                        e.message === target.message && e.date === target.date);
@@ -725,8 +725,14 @@
               })
             });
           })
-          .then(function (r) { return r.ok ? r.json() : Promise.reject('write-failed'); })
-          .then(function () {
+          .then(function (r) {
+            if (r.status === 409 && attempt < 4) {
+              // SHA conflict — another write just happened, retry with fresh read
+              statusEl.textContent = 'Retrying\u2026';
+              setTimeout(function () { deleteEntry(target, card, statusEl, attempt + 1); }, 500);
+              return;
+            }
+            if (!r.ok) { return Promise.reject('write-failed'); }
             card.style.opacity = '0.3';
             statusEl.textContent = '\u2713 Deleted.';
             setTimeout(loadPublished, 800);
