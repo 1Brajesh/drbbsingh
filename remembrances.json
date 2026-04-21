@@ -1,28 +1,3 @@
 {
-  "entries": [
-    {
-      "name": "test4",
-      "connection": "son4",
-      "message": "hello dad",
-      "date": "2026"
-    },
-    {
-      "name": "test1",
-      "connection": "son1",
-      "message": "hello dad",
-      "date": "2026"
-    },
-    {
-      "name": "test2",
-      "connection": "son2",
-      "message": "hello dad",
-      "date": "2026"
-    },
-    {
-      "name": "test3",
-      "connection": "mom",
-      "message": "hella dr sahab",
-      "date": "2026"
-    }
-  ]
+  "entries": []
 }
