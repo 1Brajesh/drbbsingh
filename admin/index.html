@@ -401,6 +401,17 @@
       font-style: italic;
       color: rgba(245, 239, 230, 0.35);
     }
+
+    .approve-selected-btn {
+      border-color: rgba(120, 180, 120, 0.3);
+      color: rgba(120, 200, 120, 0.6);
+    }
+
+    .approve-selected-btn:not(:disabled):hover {
+      border-color: rgba(120, 180, 120, 0.7);
+      color: rgba(120, 200, 120, 0.95);
+      background: rgba(120, 180, 120, 0.05);
+    }
   </style>
 </head>
 <body>
@@ -434,6 +445,12 @@
         <button class="signout-btn" id="signoutBtn" type="button">Sign out</button>
       </div>
       <div id="pendingList"></div>
+      <div class="delete-selected-wrap" id="approveSelectedWrap" hidden>
+        <button class="delete-selected-btn approve-selected-btn" id="approveSelectedBtn" type="button" disabled>
+          Approve Selected
+        </button>
+        <span class="delete-status" id="approveStatus"></span>
+      </div>
 
       <!-- Published entries -->
       <div style="margin-top:3.5rem;padding-top:3rem;border-top:1px solid rgba(201,169,110,0.12);">
@@ -469,10 +486,13 @@
       var pendingTitle       = document.getElementById('pendingTitle');
       var publishedList      = document.getElementById('publishedList');
       var publishedTitle     = document.getElementById('publishedTitle');
-      var deleteSelectedWrap = document.getElementById('deleteSelectedWrap');
-      var deleteSelectedBtn  = document.getElementById('deleteSelectedBtn');
-      var deleteStatus       = document.getElementById('deleteStatus');
-      var signoutBtn         = document.getElementById('signoutBtn');
+      var deleteSelectedWrap  = document.getElementById('deleteSelectedWrap');
+      var deleteSelectedBtn   = document.getElementById('deleteSelectedBtn');
+      var deleteStatus        = document.getElementById('deleteStatus');
+      var approveSelectedWrap = document.getElementById('approveSelectedWrap');
+      var approveSelectedBtn  = document.getElementById('approveSelectedBtn');
+      var approveStatus       = document.getElementById('approveStatus');
+      var signoutBtn          = document.getElementById('signoutBtn');
 
       // ── Auth ──────────────────────────────────────────────
       function getToken() {
@@ -530,7 +550,8 @@
 
       function loadPending() {
         pendingList.innerHTML = '<p class="pending-empty" style="color:rgba(245,239,230,0.2)">Loading…</p>';
-        // Reading public issues — no auth needed, but we send the token anyway since we have it
+        approveSelectedWrap.hidden = true;
+        approveStatus.textContent = '';
         fetch(API + '/repos/' + REPO + '/issues?labels=remembrance-pending&state=open&per_page=50', {
           headers: authHeaders()
         })
@@ -545,6 +566,8 @@
           issues.forEach(function (issue) {
             pendingList.appendChild(buildCard(issue));
           });
+          approveSelectedWrap.hidden = false;
+          updateApproveBtn();
         })
         .catch(function () {
           pendingList.innerHTML = '<p class="pending-empty" style="color:rgba(220,100,100,0.7)">Failed to load — check your token.</p>';
@@ -557,11 +580,17 @@
         try { data = JSON.parse(issue.body); } catch (e) { data = { name: '(unknown)', connection: '', message: issue.body || '' }; }
 
         var card = document.createElement('div');
-        card.className = 'submission-card';
-        card.dataset.issue = issue.number;
+        card.className = 'submission-card selectable';
+        card.dataset.issue      = issue.number;
+        card.dataset.name       = data.name || '';
+        card.dataset.connection = data.connection || '';
+        card.dataset.message    = data.message || '';
 
         var date = new Date(issue.created_at);
         var dateStr = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+        var checkbox = document.createElement('div');
+        checkbox.className = 'card-checkbox';
 
         card.innerHTML =
           '<p class="card-meta">Issue #' + issue.number + ' &nbsp;&middot;&nbsp; Submitted ' + dateStr + '</p>' +
@@ -575,6 +604,8 @@
           '</div>' +
           '<p class="card-status" hidden></p>';
 
+        card.insertBefore(checkbox, card.firstChild);
+
         card.querySelector('.card-name').textContent = data.name || '(no name)';
         card.querySelector('.card-connection').textContent = data.connection || '';
         card.querySelector('.card-message').textContent = data.message || '';
@@ -583,6 +614,18 @@
         var editBtn    = card.querySelector('.btn-edit');
         var rejectBtn  = card.querySelector('.btn-reject');
         var statusEl   = card.querySelector('.card-status');
+
+        // Card click toggles selection; button clicks must not bubble
+        card.addEventListener('click', function () {
+          if (card.style.opacity) { return; } // already processed
+          card.classList.toggle('selected');
+          checkbox.textContent = card.classList.contains('selected') ? '\u2713' : '';
+          updateApproveBtn();
+        });
+
+        [approveBtn, editBtn, rejectBtn].forEach(function (btn) {
+          btn.addEventListener('click', function (e) { e.stopPropagation(); });
+        });
 
         // ── Approve ──
         approveBtn.addEventListener('click', function () {
@@ -756,6 +799,14 @@
           : 'Delete Selected';
       }
 
+      function updateApproveBtn() {
+        var checked = pendingList.querySelectorAll('.submission-card.selected').length;
+        approveSelectedBtn.disabled = checked === 0;
+        approveSelectedBtn.textContent = checked > 0
+          ? 'Approve Selected (' + checked + ')'
+          : 'Approve Selected';
+      }
+
       function buildPublishedCard(e) {
         var card = document.createElement('div');
         card.className = 'submission-card selectable';
@@ -843,6 +894,76 @@
           .catch(function () {
             deleteStatus.textContent = 'Error \u2014 please try again.';
             deleteSelectedBtn.disabled = false;
+          });
+      });
+
+      // ── Approve selected — one read, one write, parallel issue closes ──
+      approveSelectedBtn.addEventListener('click', function () {
+        var selectedCards = Array.from(pendingList.querySelectorAll('.submission-card.selected'));
+        if (!selectedCards.length) { return; }
+
+        var count = selectedCards.length;
+        if (!confirm('Approve ' + count + ' remembrance' + (count > 1 ? 's' : '') + '?')) { return; }
+
+        approveSelectedBtn.disabled = true;
+        approveStatus.textContent = 'Reading entries\u2026';
+
+        var targets = selectedCards.map(function (card) {
+          return {
+            issueNum:   parseInt(card.dataset.issue, 10),
+            name:       card.dataset.name,
+            connection: card.dataset.connection,
+            message:    card.dataset.message
+          };
+        });
+
+        var year = String(new Date().getFullYear());
+
+        fetch(API + '/repos/' + REPO + '/contents/remembrances.json', { headers: authHeaders() })
+          .then(function (r) { return r.ok ? r.json() : Promise.reject('read-failed'); })
+          .then(function (file) {
+            var current = JSON.parse(atob(file.content.replace(/\n/g, '')));
+            var existing = Array.isArray(current) ? current : (current.entries || []);
+
+            var newEntries = targets.map(function (t) {
+              return { name: t.name, connection: t.connection, message: t.message, date: year };
+            });
+            var updated = JSON.stringify({ entries: newEntries.concat(existing) }, null, 2);
+
+            approveStatus.textContent = 'Saving ' + count + ' entr' + (count > 1 ? 'ies' : 'y') + '\u2026';
+
+            return fetch(API + '/repos/' + REPO + '/contents/remembrances.json', {
+              method: 'PUT',
+              headers: authHeaders(),
+              body: JSON.stringify({
+                message: 'Approve ' + count + ' remembrance' + (count > 1 ? 's' : ''),
+                content: btoa(unescape(encodeURIComponent(updated))),
+                sha: file.sha,
+                branch: BRANCH
+              })
+            })
+            .then(function (r) { return r.ok ? r.json() : Promise.reject('write-failed'); })
+            .then(function () {
+              approveStatus.textContent = 'Closing issue' + (count > 1 ? 's' : '') + '\u2026';
+              return Promise.all(targets.map(function (t) {
+                return fetch(API + '/repos/' + REPO + '/issues/' + t.issueNum, {
+                  method: 'PATCH',
+                  headers: authHeaders(),
+                  body: JSON.stringify({ state: 'closed', labels: ['remembrance-approved'] })
+                });
+              }));
+            });
+          })
+          .then(function () {
+            approveStatus.textContent = '\u2713 Published ' + count + '. Reloading\u2026';
+            setTimeout(function () {
+              loadPending();
+              loadPublished();
+            }, 800);
+          })
+          .catch(function () {
+            approveStatus.textContent = 'Error \u2014 please try again.';
+            approveSelectedBtn.disabled = false;
           });
       });
 
