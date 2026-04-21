@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publications — Dr. B.B. Singh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1c1714;
+      color: #f5efe6;
+      font-family: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+      min-height: 100svh;
+      padding: 3rem 1.5rem 6rem;
+    }
+
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+
+    .pub-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .pub-title {
+      font-size: clamp(1.2rem, 3vw, 1.7rem);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(201, 169, 110, 0.85);
+      margin-bottom: 0.35rem;
+    }
+
+    .pub-subtitle {
+      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      font-style: italic;
+      color: rgba(245, 239, 230, 0.35);
+      margin-bottom: 0.25rem;
+    }
+
+    .pub-count {
+      font-size: clamp(0.78rem, 1.5vw, 0.88rem);
+      letter-spacing: 0.08em;
+      color: rgba(201, 169, 110, 0.4);
+      text-transform: uppercase;
+    }
+
+    .pub-rule {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,169,110,0.4), transparent);
+      margin: 1.5rem auto 0;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 1.2rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(201,169,110,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: rgba(201,169,110,0.85); }
+
+    /* ── Decade filter ── */
+
+    .decade-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+      justify-content: center;
+    }
+
+    .decade-btn {
+      background: transparent;
+      border: 1px solid rgba(201,169,110,0.2);
+      border-radius: 2px;
+      color: rgba(201,169,110,0.5);
+      cursor: pointer;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      padding: 0.35rem 1rem;
+      text-transform: uppercase;
+      transition: all 0.15s;
+    }
+
+    .decade-btn:hover {
+      border-color: rgba(201,169,110,0.5);
+      color: rgba(201,169,110,0.85);
+    }
+
+    .decade-btn.active {
+      border-color: rgba(201,169,110,0.6);
+      color: rgba(201,169,110,0.95);
+      background: rgba(201,169,110,0.06);
+    }
+
+    /* ── List ── */
+
+    .pub-list {
+      list-style: none;
+      counter-reset: none;
+    }
+
+    .pub-list li {
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(201,169,110,0.07);
+      font-size: clamp(0.9rem, 1.8vw, 1rem);
+      line-height: 1.72;
+      color: rgba(245,239,230,0.7);
+      display: flex;
+      gap: 0.7rem;
+    }
+
+    .pub-list li[hidden] { display: none; }
+
+    .pub-n {
+      flex-shrink: 0;
+      min-width: 2.2rem;
+      color: rgba(201,169,110,0.35);
+      font-size: 0.82rem;
+      padding-top: 0.18rem;
+      letter-spacing: 0.03em;
+      text-align: right;
+    }
+
+    .pub-list li:first-child { border-top: 1px solid rgba(201,169,110,0.07); }
+
+    /* ── Visible count ── */
+    .showing {
+      font-size: 0.82rem;
+      font-style: italic;
+      color: rgba(245,239,230,0.25);
+      text-align: center;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+
+    <header class="pub-header">
+      <h1 class="pub-title">Publications</h1>
+      <p class="pub-subtitle">Dr. Bir Bahadur Singh &mdash; 1944&ndash;2024</p>
+      <p class="pub-count">245 publications &middot; 1968&ndash;2018</p>
+      <div class="pub-rule"></div>
+      <a class="back-link" href="/">&larr; Back to site</a>
+    </header>
+
+    <nav class="decade-tabs" aria-label="Filter by decade">
+      <button class="decade-btn active" data-filter="all">All &nbsp;<small style="opacity:.6">245</small></button>
+      <button class="decade-btn" data-filter="1960">1960s &nbsp;<small style="opacity:.6">4</small></button>
+      <button class="decade-btn" data-filter="1970">1970s &nbsp;<small style="opacity:.6">30</small></button>
+      <button class="decade-btn" data-filter="1980">1980s &nbsp;<small style="opacity:.6">39</small></button>
+      <button class="decade-btn" data-filter="1990">1990s &nbsp;<small style="opacity:.6">62</small></button>
+      <button class="decade-btn" data-filter="2000">2000s &nbsp;<small style="opacity:.6">98</small></button>
+      <button class="decade-btn" data-filter="2010">2010s &nbsp;<small style="opacity:.6">12</small></button>
+    </nav>
+
+    <p class="showing" id="showing">Showing all 245 publications</p>
+
+    <ol class="pub-list" id="pubList">
+        <li data-decade="1960" data-n="1"><span class="pub-n">1.</span> Singh, B.B., H.H. Hadley and F.I. Collins 1968. Distribution of fatty acids in germinating soybean seeds Crops Sci. 8: 171-173.</li>
+        <li data-decade="1960" data-n="2"><span class="pub-n">2.</span> Singh, B.B., H.H. Hadley 1968. Maternal control of oil synthesis in soybeans, Glycine max (L.) Merrill. Crop Sci. 8: 622-625.</li>
+        <li data-decade="1960" data-n="3"><span class="pub-n">3.</span> Bernard, R.L. and B.B. Singh 1969. Inheritance of pubscence type in soybean: glabrous, curly, dense, sparse and puberulent. Crop Sci. 9: 192-197.</li>
+        <li data-decade="1960" data-n="4"><span class="pub-n">4.</span> Singh, B.B. and S.C. Gupta 1969. Grow soybean in spring too. Ind. Farmer&#x27;s Dig. 2: 11-12.</li>
+        <li data-decade="1970" data-n="5"><span class="pub-n">5.</span> Singh, J.N. and B.B. Singh 1970. Soybean: A miracle crop. Ind. Farmers Dig. 3: 9-12.</li>
+        <li data-decade="1970" data-n="6"><span class="pub-n">6.</span> Singh, B.B., H.H. Hadley and R.L. Bernard 1971. Morphology of pubescence in soybean and its relationship to plant vigour. Crop. Sci. 11: 13-16.</li>
+        <li data-decade="1970" data-n="7"><span class="pub-n">7.</span> Singh, B.B. 1972. High frequency of natural cross pollination in a mutant strain of soybean. Curr. Sci. 41: 832-833.</li>
+        <li data-decade="1970" data-n="8"><span class="pub-n">8.</span> Singh, B.B., S.C. Gupta and B.D. Singh 1974. Note on &#x27;UPAS 120&#x27; an early maturing mutant pigeonpea (Cajanus cajan) (L.) Millsp.) Indian J. Agric. Sci. 44: 233-234.</li>
+        <li data-decade="1970" data-n="9"><span class="pub-n">9.</span> Chaudhary, D. N. and B.B. Singh 1974. Heterosis for some quantitative characters in soybean (Glycine max (L.) Merrill). Indian J. Genet. 34:69-74.</li>
+        <li data-decade="1970" data-n="10"><span class="pub-n">10.</span> Chaudhary, D.N. and B.B. Singh 1974. Correlation and path-cofficient analysis of yield components in soybean. Indian J. Agric Sci. 44:487-490.</li>
+        <li data-decade="1970" data-n="11"><span class="pub-n">11.</span> Singh, B.B., S.C.Gupta and B.D.Singh. 1974. Sources of field resistance to rust and yellow mosaic diseases of soybean. Ind. J. Genet. 34:400-404</li>
+        <li data-decade="1970" data-n="12"><span class="pub-n">12.</span> Singh, B.B., S.C. Gupta and B.D. Singh 1974. Induced male sterile mutants in soybean. Soybean Genetics News letter 1: 19-20.</li>
+        <li data-decade="1970" data-n="13"><span class="pub-n">13.</span> Singh, B.B., B.D. Singh and S.C. Gupta 1974. &#x27;P.I. 171443&#x27; and G. formosana resistant sources for yellow mosaic. Soybean Genetics News Letter 1: 17-18.</li>
+        <li data-decade="1970" data-n="14"><span class="pub-n">14.</span> Singh, B.B., S.C. Gupta and B.D. 1974. An induced crinkled leaf mutant in soybean. Soybean Genetics New Letter 1: 16-17.</li>
+        <li data-decade="1970" data-n="15"><span class="pub-n">15.</span> Singh, B.B., B.D. Singh and S.C. Gupta 1974. Vegetable Type Soybean - a rich source of protein. Ind. Farmers&#x27;s Dig. VII. 47-48.</li>
+        <li data-decade="1970" data-n="16"><span class="pub-n">16.</span> Patil, A.B. and B.B. Singh 1975. Cytological abnormalities associated with male sterility in soybean. Soybean Genet. News Letter 2: 12-13.</li>
+        <li data-decade="1970" data-n="17"><span class="pub-n">17.</span> Singh, B.B. amd M.C. Saxema 1975. Soybean varieties for different Agro-climatic zones in India. Seed Tech. News 5: 5-7.</li>
+        <li data-decade="1970" data-n="18"><span class="pub-n">18.</span> Singh, B.B. 1975. High yielding varieties of soybean. Ind. Farmer&#x27;s Dig. VIII. 39-40.</li>
+        <li data-decade="1970" data-n="19"><span class="pub-n">19.</span> Patil, A.B. and B.B. Singh 1976. Male sterility in soybean. Ind. J. Genet. 36: 238-243.</li>
+        <li data-decade="1970" data-n="20"><span class="pub-n">20.</span> Singh, B.B. 1976. Breeding soybean varieties for the tropics. In R.M. Goodman (Ed.) Expanding the uses of soybean. p. 11-17. INTSOY, Univ. of IIIinois, Urbana, U.S.A.</li>
+        <li data-decade="1970" data-n="21"><span class="pub-n">21.</span> Singh, B.B. 1976. Conventional breeding methods in soybean. In Hill. L.D. (ed.) World Soybean Research. Interstate Publishers Inc. IIIinois p. 222-229.</li>
+        <li data-decade="1970" data-n="22"><span class="pub-n">22.</span> Singh, B.B. and A.N. Jha 1977. Induced floral abnormality in soybean. Soybean Genet. News Letter 4:20.</li>
+        <li data-decade="1970" data-n="23"><span class="pub-n">23.</span> Malik, S.S. and B.B. Singh 1977. Isozymic variations in Black and yellow seeded isogenic lines of Bragg soybean. Soybean Genet. News Letter 4: 21</li>
+        <li data-decade="1970" data-n="24"><span class="pub-n">24.</span> Singh, B.B. 1977. Inheritance of resistance to soybean rust. Soybean Rust News Letter 1: 17.</li>
+        <li data-decade="1970" data-n="25"><span class="pub-n">25.</span> Singh, B.B. 1977. Breeding for resistance to soybean rust in India Soybean Rust Letter 1: (13-16).</li>
+        <li data-decade="1970" data-n="26"><span class="pub-n">26.</span> Jha, A.N. and B.B. Singh 1978. Additional sterile and male sterile mutants in soybean. Soybean Genetics News Letter 5: 30.</li>
+        <li data-decade="1970" data-n="27"><span class="pub-n">27.</span> Jain, K.C. and B.B. Singh 1978. Effect of leaf type, pubescenece type and non-nodulating genes on yield and other quantitative characters in soybean. Ind. J. Genet. 38 (1):67-70.</li>
+        <li data-decade="1970" data-n="28"><span class="pub-n">28.</span> B.B. Singh 1978. Biochemical changes in soybean seeds during storage. Pantnagar J. Research. 3 (1): 4-7</li>
+        <li data-decade="1970" data-n="29"><span class="pub-n">29.</span> Mailk, S.S., and B.B. Singh 1978. Biochemical differences in black and yellow seeded isogenic lines of soybean. Pantnagar J. Research 3 (1): 129-130</li>
+        <li data-decade="1970" data-n="30"><span class="pub-n">30.</span> Singh, B.B. and A.N. Jha 1978. A delayed albino mutant in soybean. Ind. J. Genet. 38 (2): 228-230.</li>
+        <li data-decade="1970" data-n="31"><span class="pub-n">31.</span> Singh, B.B. and A.S. Malik 1978. Inheritance of reistance to yellow mosaic in soybean. Ind. J. Genet. 38 (2): 258-261.</li>
+        <li data-decade="1970" data-n="32"><span class="pub-n">32.</span> Singh, B.B. and A.N. Jha 1978. Abnormal differentation of floral parts in a mutant strain of soybean. J. Heredity 69: 143-144.</li>
+        <li data-decade="1970" data-n="33"><span class="pub-n">33.</span> Upadhyaya, H.D. and B.B. Singh 1979. Induced genetic variability in yield and other quantitative characters in soybean. Ind. J. Genet 39 (2): 207-209.</li>
+        <li data-decade="1970" data-n="34"><span class="pub-n">34.</span> Singh, B.B. and M.C. Saxena 1979. Soybean production in India. Ind. Farming 1979.</li>
+        <li data-decade="1980" data-n="35"><span class="pub-n">35.</span> Upadhyaya, H.D. and B.B. Singh 1980. Induced variability for qualitative characters in soybean. Pantnagar J. Res. 5:</li>
+        <li data-decade="1980" data-n="36"><span class="pub-n">36.</span> Singh, B.B. 1980. A miniature mutant of cowpea. Tropical Grain 	Legume Bull. 21: 13-14.</li>
+        <li data-decade="1980" data-n="37"><span class="pub-n">37.</span> Singh, B.B. and P.J. Merrett, 1980. Leaf Miner- a new pest of Cowpea. Tropical Grain Legume Bull 21: 15-17.</li>
+        <li data-decade="1980" data-n="38"><span class="pub-n">38.</span> Singh, B.B. 1981. Wild cowpeas of Tanzania. Tropical grain Legume Bull. 22: 10-14.</li>
+        <li data-decade="1980" data-n="39"><span class="pub-n">39.</span> Singh, B.B. and J.K. Milgo, 1981. Free nodulation of local soybean lines in Tanzania. Tropical Grain Legume Bull. 22: 10-14.</li>
+        <li data-decade="1980" data-n="40"><span class="pub-n">40.</span> Singh, B.B. and J.K. Milgo, 1981. Yield stability of newly developed cowpea breeding lines in Tanzania. Crop Res. Bull. (1): 1-4.</li>
+        <li data-decade="1980" data-n="41"><span class="pub-n">41.</span> Singh, B.B. and J.K. Milgo, 1981. &#x27;TK-1&#x27; and &#x27;TK-5&#x27;- New varieties of cowpea for Tanzania. Trop. Grain Legume Bull. 2: 14-15.</li>
+        <li data-decade="1980" data-n="42"><span class="pub-n">42.</span> Chauhan, V.S. and B.B. Singh. 1982. Heterosis and genetic variability in relation to genetic divergence in soybean. Indian J. Genet. 42:324-328.</li>
+        <li data-decade="1980" data-n="43"><span class="pub-n">43.</span> Shahi, J.P., M.P. Pandey and B.B. Singh 1982. Note on the softening of seeds with varying periods of storage in soybean. Tropical Grain Legume Bull 26: 19-21.</li>
+        <li data-decade="1980" data-n="44"><span class="pub-n">44.</span> Singh, B.B. 1982. &#x27;Hope&#x27; and &#x27;Pride&#x27; cowpea varieties for release to Tanzania Farmers. IITA Research Briefs 3: 6-7.</li>
+        <li data-decade="1980" data-n="45"><span class="pub-n">45.</span> Singh, B.B., J.K. Milgo, E.T. Marenge and J.A. Ibrahim 1982. Sources of resistance to Phytophthora stem rot in cowpea. Tropical grain Legume Bull. 25: 17-20.</li>
+        <li data-decade="1980" data-n="46"><span class="pub-n">46.</span> Malick, J.S. and B.B. Singh 1982. Note on the corrrelations in quantitative characters in an interspecific cross of soybean. Ind J. Agric Science. 52:608-610.</li>
+        <li data-decade="1980" data-n="47"><span class="pub-n">47.</span> Price, M., B.B. Singh and C. Mamkwe 1983. The role of early maturing cowpea varieties in Tazania. Tropical Grain Legume Bull. 27:8-10.</li>
+        <li data-decade="1980" data-n="48"><span class="pub-n">48.</span> Chauhan V.S. and B.B. Singh. 1983. Genetic analysis of protein and oil content in soybean. Indian J. of Agricultural Sciences. 53: 634-637.</li>
+        <li data-decade="1980" data-n="49"><span class="pub-n">49.</span> Singh, S.R., B.B. Singh, L.E.N. Jackai and Ntare 1983. Cowpea Research at IITA. IITA information series no. 14.</li>
+        <li data-decade="1980" data-n="50"><span class="pub-n">50.</span> Ntare, B.R., R.J. Redden and B.B. Singh 1984. Evaluation of early generation selection procedures for yield in cowpea. Field Crops Res. 9:91-100.</li>
+        <li data-decade="1980" data-n="51"><span class="pub-n">51.</span> Ntare, B.R., M.E. Aken&#x27;ova, R.J. Redden and B.B. Singh 1984. The effectiveness of early generation testing and single seed descent procedures in two cowpea crosses. Euphytica 33: 539-548.</li>
+        <li data-decade="1980" data-n="52"><span class="pub-n">52.</span> Chauhan, V.S. and B.B. Singh 1984. Genetic variability and heritability in soybean. Ind. J. Agric. Science 54:273-276.</li>
+        <li data-decade="1980" data-n="53"><span class="pub-n">53.</span> Singh, B.B. 1984. Recent research advances at IITA relevant to SADCC research programmes and agriculture of the semi-arid tropics. In proceeding of the SADCC Agric. Conf. p. 88-99. Botswana.</li>
+        <li data-decade="1980" data-n="54"><span class="pub-n">54.</span> Singh, B.B., S.R. Singh and L.E.N. Jackai 1984. Cowpea breeding for disease and insect resistance. In breeding for durable disease and pest resistance. FAO Plant Prod. and Protection Paper No. 55: 139-152.</li>
+        <li data-decade="1980" data-n="55"><span class="pub-n">55.</span> Singh, B.B., S.R. Singh, L.E.N. Jackai and S.A. Shoyinka 1985. General guide for cowpea cultivation and seed production. IITA Information Series.</li>
+        <li data-decade="1980" data-n="56"><span class="pub-n">56.</span> Singh, B.B. and R.K. Pandey 1985. Breeding cowpea varieties for rice based cropping system. Proceedings of the &#x27;Workshop on Varietal Improvement for Rice-Based Farming System&#x27; held at Pitsunaloke, Thailand. March 11-15, 1985.</li>
+        <li data-decade="1980" data-n="57"><span class="pub-n">57.</span> B.B. Singh, S.R. Singh and O. Adjadi 1985. Bruchid resistance in cowpea. Crop Sci. 25: 736-739.</li>
+        <li data-decade="1980" data-n="58"><span class="pub-n">58.</span> Adjadi, O., B.B. Singh and S.R. Singh 1985. Inheritance of bruchid resistance in cowpea. Crop. Sci. 25: 740-742.</li>
+        <li data-decade="1980" data-n="59"><span class="pub-n">59.</span> Singh, B.B. 1985. Cowpea Improvement at IITA. Paper presented at the &#x27;World Bank Seminar&#x27; held at IITA, Ibadan Nigeria. June 24-28, 1985.</li>
+        <li data-decade="1980" data-n="60"><span class="pub-n">60.</span> Singh, B.B. and B.R. Ntare 1985. Development of improved cowpea varieties in Africa. In Singh and Rachie (Eds.) Cowpea Research, Production and Utilization pp. 105-116.</li>
+        <li data-decade="1980" data-n="61"><span class="pub-n">61.</span> Bata, H.D., B.B. Singh, S.R. Singh and T.A.O. Ladeinde 1987. Inheritance of resistance to aphid in cowpea. Crop Sci. 27: 892-894.</li>
+        <li data-decade="1980" data-n="62"><span class="pub-n">62.</span> Singh, B.B. 1987. &#x27;60-day cowpea varieties for Asian Farming Systems. In Wallis and Byth (Eds.) Food legume Improvement for Asian Farming Systems. ACIAR Proceedings No. 18 pp. 223.</li>
+        <li data-decade="1980" data-n="63"><span class="pub-n">63.</span> Singh, B.B. and D.M. Mukunya 1987. Breeding for resistance to drought, insect pests and diseases in crops for the semi-arid areas of Eastern Kenya. FAO-KEN/81/011 Consultant Report</li>
+        <li data-decade="1980" data-n="64"><span class="pub-n">64.</span> Fatokun, C.A. and B.B. Singh 1987. Interspecific hybridization between Vigna pubescens and V. unguiculata (L.) Walp. through embryo rescue. Plant cell, tissue and organ culture 9: 229-233.</li>
+        <li data-decade="1980" data-n="65"><span class="pub-n">65.</span> Omueti, O. and B.B. Singh 1987. Nutritional attributes of improved varieties of cowpea, (Vigna unguiculata (L.) Walp.) Human Nutrition: Food Sciences and Nutrition 41F: 103-112.</li>
+        <li data-decade="1980" data-n="66"><span class="pub-n">66.</span> Malik, S.K. and B.B. Singh 1987. Genetic variability and heritability in interspecific crosses of soybean. Ind. J. Agric. Sci. 57: 122-124.</li>
+        <li data-decade="1980" data-n="67"><span class="pub-n">67.</span> Abadassi, J.A., B.B. Singh, T.A.O. Ladeinde, S.A. Shoyinka and A.M. Emechebe. 1987. Inheritance of resistance to brown blotch, Septoria leaf spot and scab in cowpea. Ind. J. Genetics 47 (3): 299-303.</li>
+        <li data-decade="1980" data-n="68"><span class="pub-n">68.</span> Singh, B.B. 1987. Soybean research and development in India. In S.R. Singh et al (Eds.). Soybean for the tropics John Wiley and Sons p. 111-118.</li>
+        <li data-decade="1980" data-n="69"><span class="pub-n">69.</span> Singh, B.B. 1987. Breeding cowpea varieties for drought escape. In (Menyonga et al (eds.) Food Grain Production in Semi-Arid Africa. OUA/STRC-SAFGRAD. p. 299-306.</li>
+        <li data-decade="1980" data-n="70"><span class="pub-n">70.</span> Aud-Dapaah, H., B.B. Singh, H.R. Chedda and C.A. Fatokun. 1988. Heterosis and inbreeding depression in cowpea. Tropical Grain Legume Bull. 35: 23-27.</li>
+        <li data-decade="1980" data-n="71"><span class="pub-n">71.</span> Paul, C.P., B.B. Singh and C.A. Fatokun. 1988. Performance of dual purpose cowpea varieties. Tropical Grain Legume Bull. 35: 28-31.</li>
+        <li data-decade="1980" data-n="72"><span class="pub-n">72.</span> Baker, T. A., S.S. Nielsen, R.E. Shade and B.B. Singh, 1989. Physical and chemical attributes of cowpea lines resistant and susceptible to Callosobruchus maculatus (F.). J. Stored Prod. Res. 25: 1-8.</li>
+        <li data-decade="1980" data-n="73"><span class="pub-n">73.</span> Akubdabweni, L.S., C. Peter-Paul, and B.B. Singh 1989. Evaluation of elite lines of cowpea (Vigna unguiculata (L.) Walp.) for leaf/fodder plus grain (i.e. dual purpose). Trop. Agric. 67: (2): 133-136.</li>
+        <li data-decade="1990" data-n="74"><span class="pub-n">74.</span> Singh, B.B. and A.M. Emechebe 1990. Genetics of Striga resistance in cowpea genotype B 301. Crop Sci. 30: 879-881.</li>
+        <li data-decade="1990" data-n="75"><span class="pub-n">75.</span> Piergiovanni, A.R., C.D. Gatta, Q. Ng, B.B. Singh, S.R. Singh and P. Perrino. 1990. Fatty acid composition and insect resistance in Vigna unguiculata seeds. J. Sci. Food Agric. 52: 47-53.</li>
+        <li data-decade="1990" data-n="76"><span class="pub-n">76.</span> Singh, B.B. and S.R. Singh 1990. Breeding for bruchid resistance in cowpea. In K. Fujii, A.M.R. Gatehouse, C.D. Johbson, R. Mitchel and T. Yoshida (Eds.). Bruchids and Legumes: Economics, Ecology and Co evolution. 1990 Kluwer Academic Publishers, Netherlands. p. 219-228.</li>
+        <li data-decade="1990" data-n="77"><span class="pub-n">77.</span> Malick S.S. and B.B. Singh. 1991. Genetic studies of flowering and maturity in interspecific crosses of soybean. Ind. J. Genet. 51: 349-351.</li>
+        <li data-decade="1990" data-n="78"><span class="pub-n">78.</span> Singh, B.B. and A.M. Emechebe. 1991. Breeding for resistance to Striga and Alectra in cowpea. In Ranson J.K., L.J. Musselman, A.D. Worsham and C. Parker (Eds.). Proceedings of Fifth International Symposium on Parasitic Weeds, Nairobi June 24-30, &#x27;91 p. 303-305.</li>
+        <li data-decade="1990" data-n="79"><span class="pub-n">79.</span> Emechebe, A.M. Singh, B.B., Leleji, O.I., Atokple, I.D.K. and Adu, J.K. 1991. Cowpea Striga problems and Research in Nigeria p. 18-28. In: Kim S.K. (ed). Combating Striga in Africa. Proceeding of the International workshop organised by IITA, ICRISAT, and IDRC 22-24, Aug. 1988. IITA, Ibadan.</li>
+        <li data-decade="1990" data-n="80"><span class="pub-n">80.</span> Singh, B.B., 1992. Host plant resistance: polygenes vs major gene -pragmatism should lead the way. IITA Res. (5): 21.</li>
+        <li data-decade="1990" data-n="81"><span class="pub-n">81.</span> Blade, S.F.; D.E. Mather , B.B. Singh, and D.L. Smith 1992. Evaluation of yield stability of cowpea under sole and intercrop management in Nigeria. Euphytica 61: 193-201.</li>
+        <li data-decade="1990" data-n="82"><span class="pub-n">82.</span> Singh, B.B.; A.M. Emechebe and I.D.K. Atokple 1993. Inheritance of Alectra resistance in cowpea genotype B 301. Crop. Sci. 33: 70-72.</li>
+        <li data-decade="1990" data-n="83"><span class="pub-n">83.</span> Atokple, I.D.K., B.B. Singh and A.M. Emechebe 1993. Independent inheritance of Striga and Alectra resistance in cowpea genotype B 301. Crop Sci. 33: 714-715.</li>
+        <li data-decade="1990" data-n="84"><span class="pub-n">84.</span> Atokple, I.D.K., B.B. Singh and A.M. Emechebe 1993. Independent inheritance of Striga and Alectra resistance in cowpea genotype B 301. Crop. Sci. 33: 714-715.</li>
+        <li data-decade="1990" data-n="85"><span class="pub-n">85.</span> Nelsen, S.S., W.E. Brandt and B.B. Singh 1993. Genetic variability for nutritional composition and cooking time of improved cowpea lines Crop. Sci. 33: 469-472.</li>
+        <li data-decade="1990" data-n="86"><span class="pub-n">86.</span> Agyemang,K.,D.A.Little, and B.B.Singh. 1993. Emerging evidence of highly integrated crop/livestock system in northern Nigeria: A case study of Kano State. Cattle Research News Letter. 12:7</li>
+        <li data-decade="1990" data-n="87"><span class="pub-n">87.</span> Lane, J.A. Moore, I.H.M., Child, D.V. Cardwell, K.F., Singh, B.B. Singh Bailey, J.A. 1994. Virulence characteristics of a new race of the parasitic angiosperm Striga gesnerioides, from southern Benin of on cowpea, (Vigna unguiculata). Euphytica 72 (3): 183-188.</li>
+        <li data-decade="1990" data-n="88"><span class="pub-n">88.</span> Singh B.B., 1994. Breeding suitable cowpea varieties for West and Central African savanna. p. 77-85. In: Menyonga J.M., T. B. Bezuneh, J.Y. Yayock and I. Soumana (Eds.) Progress in Food Grain Research and Production in Semi-Arid ZAfrica. OAU/STRC-SAFGRAD, Ouagadougou, Burkina Faso.</li>
+        <li data-decade="1990" data-n="89"><span class="pub-n">89.</span> Emechebe, A.M. and B.B. Singh 1994. Interactions between some cowpea lines and two parasitic higher plants, Striga gesnerioides and Alectra vogelii. p. 479-485. In: Menyonga J.M., T. B. Bezunch, J.Y. Yayock and I. Soumana (Eds.) Progress in Food Grain Research and Production in Semi-Arid Africa. OAU/STRC-SAFGRAD, Ouagadougou, Burkina Faso.</li>
+        <li data-decade="1990" data-n="90"><span class="pub-n">90.</span> Singh B.B. 1994. Collection and utilization of germplasm of cowpea resistant to Striga and Alectra. Proceedings of the JIRCAS International Symposium Series No.2. Plant Genetic Resource Management in the Tropics Japan International Research Centre for Agricultural Sciences 1994. Tsukuba, Japan, p. 135-143.</li>
+        <li data-decade="1990" data-n="91"><span class="pub-n">91.</span> Lagoke, S.T., J.Y., Shebayan, G. Weber, O. Olufajo, K. Elemo, J.K. Adu, A.M. Emechebe, B.B. Singh, A. Zaria, A. Awad, L. Ngawa, G.O. Olaniyan, S.O. Olarfare and A.A. Adeoji 1994. Survey of Striga problem and evaluation of Striga control method and packages in crops in the Nigerian savanna p. 91-120. In Improving Striga Management in Africa. Proceedings of the 2nd General Workshop on the Pan-African Striga control Network (PASCON), 23-29 June 1991. Nairobi, Kenya. FAO/PASCON. Accra, 1994.</li>
+        <li data-decade="1990" data-n="92"><span class="pub-n">92.</span> Atokple, I.D.K., B.B. Singh and A.M. Emechebe 1995. Genetics of resistance to Striga and Alectra in cowpea. J. Heredity 86:45-49.</li>
+        <li data-decade="1990" data-n="93"><span class="pub-n">93.</span> Berner, D.K., Kling, J.G. and Singh, B.B. 1995. Striga research and control - a perspective from Africa. Plant Disease 79, 652-660.</li>
+        <li data-decade="1990" data-n="94"><span class="pub-n">94.</span> Bottenberg, H. and B.B. Singh 1996. Effect of neem leaf extract applied using the broom method on cowpea pests and yield. Intl. J. Pest Management 42:207-209.</li>
+        <li data-decade="1990" data-n="95"><span class="pub-n">95.</span> Singh, B.B. and B. Sharma, 1996. Restructuring cowpea for higher yield. Indian J. Genet. 56:389-405.</li>
+        <li data-decade="1990" data-n="96"><span class="pub-n">96.</span> Magani, E.I., S.T. Lagoke, A.M. Emechebe, B.B. Singh and O.O. Olufajo 1996. Reaction of cowpea varieties to Alectra vogelii in the Northern Guinea Savanna of Nigeria. PASCON Striga Newsletter 6:14.</li>
+        <li data-decade="1990" data-n="97"><span class="pub-n">97.</span> Singh, B.B., D.R. Mohan Raj, K.E. Dashiell and L.E.N. Jackai 1997. Advances in Cowpea Research. Co-publication of IITA and JIRCAS, IITA, Ibadan, Nigeria.</li>
+        <li data-decade="1990" data-n="98"><span class="pub-n">98.</span> Hall, A.E., B.B. Singh and J.D. Ehlers. 1997. Cowpea Breeding. Plant Breeding Reviews 15: 215-274.</li>
+        <li data-decade="1990" data-n="99"><span class="pub-n">99.</span> Singh, B.B. and A.F. Umar 1997. Spread of neem from Asia to West African Asian Agric – History 1:41-46.</li>
+        <li data-decade="1990" data-n="100"><span class="pub-n">100.</span> van Ek, G.A., J. Henriet, S.F. Blade and B.B. Singh, 1997. Quantitative assessment of traditional cropping systems in the Sudan savanna of northern Nigeria: II Management and productivity of major cropping systems. Samaru Journal of Agricultural Research.14:47-60.</li>
+        <li data-decade="1990" data-n="101"><span class="pub-n">101.</span> Henriet, J., G.A. van Ek, S.F. Blade and B.B. Singh, 1997. Quantitative assessment of traditional cropping systems in the Sudan savanna of northern Nigeria: III Importance of tress shrubs and secondary crops in the cropping systems. Samaru Journal of Agricultural Research.14:61-66.</li>
+        <li data-decade="1990" data-n="102"><span class="pub-n">102.</span> Henriet J., G.A. van Ek, S.F. Blade and B.B. Singh, 1997. Quantitative assessment of traditional cropping systems in the Sudan savanna of northern Nigeria: I. Rapid survey of prevalent cropping systems. Samaru Journal of Agricultural Research.14:37-45.</li>
+        <li data-decade="1990" data-n="103"><span class="pub-n">103.</span> Singh, B.B. and S.A. Tarawali 1997. Cowpea and its improvement: Key to sustainable mixed crop/livestock farming systems in West Africa. pages 79-100. in: Renard, C. (ed.) Crop Residues in Sustainable Mixed Crop/livestock Farming Systems CAB International in association with ICRISAT and ILRI, Oxon, U.K.</li>
+        <li data-decade="1990" data-n="104"><span class="pub-n">104.</span> Singh, B.B., O.l Chambliss and B. Sharma 1997. Recent advances in cowpea breeding, pages 30-49. in: Singh B.B., D.R. Mohan Raj, K. Dashiell and L.E.N. Jackai (eds.) 1997. Advances in cowpea research. Copublication of International Institute of Tropical Agriculture (IITA) and Japan International Center for Agricultural Sciences (JIRCAS), IITA, Ibadan, Nigeria.</li>
+        <li data-decade="1990" data-n="105"><span class="pub-n">105.</span> Fery R.L. and B.B. Singh 1997. Cowpea genetics a regiew of the recent literative pages. 13-29, in: Singh B.B., D.R. Mohan Raj, K. Dashiell and L.E.N. Jackai (eds.) 1997. Advances in cowpea research. Copublication of International Institute of Tropical Agriculture (IIAT) and Japan International Center for Agricultural Sciences (JIRCAS), IITA, Ibadan, Nigeria.</li>
+        <li data-decade="1990" data-n="106"><span class="pub-n">106.</span> Mortimore, M.J., B.B. Singh, F. Harris and S.B. Blade 1997. cowpea in traditional cropping systems pages. 99-113 in: Singh B.B., D.R. Mohan Raj, K. Dashiell and L.E.N. Jackai (eds.) 1997. Advances in cowpea research. Copublication of International Institute of Tropical Agriculture (IITA) and Japan International Center for Agricultural Sciences (JIRCAS), IITA, Ibadan, Nigeria.</li>
+        <li data-decade="1990" data-n="107"><span class="pub-n">107.</span> Blade S.F, S.V.R. shetty, T. Terao and B.B. Singh 1997. Recent developments in cowpea cropping systems research pages 114-128. in: Singh B.B., D.R. Mohan Raj, K. Dashiell and L.E.N. Jackai (eds.) 1997. Advances in cowpea research. Copublication of International Institute of Tropical Agriculture (IITA) and Japan International Center for Agricultural Sciences (JIRCAS), IITA, Ibadan, Nigeria.</li>
+        <li data-decade="1990" data-n="108"><span class="pub-n">108.</span> Terao, T., I. Watanabe, R. Matsunaga, S. Hakoyama and B.B. Singh 1997. Agro-physiological constraints in intercropped cowpea: An analysis, pages 129-140. in: Singh B.B., D.R. Mohan Raj, K. Dashiell and L.E.N. Jackai (eds.) 1997. Advances in cowpea research. Copublication of International Institute of Tropical Agriculture (IITA) and Japan International Center for Agricultural Sciences (JIRCAS), IITA, Ibadan, Nigeria.</li>
+        <li data-decade="1990" data-n="109"><span class="pub-n">109.</span> Watanabe, I., S. Hakoyama, T. Terao and B.B. Singh 1997. Evaluation methods for drought tolerance in cowpea, pages 141-146. in: Singh B.B., D.R. Mohan Raj, K. Dashiell and L.E.N. Jackai (eds.) 1997. Advances in cowpea research. Copublication of International Institute of Tropical Agriculture (IITA) and Japan International Center for Agricultural Sciences (JIRCAS), IITA, Ibadan, Nigeria.</li>
+        <li data-decade="1990" data-n="110"><span class="pub-n">110.</span> Singh B.B. and A.M. Emechebe 1997. Advances in research on cowpea Striga and Alectra pages 215-230. in: Singh B.B., D.R. Mohan Raj, K. Dashiell and L.E.N. Jackai (eds.) 1997. Advances in cowpea research. Copublication of International Institute of Tropical Agriculture (IITA) and Japan International Center for Agricultural Sciences (JIRCAS), IITA, Ibadan, Nigeria.</li>
+        <li data-decade="1990" data-n="111"><span class="pub-n">111.</span> Bottenberg, H. M. Tamo, D. Arodokoun, L.E.N. Jackai and B.B. Singh 1997. Population dynamics and migration of cowpea pests in northern Nigeria: implications for intergrated pest management, pages 271-284. in: Singh B.B., D.R. Mohan Raj, K. Dashiell and L.E.N. Jackai (eds.) 1997. Advances in cowpea research. Publication of International Institute of Tropical Agriculture (IITA) and Japan International Center for Agricultural Sciences (JIRCAS), IITA, Ibadan, Nigeria.</li>
+        <li data-decade="1990" data-n="112"><span class="pub-n">112.</span> Tarawali, S.A., B.B. Singh, M. Peters and S.F. Blade 1997. Cowpea haulms as fodder, pages 313-325. in: Singh B.B., D.R. Mohan Raj, K. Dashiell and L.E.N. Jackai (eds.) 1997. Advances in cowpea research. Copublication of International Institute of Tropical Agriculture (IITA) and Japan International Center for Agricultural Sciences (JIRCAS), IITA, Ibadan, Nigeria.</li>
+        <li data-decade="1990" data-n="113"><span class="pub-n">113.</span> Ng, N.Q. and B.B. Singh 1997. Cowpea. p. 82-99 in: Fuccillo, D., L. Sears and P. Stapleton (eds). Biodiversity and Trust. Cambridge University Press, U.K.</li>
+        <li data-decade="1990" data-n="114"><span class="pub-n">114.</span> Emechebe, A.M. and B.B. Singh. 1997. Technology options and research challenges to increase cowpea production under Striga and drought stress in the semi-arid Africa. p. 207-217 in: Bezuneh, T., A.M. Emechebe, J. Sedgo and M. Ouedraogo (ed.) 1997. Technology options for sustainable agricultural production in sub-Saharan Africa. OAU/STRC-SAFGRAD, Ouagadougou, Burkina Faso.</li>
+        <li data-decade="1990" data-n="115"><span class="pub-n">115.</span> Singh B.B. and S.F. Blade. 1997. Potential of dry season cowpea in West Africa. p. 227-233 in : Bezuneh, T., A.M. Emechebe, J. Sedgo and M. Ouedraogo (ed.) 1997. Technology options for sustainable agricultural production in sub-Saharan Africa OAU/STRC-SAFGRAD, Ouagadougou, Burkina Faso.</li>
+        <li data-decade="1990" data-n="116"><span class="pub-n">116.</span> Singh, B.B., H. Ajeigbe, S.G. Mohammed and A.J.G. van Gastel 1997. Farmer to farmer diffusion of cowpea seed in northern Nigeria. P. 180-187, in: Rohrbach, D.D., Z. Bishaw and S.J.G. van Gastel (eds.) 1997. Alternative stragegies for small holder seed supply ICRISAT, India</li>
+        <li data-decade="1990" data-n="117"><span class="pub-n">117.</span> Tarawali, S.A., B.B. Singh, S. Farnandez-Rivera and M. Peters, J.W. Smith, R. Schutze-Kraft and H.A. Ajeigbe 1997. Optimizing the contribution of cowpea to food and fodder production in crop livestock systems in West Africa. pages 53-54, In the Proceeding of International Grassland Congress Canada, June, 1977.</li>
+        <li data-decade="1990" data-n="118"><span class="pub-n">118.</span> Singh, B.B., I.D.K. Atokple and A.M. Emechebe 1997. Controlling Striga and Alectra on cowpea by host plant resistance. pp. 32-35, in: Lagoke, S.T.O., L.E. van der Straten and S.S. M&#x27;Boob (eds). 1997. Integrated Management of Striga for he African Farmers, Proceedings, 3rd General Workshop of the Pan-African Striga Control Network (PASCON), 18-23 October 1993, Harare Zimbabwe. 157 pp. Accra (Ghana): FAO.</li>
+        <li data-decade="1990" data-n="119"><span class="pub-n">119.</span> Lagoke, S.T.O., J.Y. Shebayan, I. Magani, P. Olorunju, O.O. Olufajo, K.A. Elemo, I. Uvah, a.A. Adeoti, P.S. Chindo, I. Kureh, S. Jatau, A.M. Emechebe, W. B. Ndahi, S.K. Kim, G. Weber, B.B. Singh, C. Odion, and A. Avan 1997. Striga problem and development of appropriate control technologies in various crops in Nigeria. pp. 89-100, in: Lagoke, S.T.O., L.E. van der Straten and S.S. M&#x27;Boob (eds). 1997. Integrated Management of Striga for he African Farmers, Proceedings, 3rd General Workshop of the Pan-African Striga Control Network (PASCON), 18-23 October 1993, Harare Zimbabwe. 157 pp. Accra (Ghana): FAO.</li>
+        <li data-decade="1990" data-n="120"><span class="pub-n">120.</span> Singh, B.B., and Emechebe, A.M. 1998. Increasing productivity of millet-cowpea intercropping systems. Pages 68-75 in: pearl millet in Nigeria agriculture: production, utilization and research priorities. Proceedings of the Pre-season Planning Meeting for the Nationally Coordinated Research Programme for Pearl Millet, Maiduguri, 21-24 April 1997. [Emechebe, A.M., Ikwelle, M.C., Ajayi, O., Aminu Kano, M., and Anaso, A.B. eds.]. Lake Chad Research Institute, P.M.B. 1239, Maiduguri, Nigeria.</li>
+        <li data-decade="1990" data-n="121"><span class="pub-n">121.</span> Allen, D.J., G. Thottappilly, A.M. Emechebe and B.B. Singh 1998. Diseases of cowpea. p. 267-324 in: Allen, D.J. and J.M. Lene (eds.). The pathology of food and pasture legumes. CAB Intl. Wallingford, U.K.</li>
+        <li data-decade="1990" data-n="122"><span class="pub-n">122.</span> Singh, B.B. and H.K. Adu-Dapaah 1998. A partial male sterile mutant in cowpea. African Crop Science Journal 6:97-101.</li>
+        <li data-decade="1990" data-n="123"><span class="pub-n">123.</span> Bottenberg,H., M. Tamo and B.B.Singh 1998. Occurrence of phytophagous insects on wild Vigna sp. and cultivated cowpea: comparing the relative importance of host-plant resistance and millet intercropping. Agriculture, Ecosystems and Environment 70:217-229</li>
+        <li data-decade="1990" data-n="124"><span class="pub-n">124.</span> Okosun, L.A., M.E. Aken’ova and B.B. Singh 1998.. Screening for drought tolerance at seedling stage in cowpea (Vigna unguiculata (L.) Walp. II. Selecting for root length and recovery ability traits. Journal of Arid Agriculture 8, 11-20.</li>
+        <li data-decade="1990" data-n="125"><span class="pub-n">125.</span> Okosun, L.A., M.E. Aken’ova and B.B. Singh 1998. Screening for drought tolerance at seedling stage in cowpea (Vigna unguiculata (L.) Walp I. The significance of the trait permanent wilting percentage. Journal of Arid Agriculture 8, 1-10</li>
+        <li data-decade="1990" data-n="126"><span class="pub-n">126.</span> Singh, B.B., Y. Mai-Kodomi and T. Terao. 1999. A simple screening method for drought tolerance in cowpea. Indian J. Genet., 59: 211-220.</li>
+        <li data-decade="1990" data-n="127"><span class="pub-n">127.</span> Singh, B.B. and K. Dashiell 1999.Cowpea and soybean seed production. P141-150 . in: Aliyu, A.A. Joshua and P.O. Oyekan (eds.).Seed Technology. NARP, Federal Ministry of Agric., Abuja ,Nigeria.</li>
+        <li data-decade="1990" data-n="128"><span class="pub-n">128.</span> Inaizumi, H., B.B.Singh, P.C.Sanginga, V.M.Manyong, A.A.Adesina and S. Tarawali. 1999. Adoption and Impact of dry season dual purpose cowpea in the semi-arid zone of northern Nigeria. IITA. Impact Series.14 pp, IITA, Ibadan, Nigeria</li>
+        <li data-decade="1990" data-n="129"><span class="pub-n">129.</span> Mai-Kodomi, Y., B.B. Singh, O. Myers, Jr., J. H. Yopp, P.J. Gibson and T. Terao. 1999. Two mechanisms of drought tolerance in cowpea. Indian J. Genet., 59: 309-316.</li>
+        <li data-decade="1990" data-n="130"><span class="pub-n">130.</span> Mai-Kodomi, Y., B.B. Singh, T. Terao, O. Myers Jr., J.H. Yopp and P.J. Gibson. 1999. Inheritance of drought tolerance in cowpea, Indian J. Genet., 59: 317-332.</li>
+        <li data-decade="1990" data-n="131"><span class="pub-n">131.</span> Singh, B.B,, Y. Mai-Kodomi and T. Terao. 1999. Relative drought tolerance of major rainfed crops of the semi-arid tropics. Indian J. Genet., 59:1-8.</li>
+        <li data-decade="1990" data-n="132"><span class="pub-n">132.</span> Singh, B.B. and K. Dashiell 1999.Cowpea and soybean seed production. P141-150 . in: Aliyu, A.A. Joshua and P.O. Oyekan (eds.).Seed Technology. NARP, Federal Ministry of Agric., Abuja ,Nigeria.</li>
+        <li data-decade="1990" data-n="133"><span class="pub-n">133.</span> Blhahut, G.R. and B.B. Singh 1999. Achishiru cowpeas in Central Nigeria. I. Origin, diversity and production practices. Samaru Journal of Agricultural Research 15:21-28.</li>
+        <li data-decade="1990" data-n="134"><span class="pub-n">134.</span> Singh, B.B,. and G.R. Blahut. 1999. Achishiru cowpeas in central Nigeria II. Evaluation of improved breeding lines at different locations. Samaru Journal of Agricultural Research. 15:29-33.</li>
+        <li data-decade="1990" data-n="135"><span class="pub-n">135.</span> Adu-Dapaah, H.K.,B.B. Singh and C.Fatokun 1999. A fascinated mutant in cowpea ( Vigna unguiculata (L.) Walp.). Acta-Agronomica- Hungarica 47:371-376</li>
+        <li data-decade="2000" data-n="136"><span class="pub-n">136.</span> Kolawale, G.O., G. Tian and B.B. Singh. 2000. Differential response of cowpea varieties to Aluminum and phosphorus application . Journal of Plant Nutrition .23:731-740</li>
+        <li data-decade="2000" data-n="137"><span class="pub-n">137.</span> Sanginga, N., O. Lyasse and B.B. Singh. 2000. Phosphorus use efficiency and nitrogen balance of cowpea breeding lines in a low P soil of the derived savanna zone in West Africa. Plant and Soil 220:119-128</li>
+        <li data-decade="2000" data-n="138"><span class="pub-n">138.</span> Singh, B.B. and M.F.Ishiaku.2000. Genetics of rough seed coat texture in cowpea. Journal of Heredity.91:170-174.</li>
+        <li data-decade="2000" data-n="139"><span class="pub-n">139.</span> van Boxtel,J., B.B. Singh, G .Thottappilly and A.J.Maule.2000. Resistance of (Vigna unguiculata (L.) Walp.) breeding lines to blackeye cowpea mosaic and cowpea aphid borne mosaic poty virus isolates under experimental conditions. Journal of Plant Disease and Protection. 107: 197-204.</li>
+        <li data-decade="2000" data-n="140"><span class="pub-n">140.</span> Singh,B.B..2000. Successful farmer to farmer diffusion of improved cowpea seeds in northern Nigeria .The Newsletter of West Africa Seed Network. 5:20</li>
+        <li data-decade="2000" data-n="141"><span class="pub-n">141.</span> Singh, B.B. 2000. Breeding cowpea varities with combined resistance to different strains of Striga gesnerioides . pages 261-270, In: B.I.G. Haussman, D.E. Hess, M.L. Koyama, L Grivet, H.F.W. Rattunde and H.H. Geiger (eds.),2000. Breeding for Striga Resistance in Cereals. Proceedings of a workshop held at I.I resistance to T.A., Ibadan, Nigeria from Aug.18-20,1999. Margraf Verlag, Weikersheim, Germany.</li>
+        <li data-decade="2000" data-n="142"><span class="pub-n">142.</span> Singh, B.B. 2000. Breeding cowpea varieties for wide adaptation by minimizing genotype x environment interactions. pages 173-181 in Ekanayake, I.J. and R. Ortiz (eds.).Genotype x environment interactions analysis of IITA mandate crops in sub-Saharan Africa. International Institute of Tropical Agriculture, Ibadan, Nigeria.</li>
+        <li data-decade="2000" data-n="143"><span class="pub-n">143.</span> Mustapha, O.T., S.G. Mohammed and B.B. Singh. 2000. Inheritance of resistance to root-knot nematode in cowpea(Vigna unguiculata (L.) Walp.). Biosience Research Communications 12:287-290</li>
+        <li data-decade="2000" data-n="144"><span class="pub-n">144.</span> Mohammed, S.G., B.B.Singh and O.T.Mustapha. 2000. An evaluation of variation for root-knot nematode resistance in cowpea (Vigna unguiculata). Nigerian Journal of Botany 13: 31-37</li>
+        <li data-decade="2000" data-n="145"><span class="pub-n">145.</span> Kushwaha, S., S.A.Musa, B.B.Singh and J. Lowenberg-Deboer. 2000. Problems mitigating against effective cowpea marketing in Nigeria. Journal of Scientific Research 50: 201-210</li>
+        <li data-decade="2000" data-n="146"><span class="pub-n">146.</span> Ishiyaku, M.F. and B.B. Singh. 2001. Inheritance of shortday induced dwarfing in photosensitive cowpeas. African Crop Science Journal 9:1-8</li>
+        <li data-decade="2000" data-n="147"><span class="pub-n">147.</span> Carsky, R.J., B.B. Singh and B. Oyewole. 2001. Contribution of early season cowpea to late season maize in the savanna zone of West Africa. Biological Agriculture &amp; Horticulture 18:303-316</li>
+        <li data-decade="2000" data-n="148"><span class="pub-n">148.</span> Ajeigbe,H.A.,S.G.Mohammed, B.B.Singh and S.A.Tarawali.2001. Crop- Livestock integration for sustainable agricultural production in sub-Saharan Africa- A prognosis. Journal of Sustainable Tropical Agricultural Research. 1:1-9</li>
+        <li data-decade="2000" data-n="149"><span class="pub-n">149.</span> Kristjanson, P., I. Okike, S.T.Tarawali and B.B.Singh. 2001.Adoption and impact of improved cowpea on food and feed and livelihoods in African dry savanna zone. Agriculture, Ecosystems and Environment 59:79-98</li>
+        <li data-decade="2000" data-n="150"><span class="pub-n">150.</span> Cheng-Dao, Li., C.A. Fatokun, B. Ubi, B.B. Singh and G.J.Scoles.2001. Determining genetic similarities and relationships among cowpea breeding lines and cultivars by microsatellite markers. Crop Science 41:189-197</li>
+        <li data-decade="2000" data-n="151"><span class="pub-n">151.</span> Singh, B.B., and H.A. Ajeigbe. 2001. Breeding improved cowpea varieties for different cropping systems and agro-ecologies in West Africa. African Crop Science Proceedings 5: 35-41</li>
+        <li data-decade="2000" data-n="152"><span class="pub-n">152.</span> Singh, B.B. 2001. Genetic variability for physical properties of cowpea seeds and their effect on cooking quality. African Crop Science Proceedings 5: 43-46</li>
+        <li data-decade="2000" data-n="153"><span class="pub-n">153.</span> Singh, B.B. 2001. Genetic variability for drought tolerance, heat tolerance and root architecture in cowpea. African Crop Science Proceedings 5: 47-50</li>
+        <li data-decade="2000" data-n="154"><span class="pub-n">154.</span> Kristjanson, P., S. Tarawali, I. Okike, B.B.singh, P.K.Thornton, V.M. Manyong, K.Kruska and G. Hoogenboom. 2002. Genetically improved dual-purpose cowpea. ILRI Impact Assessment Series N0.9, Sept.2002. ILRI/IITA Joint Publication. ILRI,Nairobi, Kenya. .</li>
+        <li data-decade="2000" data-n="155"><span class="pub-n">155.</span> Kristjanson, P., I.Okike, S.A.Tarawali, R. Kruska, V.M.Manyong and B.B.Singh. 2002. Evaluating adoption of new crop-livestock-soil management technologies using georeferenced village-level data : The case of cowpea in the dry savannas of West Africa. Pages 169-180. In Barrett, C.B., F. Place and A.A. Aboud (eds.). Natural Resources Management in African Agriculture. CAB International 2002</li>
+        <li data-decade="2000" data-n="156"><span class="pub-n">156.</span> Singh, B.B. 2002. Recent genetic studies in cowpea. Pages 3-13. In Fatokun, C.A., S.A.Tarawali, B.B.Singh, P.M.Kormawa and M. Tamo (editors).2002. Challenges and opportunities for enhancing sustainable cowpea production. IITA, Ibadan, Nigeria</li>
+        <li data-decade="2000" data-n="157"><span class="pub-n">157.</span> Singh, B.B., J.D. Ehlers, B. Sharma and F.R. Freire-Filho.2002. Recent progress in cowpea breeding. Pages 22-40. In Fatokun, C.A., S.A.Tarawali, B.B.Singh, P.M.Kormawa and M. Tamo (editors).2002. Challenges and opportunities for enhancing sustainable cowpea production. IITA, Ibadan, Nigeria</li>
+        <li data-decade="2000" data-n="158"><span class="pub-n">158.</span> Singh, B.B. 2002. Breeding cowpea varieties for resistance to Striga gesnerioides and Alectra vogelii. Pages 154-166. In Fatokun, C.A., S.A.Tarawali, B.B.Singh, P.M.Kormawa and M. Tamo (editors).2002. Challenges and opportunities for enhancing sustainable cowpea production. IITA, Ibadan, Nigeria</li>
+        <li data-decade="2000" data-n="159"><span class="pub-n">159.</span> Tarawali, S.A., B.B. Singh, S.C. Gupta, R. Tabo, F. Harris, S. Nokoe, S. Fernandez Rivera, A. Bationo, V.M. Manyong, and E.C. Odion 2002. Cowpea as a key factor for a new approach to integrated crop-livestock system research in the dry savannas of West Africa. Pages 233-251. In Fatokun, C.A., S.A.Tarawali, B.B.Singh, P.M.Kormawa and M. Tamo (editors).2002. Challenges and opportunities for enhancing sustainable cowpea production. IITA, Ibadan, Nigeria</li>
+        <li data-decade="2000" data-n="160"><span class="pub-n">160.</span> Olufajo O.O., and B.B. Singh. 2002. Advances in cowpea cropping systems research. Pages 267-277. In Fatokun, C.A., S.A.Tarawali, B.B.Singh, P.M.Kormawa and M. Tamo (editors).2002. Challenges and opportunities for enhancing sustainable cowpea production. IITA, Ibadan, Nigeria</li>
+        <li data-decade="2000" data-n="161"><span class="pub-n">161.</span> Singh, B.B. and H.A. Ajeigbe. 2002. Improving cowpea-cereals-based cropping systems in the dry savannas of West Africa. Pages 278-286. In Fatokun, C.A., S.A.Tarawali, B.B.Singh, P.M.Kormawa and M. Tamo (editors).2002. Challenges and opportunities for enhancing sustainable cowpea production. IITA, Ibadan, Nigeria</li>
+        <li data-decade="2000" data-n="162"><span class="pub-n">162.</span> Singh, B.B. and T. Matsui 2002. Breeding cowpea varieties for drought tolerance. Pages 287-300. In Fatokun, C.A., S.A.Tarawali, B.B.Singh, P.M.Kormawa and M. Tamo (editors).2002. Challenges and opportunities for enhancing sustainable cowpea production. IITA, Ibadan, Nigeria</li>
+        <li data-decade="2000" data-n="163"><span class="pub-n">163.</span> Kolawole, G.O., G. Tian and B.B. Singh 2002. Differential response of cowpea lines to P fertilizer. Pges319-328. In Fatokun, C.A., S.A.Tarawali, B.B.Singh, P.M.Kormawa and M. Tamo (editors).2002. Challenges and opportunities for enhancing sustainable cowpea production. IITA, Ibadan, Nigeria</li>
+        <li data-decade="2000" data-n="164"><span class="pub-n">164.</span> Okike, I., P. Kristjanson, S. Tarawali, B.B. Singh, R. Kruska and V.M. Manyong 2002. Potential adoption and diffusion of improved dual-purpose cowpea in the dry savannas of Nigeria: an evaluation using a combination of participatory and structured approaches. Pages 387-406. In Fatokun, C.A., S.A.Tarawali, B.B.Singh, P.M.Kormawa and M. Tamo (editors).2002. Challenges and opportunities for enhancing sustainable cowpea production. IITA, Ibadan, Nigeria.</li>
+        <li data-decade="2000" data-n="165"><span class="pub-n">165.</span> Ortiz, R., I.J.Ekanayake, V. Mahalakshmi, A. Kamara, A. Menkir, S.N.Nigam, B.B.Singh and N.P.Saxena. 2002. Development of drought resistant and water-stressed tolerant crops through traditional breeding. Pages-11-21. in Yajima,M., K. Okada and N. Matsumoto (eds.). Water for sustainable agriculture in developing regions-more crop for every scarce drop. Proceedings of the 8th JIRCAS Intl. Symposium, Sukuba, 27-28 Nov. 2001. JIRCAS Series no.10. Japan.</li>
+        <li data-decade="2000" data-n="166"><span class="pub-n">166.</span> Fatokun, C.A., S.A.Tarawali, B.B.Singh, P.M.Kormawa and M.Tamo (editors). 2002. Challenges and opportunities for enhancing sustainable cowpea production. IITA, Ibadan, Nigeria</li>
+        <li data-decade="2000" data-n="167"><span class="pub-n">167.</span> Yilwa, V.M., O.P.Ifenkwe and B.B.Singh. 2002. Genetic association between plant pigmentation and flower color in cowpea. Nigerian Journal of Botany 15:57-61</li>
+        <li data-decade="2000" data-n="168"><span class="pub-n">168.</span> Matsui, T. and B. B .Singh. 2003. Root characteristics in cowpea related to drought tolerance in seedling stage. Experimental Agriculture 39:1-10</li>
+        <li data-decade="2000" data-n="169"><span class="pub-n">169.</span> Elawad, H.A.O. and B. B. Singh. 2003. Registration of Dahab Elgoz cowpea. Crop Science. 43: 1880</li>
+        <li data-decade="2000" data-n="170"><span class="pub-n">170.</span> Singh, B. B., H.A.Ajeigbe, S.A. Tarawali, S. Fernandez-Rivera and Musa Abubakar. 2003. Improving the production and utilization of cowpea as food and fodder. Field Crops Research 84:169-177</li>
+        <li data-decade="2000" data-n="171"><span class="pub-n">171.</span> Singh, B.B., P. Hartmann, C.Fatokun, M.Tamo, S.a.Tarawali and R.Ortiz. 2003. Recent progress in cowpea improvement. Chronica Horticulturae 43:8-12</li>
+        <li data-decade="2000" data-n="172"><span class="pub-n">172.</span> Carsky, R.J., C.Akakpo, B.B.Singh and J. Detongnon. 2003. Cowpea yield gain from resistance to Striga gesnerioides parasitism in southern Benin. Experimental Agriculture 39: 327-333</li>
+        <li data-decade="2000" data-n="173"><span class="pub-n">173.</span> Sanginga, N., K.E.Dashiell, J.Diels, B.Vanalue, O.Lyasse, R.J.Carsky, S.Tarawali, B.Asafo-Adjei, A.Menkir, S.Schulz, B.B.Singh, D.Chikoye, D.Keatinge, and R.Ortiz. 2003. Sustainable resource management coupled to resilient germplasm to provide new intensive cereal-grain legume-livestock systems in the dry savanna. Agriculture, Ecosystem and Environment 100:305-314.</li>
+        <li data-decade="2000" data-n="174"><span class="pub-n">174.</span> Ishiyaku, M.F. and B.B.Singh 2003. Genetics of juvenile phase in cowpea [ Vigna unguiculata (L.) Walp.]. Journal of Food, Agriculture &amp; Environment 1: 133-136</li>
+        <li data-decade="2000" data-n="175"><span class="pub-n">175.</span> Ishiyaku, M.F. and B.B.Singh. 2004. Inheritance of purple pigmentation on vegetative parts in cowpea (Vigna unguiculata (L.) Walp.). Scientia Horticulturae 102: 369-373</li>
+        <li data-decade="2000" data-n="176"><span class="pub-n">176.</span> Ishiyaku, M.F. and B.B.Singh. 2004. Genetic studies and transgressive segregation for large seeds in cowpea. MAURIK Bulletin 6: 10-14</li>
+        <li data-decade="2000" data-n="177"><span class="pub-n">177.</span> Boukar, O., L. Kong, B.B. Singh, L. Murdock, and H.W. Ohm. 2004. AFLP and AFLP-derived SCAR markers associated with Striga gesnerioides resistance in cowpea (Vigna unguiculat (L.) Walp.). Crop Science 44: 1259-1264</li>
+        <li data-decade="2000" data-n="178"><span class="pub-n">178.</span> Yilwa, V.M., O.P.Ifenkwe and B.B.Singh. 2004. Genetic association of flower colour and pod-pigmentation in cowpea. Nigerian Journal of Experimental and Applied Biology. 5:91-95</li>
+        <li data-decade="2000" data-n="179"><span class="pub-n">179.</span> Yilwa, V.M., O.P.Ifenkwe and B.B.Singh. 2004. Inheritance of purple colour pigmentation in cowpea flowers. Nigerian Journal of Botany 17:119-127</li>
+        <li data-decade="2000" data-n="180"><span class="pub-n">180.</span> Singh, B.B., F.Hakizimana, R. Ortiz and E.A.Kueneman. 2004. Soybean production and utilization in Africa. Pages 56-70. In F.Moscardi, C.B.H-Campo, O.F.Saraiva, P.R.Galerani,F.C.Krzyzanowsky, and M.C.C-Panizzi (eds.). VII World Soybean Conference Proceedings, Feb.29-March 5, 2004, Foz du Iguassu, PR, EMBRAPA, Brazil,</li>
+        <li data-decade="2000" data-n="181"><span class="pub-n">181.</span> Singh, B.B., H.A.Ajeigbe, C.Endondo, I.B.Mohammed and O.O.Olufajo. 2004. An improved planting pattern for cowpea-based intercrops in West Africa. Pages 67-68. In Proceedings of 5th European Conference on Grain Legumes and 2nd International Conference on Legume Genomics and Genetics held at Dijon, France, June 7-11, 2004. European Association for Grain Legume Research (AEP), Paris, France.</li>
+        <li data-decade="2000" data-n="182"><span class="pub-n">182.</span> Singh, B.B. 2004. Recent advances in cowpea genetics and breeding. Page 124. In Conference Handbook, 5th European Conference on Grain Legumes, held at Dijon, France, June 7-11, 2004. European Association for Grain Legume Research (AEP), Paris, France.</li>
+        <li data-decade="2000" data-n="183"><span class="pub-n">183.</span> Singh, B.B. 2004. Cowpea research, production and utilization: a global view. Page 370. In Conference Handbook, 5th European Conference on Grain Legumes, held at Dijon, France, June 7-11, 2004. European Association for Grain Legume Research (AEP), Paris, France.</li>
+        <li data-decade="2000" data-n="184"><span class="pub-n">184.</span> Kormawa, P.M., C.I. Ezedinma and B.B. Singh. 2004. Factors influencing farmer-to-farmer transfer of an improved cowpea variety in kano State, Nigeria. Journal of Agriculture and Rural Development in the Tropics and Subtropics 105: 1-13</li>
+        <li data-decade="2000" data-n="185"><span class="pub-n">185.</span> Kristjanson, P., I. Okike, S. Tarawali, B.B.Singh and V.M.Manyong. 2004. Farmers’ perceptions of benefits and factors affecting the adoption of improved dual-purpose cowpea in the dry savannas of Nigeria. Agricultural Economics. 32: 195-210</li>
+        <li data-decade="2000" data-n="186"><span class="pub-n">186.</span> Singh, B.B., A. Larbi, R.Tabo and A.G.O.Dixon. 2004. Trends in development of crop varieties for improved crop-livestock systems in West Africa. Pages 371-388. In: Williams T.O., S.A.Tarawali, P.Hierneux and S. Fernandez-Rivera (eds.), Sustainable crop-livestock production for improved livelihoods and natural resource management in West Africa. Proc. of Intl. Conference, held at IITA, Ibadan, Nov.19-21, 2001. Published by ILRI, Nairobi and CTA, The Netherlands. 2004</li>
+        <li data-decade="2000" data-n="187"><span class="pub-n">187.</span> Mukhtar, F.B. and B.B.Singh. 2004. Growth response of photoperiod- sensitive and photoperiod-insensitive cowpea varieties to plant growth regulators treatments. Biological and Environmental J. for the Tropics. 1:79-86</li>
+        <li data-decade="2000" data-n="188"><span class="pub-n">188.</span> Asafo-Adjei, B. and B.B.Singh. 2005. Registration of ‘Ayiyi’ cowpea. Crop Science .: 45 : 2650-2651</li>
+        <li data-decade="2000" data-n="189"><span class="pub-n">189.</span> Asafo-Adjei, B. and B.B.Singh. 2005. Registration of ‘Bengpla’ cowpea. Crop Science .: 45 : 2649-2650</li>
+        <li data-decade="2000" data-n="190"><span class="pub-n">190.</span> Asafo-Adjei, B. and B.B.Singh and G. Atuahen-Amankwa. 2005. Registration of ‘Asontem’ cowpea. Crop Science .: 45 : 2649</li>
+        <li data-decade="2000" data-n="191"><span class="pub-n">191.</span> Toure, M.A. and B.B.Singh. 2005. Registration of ‘Korobalen’ cowpea. Crop Science .: 45 : 2648-2649</li>
+        <li data-decade="2000" data-n="192"><span class="pub-n">192.</span> Toure, M.A. and B.B.Singh. 2005. Registration of ‘Sangaraka’ cowpea. Crop Science .: 45 : 2648</li>
+        <li data-decade="2000" data-n="193"><span class="pub-n">193.</span> Ishiyaku, M.F. and B.B.Singh. 2005. Inheritance of time to flowering in cowpea (Vigna unguiculata (L.) Walp.). Euphytica 142 (3): 291-300.</li>
+        <li data-decade="2000" data-n="194"><span class="pub-n">194.</span> Singh, B.B. 2005. Breeding a range of cowpea varieties for different cropping systems and use patterns in the tropics: an overview. Proceedings of the 4th World Cowpea Conference, held on April 17-22, 2005, at Durban, South Africa.</li>
+        <li data-decade="2000" data-n="195"><span class="pub-n">195.</span> Singh, B.B., H.A.Ajeigbe, I.Ezeaku and I.B.Mohammad. 2005. Improved cowpea-based cropping systems for sustainable increase in food production and income generation in West Africa. Proceedings of the 4th World Cowpea Conference, held on April 17-22, 2005, at Durban, South Africa.</li>
+        <li data-decade="2000" data-n="196"><span class="pub-n">196.</span> Mukhtar, F.B. and B.B.Singh. 2005. Influence of photoperiod on growth, flowering and yield of cowpea ( Vigna unguiculata ( L.) Walp.). Biological and Environmental J. for the Tropics. 1:135-140</li>
+        <li data-decade="2000" data-n="197"><span class="pub-n">197.</span> Singh, B.B. 2005. Cowpea [Vigna unguiculata (L.) Walp. Pages 117-162. In Singh, R.J. and P.P.Jauhar (editors). Genetic Resources, Chromosome Engineering and Crop Improvement. Volume 1. 2005. CRC Press, Boca Raton, Florida, USA.</li>
+        <li data-decade="2000" data-n="198"><span class="pub-n">198.</span> Aliyu, B.S., A.M. Emechebe, and B.B. Singh. 2005. The cultural control of Striga hermonthica on pearl millet ( Pennisetum glaucum) through inter-row and intra-row intercropping with cowpea ( Vigna unguiculata). South Eastern Biology 52: 160</li>
+        <li data-decade="2000" data-n="199"><span class="pub-n">199.</span> Ajeigbe, H. A., B.B.Singh and E. Makeri. 2005. Cowpea as a multi purpose crop in Nigeria. Pages 65-68. In Olarewaju, J.D., M.D. Alegbejo ansd F.A.Showemimo ( eds.). Proceedings of the 22nd Annual Conference of the Horticultural Society of Nigeria held at Kano, July 4-9, 2004. HORTSON, Ibadan.</li>
+        <li data-decade="2000" data-n="200"><span class="pub-n">200.</span> Mukhtar, F.B. and B.B. Singh. 2003 (appeared in 2005). Planting season effects on growth, yield and harvest index of photosensitive and photo-insensitive cowpea varieties. Journal of Applied and Pure Science ( Nigeria) 1: 33-38</li>
+        <li data-decade="2000" data-n="201"><span class="pub-n">201.</span> Tarawali, S.A., I. Okike, P.K. Kristjanson, B.B. Singh and P. Thornton. 2005. Dual purpose cowpea for West Africa. Tropical Grasslands 39: 210</li>
+        <li data-decade="2000" data-n="202"><span class="pub-n">202.</span> Ajeigbe, H. A., B.B. Singh and T.O. Oseni, 2005. Cowpea-cereal intercrop productivity in the Sudan savanna zone of Nigeria as affected by planting pattern, crop variety and pest management. African Crop Science Journal13 : 269-279</li>
+        <li data-decade="2000" data-n="203"><span class="pub-n">203.</span> Singh, B.B. 2005. Till the cowpeas come home. Pages 6-7, In Fredenburg, P.F. ( editor). Scientists of the CGIAR. Published by CGIAR, Washington D.C. 2005 Mishra, SK., Singh, BB., Daya Chand., Meena, KN Sources for high temperature tolerant germplasm in cowpea (Vigna unguiculata L. Walp.). [Book chapter] Arid legumes for sustainable agriculture and trade: volume 1. Scientific Publishers (India), Jodhpur, India: 2005. 78-80.</li>
+        <li data-decade="2000" data-n="204"><span class="pub-n">204.</span> Dingkuhn, M., B.B.Singh, B. Clerget, J. Chantereau and B. Sultan. 2006. Past, present and future criteria to breed crops for water-limited environments in West Africa. Agricultural Water Management 80:241-261</li>
+        <li data-decade="2000" data-n="205"><span class="pub-n">205.</span> Ajeigbe, H.A., T.O.Oseni and B.B.Singh. 2006. Effect of planting pattern, crop variety and insecticide on the productivity of cowpea-cereal systems in Northern Guinea Savanna of Nigeria. J. Food, Agriculture &amp; Environment 4: 145- 150</li>
+        <li data-decade="2000" data-n="206"><span class="pub-n">206.</span> Singh, B.B. 2006. Success of soybean in India : The early challenges and pioneer promoters. Asian Agri-History 10: 43-53</li>
+        <li data-decade="2000" data-n="207"><span class="pub-n">207.</span> Ewansiha, S.U. and B.B. Singh. 2006. Relative drought tolerance of important herbaceous legumes and cereals in the moist and semi-arid regions of West Africa. J. Food, Agriculture &amp; Environment 4(2): 188-190</li>
+        <li data-decade="2000" data-n="208"><span class="pub-n">208.</span> Ajeigbe, H.A., S.G.Mohammed and B.B.Singh. 2006. Comparative assessment of yield potentials of improved cowpea breeding lines using performance index and ranking methods. J. Food, Agriculture &amp; Environment 4:95-98</li>
+        <li data-decade="2000" data-n="209"><span class="pub-n">209.</span> Singh, B.B. 2005. Breeding a range of cowpea varieties for different cropping systems and use pattern in the tropics: an overview. Proceedings of the 1st International Edible Legume Conference in conjunction with the IVth World Cowpea Congress, Durban, South Africa, 17-21 April 2005. pp. 1-10.</li>
+        <li data-decade="2000" data-n="210"><span class="pub-n">210.</span> Singh, B.B., O.O.Olufajo, M.F.Ishiyaku and R.A.Adeleke, H.A.Ajeigbe and S.G.Mohammed. 2006. Registration of NGVU-05-25 cowpea. Crop Science 46:2708-2079</li>
+        <li data-decade="2000" data-n="211"><span class="pub-n">211.</span> Mukhtar F.B. and B.B.Singh. 2006. Influence pf photoperiod and gibberellic acid (GA3) on growth and flowering of cowpea [ Vigna unduiculata (L.) Walp.]. Journal of Food, Agriculture &amp; Environment 4(2): 201-203</li>
+        <li data-decade="2000" data-n="212"><span class="pub-n">212.</span> Singh, B.B., M.F.Ishiyaku, R.A.Adeleke, H.Ajeigbe and S.G.Mohammed. 2006. Registration of six improved germplasm lines of cowpea with combined resistance to Striga gesnerioides and Alectra vogelii. Crop Science 46:2332-2333</li>
+        <li data-decade="2000" data-n="213"><span class="pub-n">213.</span> Ajeigbe, H. A., S. G. Mohammed and B. B. Singh, 2006. Comparative assessment of yield potentials of improved cowpea breeding lines using performance index and ranking methods. Journal of Food, Agriculture and Environment. Vol. 4 (3&amp;4):95-98, 2006</li>
+        <li data-decade="2000" data-n="214"><span class="pub-n">214.</span> Ajeigbe H. A. and B.B. Singh, 2006. Integrated Pest Management in Cowpea: Effect of Time and Frequency of Insecticide Application on Productivity. Crop Protection 25: 920-925</li>
+        <li data-decade="2000" data-n="215"><span class="pub-n">215.</span> Ajeigbe, H. A., T.O. Oseni, and B.B. Singh, 2006. Effect of planting pattern, crop variety and insecticide on the productivity of cowpea-cereal system in the Northern Guinea Savanna of Nigeria. Journal of Food, Agriculture and Environment Vol. 4:101-107. 2006</li>
+        <li data-decade="2000" data-n="216"><span class="pub-n">216.</span> Pandey, I.D. and B.B. Singh. 2006. Identification of early maturing grain type cowpea varieties for wheat-cowpea-rice based intensive cropping system. Pantnagar Journal of Research 4: 65-71</li>
+        <li data-decade="2000" data-n="217"><span class="pub-n">217.</span> Singh, B.B. and H. A. Ajeigbe. 2007. Improved Cowpea-cereals-Based Cropping Systems for Household Food Security and Poverty Reduction in West Africa. In: Kang, M.S. (ed) Agricultural and Environmental Sustainability, Consideration for the Future. pages 157-172,</li>
+        <li data-decade="2000" data-n="218"><span class="pub-n">218.</span> Abdul-Azeez, A., F.B. Mukhtar, and H.A. Ajeigbe, 2007. Effect of different types and level of organic and inorganic fertilizer on growth and yield of selected maize varieties: Environmental protection and food security through life sciences. Nigerian Society for Experimental Biology (NISEB), Proceedings of the 5th International Conference/AGm 28th February – 3rd March 2007, Kogi State University, Anyigba, Kogi State, Nigeria. Page 25-26</li>
+        <li data-decade="2000" data-n="219"><span class="pub-n">219.</span> Pandey, I.D., B.B. Singh and D. Kumar. 2007. Present status and future prospects of cowpea research in India. Journal of Arid Legumes 4: 26-30</li>
+        <li data-decade="2000" data-n="220"><span class="pub-n">220.</span> Singh, B.B. and H.A. Ajeigbe. 2007. Improved cowpea-cereals-based cropping systems for household food security and poverty reduction in West Africa. Journal of Crop Improvement 19: 157-172</li>
+        <li data-decade="2000" data-n="221"><span class="pub-n">221.</span> Singh, B.B. and J.A. Mligo. 2007. Registration of ‘Vuli-1’ cowpea. Crop Science 47: 437-438</li>
+        <li data-decade="2000" data-n="222"><span class="pub-n">222.</span> Singh, B.B. and H. A. Ajeigbe. Improved Cowpea-cereals-Based Cropping Systems for Household Food Security and Poverty Reduction in West Africa. Journal of Crop Improvement. Vol. 19, No.1/2 pages 157-172, 2007</li>
+        <li data-decade="2000" data-n="223"><span class="pub-n">223.</span> Singh, B.B. and J.A. Mligo. 2006. Registration of ‘Vuli-2’ cowpea. Journal of Plant registrations 1:47</li>
+        <li data-decade="2000" data-n="224"><span class="pub-n">224.</span> Singh, B.B., O.O.Olufajo, M.F.Ishiyaku and R.A.Adeleke, H.A.Ajeigbe and S.G.Mohammed. 2006. Registration of NGVU-98-21 cowpea.</li>
+        <li data-decade="2000" data-n="225"><span class="pub-n">225.</span> Singh, B.B., O.O.Olufajo, M.F.Ishiyaku and R.A.Adeleke, H.A.Ajeigbe and S.G.Mohammed. 2007. Registration of ‘NGVU-05-24’ cowpea. Journal of plant Registrations 1:48-49</li>
+        <li data-decade="2000" data-n="226"><span class="pub-n">226.</span> Pandey, I.D. and B.B.Singh. 2006. Identification of early maturing grain type cowpea varieties for wheat-cowpea-rice based intensive cropping system. Pantnagar J. of Research 4:65-71</li>
+        <li data-decade="2000" data-n="227"><span class="pub-n">227.</span> Singh, B.B. and H. A. Ajeigbe, 2007. Improved Cowpea-cereals-Based Cropping Systems for Household Food Security and Poverty Reduction in West Africa. Journal of Crop Improvement. Vol. 19, No.1/2 pages 157-172, 2007</li>
+        <li data-decade="2000" data-n="228"><span class="pub-n">228.</span> Singh, B.B. and H. A. Ajeigbe, 2007. Improved Cowpea-cereals-Based Cropping Systems for Household Food Security and Poverty Reduction in West Africa. In: M.S. Kang (Editor) Agricultural and Environmental Sustainability: considerations for the future. Haworth press Inc. USA. pages 157-172.</li>
+        <li data-decade="2000" data-n="229"><span class="pub-n">229.</span> H.A. Ajeigbe. T.O.Oseni, B.B.Singh and S.A. Tarawali, 2007. Effect of Different Cowpea-cereal row-row Planting Systems and Insecticide Sprays of Cowpea on the Quality of the Crop Residues. in: K. Z. Ahmed, M.A. Mahamoud, S.I. Shalabi, E.A.El-Morsi and H.A.M. Ismael (editors) African Crop Science Conference Proceedings, El-Minia, Egypt, 27-2-31 October, 2007.  Vol 8 part 2. p 1057-1062.</li>
+        <li data-decade="2000" data-n="230"><span class="pub-n">230.</span> Adati T, Tamo M, Yusuf SR, Downham MCA, Singh BB, and Hammond W (2008) Integrated pest management for cowpea-cereal cropping systems in the West African savannah. International Journal of Tropical Insect Science 27 (3/4): 123-137.</li>
+        <li data-decade="2000" data-n="231"><span class="pub-n">231.</span> Timko, M.P. and B.B. Singh. 2008. Cowpea, a multifunctional legume. In: Moore , P.H. and Ming, R. (eds), Genomics of Tropical Crop Plants, Springer Science + Business Media, LLC, New York , NY . pp. 227-258.</li>
+        <li data-decade="2000" data-n="232"><span class="pub-n">232.</span> H. A. Ajeigbe1*, B. B. Singh2 and A. M. Emechebe1 2008. Field evaluation of improved cowpea lines for resistance to bacterial blight, virus and striga under natural infestation in the West African Savannas . African Journal of Biotechnology Vol. 7 (20), pp. 3563-3568, 20 October, 2008</li>
+        <li data-decade="2000" data-n="233"><span class="pub-n">233.</span> Singh, B.B., H.A. Ajeigbe and Y.V.Singh . 2009. Breeding High Yielding Cowpea Varieties with Enhanced Quality and Nutritional Traits pages 39-47 . In Proceedings of the Anais do II CONAC : Congresso Nacional de Feijo-caupi. Held at Belem (PARA), Brazil Aug- 24-28, 2009</li>
+        <li data-decade="2010" data-n="234"><span class="pub-n">234.</span> Ajeigbe, H.A., B. B. Singh, I. E. Ezeaku and J. O. Adeosun, 2010. On-farm evaluation of improved cowpea-cereals cropping systems for crop- livestock farmers: Cereals-cowpea systems in Sudan Savanna zone of Nigeria. African Journal of Agricultural Research Vol. 5(17), pp. 2297-2304</li>
+        <li data-decade="2010" data-n="235"><span class="pub-n">235.</span> Singh, Y.V., M.K. Nautiyal, B.B.Singh, Bhawana Pandey and C.L.Sharma. 2010. Performance of short duration cowpea varieties for enhanced pulses production in different seasons under Tarai conditions of Uttarakhand. Pantnagar J. of Research 8:198-201</li>
+        <li data-decade="2010" data-n="236"><span class="pub-n">236.</span> Singh, B.B., A. Musa, H.A. Ajeigbe, and S.A. Tarawali. 2011. Effect of feeding crop residues of different cereals andlegumes on weight gain of Yankassa rams.International Journal of Livestock Production Vol. 2 (2), pp. 017-023,</li>
+        <li data-decade="2010" data-n="237"><span class="pub-n">237.</span> Saidou, A.K., R.C. Abaidoo, E.N.O. Iwuafor, N. Sanginga, and B.B. Singh. 2011. Genotypic variation in Cowpea (Vigna unguiculata L.) for rock phosphate in low phosphorous soils of dry Sudan and Sahel savannas of Niger and Nigeria, West Africa. American-Eurasian J. Agric. &amp; Environ. Sci. 11(1):62-70.</li>
+        <li data-decade="2010" data-n="238"><span class="pub-n">238.</span> Ajeigbe, H.A., R.S. Adamu and B.B. Singh 2012. Yield performance of cowpea as influenced by insecticide types and their combinations in the dry savannas of Nigeria. African Journal of Agricultural Research Vol. 7(44), pp. 5930 -5938</li>
+        <li data-decade="2010" data-n="239"><span class="pub-n">239.</span> Singh, B.B., M.P. Timko and F.L. Aragao. 2014. Advances in cowpea improvement and genomics. In: ‘Legumes in the Omic Era’ (eds., S. Gupta, N. Nadarajan and D. S. Gupta). Springer, N.Y., pp. 131-154.</li>
+        <li data-decade="2010" data-n="240"><span class="pub-n">240.</span> Verbree, D.A., B.B. Singh and W.A. Payne. 2014. Role of gas exchange, leaf water status and carbohydrate partitioning during the early vegetative stage on drought tolerance in cowpea. Crop Science 54: 770-778</li>
+        <li data-decade="2010" data-n="241"><span class="pub-n">241.</span> Singh, B.B. 2014. Cowpea : the food legume of the 21st century. Crop Science Society of America, Madison, Wisconsin, USA</li>
+        <li data-decade="2010" data-n="242"><span class="pub-n">242.</span> Verbree, D.A., B.B. Singh and W.A. Payne. 2015. Genetics and heritability of shoot drought tolerance in cowpea. Crop Science 55: 146-153</li>
+        <li data-decade="2010" data-n="243"><span class="pub-n">243.</span> Singh, B.B., Y. V. Singh, C. L. Sharma and M. K. Nautiyal. 2015. Sixty day cowpea: the best option for increasing pulses production in India. In Souvenir, Foundation Day 2015. G.B. Pant University of Agriculture and Technology, Pantnagar, India, pages 5-11.</li>
+        <li data-decade="2010" data-n="244"><span class="pub-n">244.</span> Singh, B.B. 2016. Genetic enhancement for yield and nutritional quality in cowpea [Vigna unguiculata (L.) Walp.]. Indian J. Genet., 76(4): 568-582</li>
+        <li data-decade="2010" data-n="245"><span class="pub-n">245.</span> Singh, B.B. 2018. Breeding improved varieties of cowpea. Pages-215-234. In Sivasankar, Shobha., David Bergvinson, Pooran Gaur, Shiv K. Agrawal, Steve Beebe, and Manuele Tamò (editors). Achieving Sustainable Cultivation of Grain Legumes Vol 2. Genetics, breeding, pests and diseases. Published by Burleigh Dodds Science Publishing Ltd. U.K.</li>
+    </ol>
+
+  </div>
+
+  <script>
+    (function () {
+      var tabs = document.querySelectorAll('.decade-btn');
+      var items = document.querySelectorAll('#pubList li');
+      var showing = document.getElementById('showing');
+
+      tabs.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          tabs.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+
+          var filter = btn.dataset.filter;
+          var count = 0;
+          items.forEach(function (li) {
+            var match = filter === 'all' || li.dataset.decade === filter;
+            li.hidden = !match;
+            if (match) { count++; }
+          });
+
+          if (filter === 'all') {
+            showing.textContent = 'Showing all 245 publications';
+          } else {
+            showing.textContent = 'Showing ' + count + ' publication' + (count === 1 ? '' : 's') + ' from the ' + filter + 's';
+          }
+        });
+      });
+    }());
+  </script>
+
+</body>
+</html>
