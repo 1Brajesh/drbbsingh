@@ -1274,8 +1274,14 @@
           })
           .then(function (r) {
             if (r.ok) {
+              form.reset();
+              submitBtn.disabled = false;
               form.hidden = true;
               if (thankyou) { thankyou.hidden = false; }
+              setTimeout(function () {
+                if (thankyou) { thankyou.hidden = true; }
+                form.hidden = false;
+              }, 5000);
             } else {
               submitBtn.disabled = false;
               if (errorEl) { errorEl.hidden = false; }
