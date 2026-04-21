@@ -354,6 +354,14 @@
         <button class="signout-btn" id="signoutBtn" type="button">Sign out</button>
       </div>
       <div id="pendingList"></div>
+
+      <!-- Published entries -->
+      <div style="margin-top:3.5rem;padding-top:3rem;border-top:1px solid rgba(201,169,110,0.12);">
+        <div class="pending-header">
+          <span class="pending-title" id="publishedTitle">Published</span>
+        </div>
+        <div id="publishedList"></div>
+      </div>
     </div>
 
   </div>
@@ -371,9 +379,11 @@
       var tokenBtn    = document.getElementById('tokenBtn');
       var tokenError  = document.getElementById('tokenError');
       var pendingPanel = document.getElementById('pendingPanel');
-      var pendingList  = document.getElementById('pendingList');
-      var pendingTitle = document.getElementById('pendingTitle');
-      var signoutBtn   = document.getElementById('signoutBtn');
+      var pendingList    = document.getElementById('pendingList');
+      var pendingTitle   = document.getElementById('pendingTitle');
+      var publishedList  = document.getElementById('publishedList');
+      var publishedTitle = document.getElementById('publishedTitle');
+      var signoutBtn     = document.getElementById('signoutBtn');
 
       // ── Auth ──────────────────────────────────────────────
       function getToken() {
@@ -426,6 +436,7 @@
         tokenGate.hidden = true;
         pendingPanel.hidden = false;
         loadPending();
+        loadPublished();
       }
 
       function loadPending() {
@@ -618,6 +629,104 @@
       // ── Helpers ───────────────────────────────────────────
       function setCardBusy(card, busy) {
         card.querySelectorAll('.btn').forEach(function (b) { b.disabled = busy; });
+      }
+
+      // ── Load published entries ────────────────────────────
+      function loadPublished() {
+        publishedList.innerHTML = '<p class="pending-empty" style="color:rgba(245,239,230,0.2)">Loading…</p>';
+        fetch('https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/remembrances.json?v=' + Date.now())
+          .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+          .then(function (data) {
+            var entries = Array.isArray(data) ? data : (data.entries || []);
+            publishedTitle.textContent = 'Published (' + entries.length + ')';
+            publishedList.innerHTML = '';
+            if (!entries.length) {
+              publishedList.innerHTML = '<p class="pending-empty">No published remembrances.</p>';
+              return;
+            }
+            entries.forEach(function (e, idx) {
+              publishedList.appendChild(buildPublishedCard(e, idx));
+            });
+          })
+          .catch(function () {
+            publishedList.innerHTML = '<p class="pending-empty" style="color:rgba(220,100,100,0.7)">Failed to load.</p>';
+          });
+      }
+
+      function buildPublishedCard(e, idx) {
+        var card = document.createElement('div');
+        card.className = 'submission-card';
+
+        var nameEl = document.createElement('p');
+        nameEl.className = 'card-name';
+        nameEl.textContent = e.name || '(no name)';
+
+        var connEl = document.createElement('p');
+        connEl.className = 'card-connection';
+        connEl.textContent = (e.connection ? e.connection + ' \u00B7 ' : '') + (e.date || '');
+
+        var msgEl = document.createElement('p');
+        msgEl.className = 'card-message';
+        msgEl.textContent = e.message || '';
+
+        var actions = document.createElement('div');
+        actions.className = 'card-actions';
+
+        var delBtn = document.createElement('button');
+        delBtn.className = 'btn btn-reject';
+        delBtn.textContent = 'Delete';
+        delBtn.type = 'button';
+
+        var statusEl = document.createElement('p');
+        statusEl.className = 'card-status';
+        statusEl.hidden = true;
+
+        delBtn.addEventListener('click', function () {
+          if (!confirm('Delete remembrance from ' + (e.name || 'unknown') + '? This cannot be undone.')) { return; }
+          delBtn.disabled = true;
+          statusEl.textContent = 'Deleting\u2026';
+          statusEl.hidden = false;
+          deleteEntry(idx, card, statusEl, delBtn);
+        });
+
+        actions.appendChild(delBtn);
+        card.appendChild(nameEl);
+        card.appendChild(connEl);
+        card.appendChild(msgEl);
+        card.appendChild(actions);
+        card.appendChild(statusEl);
+        return card;
+      }
+
+      function deleteEntry(idx, card, statusEl, delBtn) {
+        fetch(API + '/repos/' + REPO + '/contents/remembrances.json', { headers: authHeaders() })
+          .then(function (r) { return r.ok ? r.json() : Promise.reject('read-failed'); })
+          .then(function (file) {
+            var current = JSON.parse(atob(file.content.replace(/\n/g, '')));
+            var entries = Array.isArray(current) ? current : (current.entries || []);
+            entries.splice(idx, 1);
+            var updated = JSON.stringify({ entries: entries }, null, 2);
+            return fetch(API + '/repos/' + REPO + '/contents/remembrances.json', {
+              method: 'PUT',
+              headers: authHeaders(),
+              body: JSON.stringify({
+                message: 'Delete remembrance entry',
+                content: btoa(unescape(encodeURIComponent(updated))),
+                sha: file.sha,
+                branch: BRANCH
+              })
+            });
+          })
+          .then(function (r) { return r.ok ? r.json() : Promise.reject('write-failed'); })
+          .then(function () {
+            card.style.opacity = '0.3';
+            statusEl.textContent = '\u2713 Deleted.';
+            setTimeout(loadPublished, 1200);
+          })
+          .catch(function () {
+            statusEl.textContent = 'Error \u2014 please try again.';
+            delBtn.disabled = false;
+          });
       }
 
       // Auto-restore session if token in localStorage
