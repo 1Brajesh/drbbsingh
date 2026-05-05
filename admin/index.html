@@ -679,7 +679,7 @@
       }
 
       // ── Inline edit form ──────────────────────────────────
-      function buildEditForm(data, onSave) {
+      function buildEditForm(data, onSave, saveLabel) {
         var form = document.createElement('div');
         form.className = 'edit-form';
         form.innerHTML =
@@ -687,9 +687,14 @@
           '<div class="edit-field"><label class="edit-label">Connection</label><input class="edit-input" id="ef-conn"></div>' +
           '<div class="edit-field"><label class="edit-label">Message</label><textarea class="edit-textarea" id="ef-msg"></textarea></div>' +
           '<div class="edit-actions">' +
-            '<button class="btn btn-approve" type="button">Approve with edits</button>' +
+            '<button class="btn btn-approve" type="button">' + (saveLabel || 'Approve with edits') + '</button>' +
             '<button class="btn btn-reject" type="button" style="border-color:rgba(245,239,230,0.15);color:rgba(245,239,230,0.3)">Cancel</button>' +
           '</div>';
+
+        // Keep form interaction from toggling the card selection state.
+        form.addEventListener('click', function (e) {
+          e.stopPropagation();
+        });
 
         form.querySelector('#ef-name').value = data.name || '';
         form.querySelector('#ef-conn').value = data.connection || '';
@@ -805,8 +810,8 @@
               publishedList.innerHTML = '<p class="pending-empty">No published remembrances.</p>';
               return;
             }
-            entries.forEach(function (e) {
-              publishedList.appendChild(buildPublishedCard(e));
+            entries.forEach(function (e, index) {
+              publishedList.appendChild(buildPublishedCard(e, index));
             });
             deleteSelectedWrap.hidden = false;
             updateDeleteBtn();
@@ -840,9 +845,90 @@
           : 'Reject Selected';
       }
 
-      function buildPublishedCard(e) {
+      function entriesMatch(a, b) {
+        return !!a && !!b &&
+          (a.name || '') === (b.name || '') &&
+          (a.connection || '') === (b.connection || '') &&
+          (a.message || '') === (b.message || '') &&
+          (a.date || '') === (b.date || '');
+      }
+
+      function findEntryIndex(entries, target, preferredIndex) {
+        if (preferredIndex >= 0 && preferredIndex < entries.length && entriesMatch(entries[preferredIndex], target)) {
+          return preferredIndex;
+        }
+
+        for (var i = 0; i < entries.length; i++) {
+          if (entriesMatch(entries[i], target)) { return i; }
+        }
+
+        return -1;
+      }
+
+      function updatePublishedEntry(card, statusEl, edited) {
+        var original = {
+          name: card.dataset.name || '',
+          connection: card.dataset.connection || '',
+          message: card.dataset.message || '',
+          date: card.dataset.date || ''
+        };
+        var preferredIndex = parseInt(card.dataset.entryIndex, 10);
+
+        statusEl.textContent = 'Reading remembrances.json…';
+        statusEl.hidden = false;
+
+        fetch(API + '/repos/' + REPO + '/contents/remembrances.json', { headers: authHeaders() })
+          .then(function (r) { return r.ok ? r.json() : Promise.reject('read-failed'); })
+          .then(function (file) {
+            var current = JSON.parse(atob(file.content.replace(/\n/g, '')));
+            var entries = Array.isArray(current) ? current : (current.entries || []);
+            var entryIndex = findEntryIndex(entries, original, preferredIndex);
+
+            if (entryIndex === -1) {
+              return Promise.reject('entry-not-found');
+            }
+
+            entries[entryIndex] = {
+              name: edited.name,
+              connection: edited.connection,
+              message: edited.message,
+              date: original.date
+            };
+
+            statusEl.textContent = 'Saving changes…';
+
+            return fetch(API + '/repos/' + REPO + '/contents/remembrances.json', {
+              method: 'PUT',
+              headers: authHeaders(),
+              body: JSON.stringify({
+                message: 'Edit remembrance from ' + (edited.name || original.name || 'unknown'),
+                content: btoa(unescape(encodeURIComponent(JSON.stringify({ entries: entries }, null, 2)))),
+                sha: file.sha,
+                branch: BRANCH
+              })
+            });
+          })
+          .then(function (r) { return r.ok ? r.json() : Promise.reject('write-failed'); })
+          .then(function () {
+            statusEl.textContent = '✓ Saved. Reloading…';
+            setTimeout(loadPublished, 800);
+          })
+          .catch(function (err) {
+            statusEl.textContent = err === 'entry-not-found'
+              ? 'This entry changed on GitHub. Reload and try again.'
+              : 'Error: ' + (err || 'something went wrong') + '. Please try again.';
+            setCardBusy(card, false);
+          });
+      }
+
+      function buildPublishedCard(e, index) {
         var card = document.createElement('div');
         card.className = 'submission-card selectable';
+        card.dataset.entryIndex = String(index);
+        card.dataset.name = e.name || '';
+        card.dataset.connection = e.connection || '';
+        card.dataset.message = e.message || '';
+        card.dataset.date = e.date || '';
 
         var checkbox = document.createElement('div');
         checkbox.className = 'card-checkbox';
@@ -859,15 +945,45 @@
         msgEl.className = 'card-message';
         msgEl.textContent = e.message || '';
 
+        var actions = document.createElement('div');
+        actions.className = 'card-actions';
+
+        var editBtn = document.createElement('button');
+        editBtn.className = 'btn btn-edit';
+        editBtn.type = 'button';
+        editBtn.textContent = 'Edit';
+
+        var statusEl = document.createElement('p');
+        statusEl.className = 'card-status';
+        statusEl.hidden = true;
+
+        actions.appendChild(editBtn);
+
         card.appendChild(checkbox);
         card.appendChild(nameEl);
         card.appendChild(connEl);
         card.appendChild(msgEl);
+        card.appendChild(actions);
+        card.appendChild(statusEl);
 
         card.addEventListener('click', function () {
           card.classList.toggle('selected');
           checkbox.textContent = card.classList.contains('selected') ? '\u2713' : '';
           updateDeleteBtn();
+        });
+
+        editBtn.addEventListener('click', function (e2) {
+          e2.stopPropagation();
+          if (card.querySelector('.edit-form')) { return; }
+          var editForm = buildEditForm({
+            name: card.dataset.name,
+            connection: card.dataset.connection,
+            message: card.dataset.message
+          }, function (edited) {
+            setCardBusy(card, true);
+            updatePublishedEntry(card, statusEl, edited);
+          }, 'Save changes');
+          card.appendChild(editForm);
         });
 
         return card;
