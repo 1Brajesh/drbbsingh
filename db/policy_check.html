@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RLS policy check — remembrances</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  body { font: 14px/1.5 system-ui, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; color: #222; }
+  h1 { font-size: 18px; }
+  .test { padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #ddd; }
+  .pass { background: #e9f7ec; border-color: #6abf7a; }
+  .fail { background: #fbeaea; border-color: #c46b6b; }
+  .wait { background: #f4f4f4; }
+  pre  { margin: 6px 0 0; font: 12px/1.4 ui-monospace, monospace; white-space: pre-wrap; }
+  .label { font-weight: 600; }
+  button { padding: 8px 14px; font-size: 14px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<h1>Remembrances RLS policy check</h1>
+<p>This runs four tests against the live Supabase project as an anonymous client.
+Expect: <strong>3 passes, 1 expected-failure (self-approve blocked)</strong>.</p>
+
+<button id="run">Run tests</button>
+
+<div id="t1" class="test wait"><span class="label">1. Read approved rows</span><pre>not run</pre></div>
+<div id="t2" class="test wait"><span class="label">2. Insert with status='pending' (should succeed)</span><pre>not run</pre></div>
+<div id="t3" class="test wait"><span class="label">3. Insert with status='approved' (should be BLOCKED by RLS)</span><pre>not run</pre></div>
+<div id="t4" class="test wait"><span class="label">4. Read pending rows (should return 0 — pending invisible to anon)</span><pre>not run</pre></div>
+
+<p style="margin-top:24px;color:#666">After tests pass, clean up the test row in the SQL editor:
+<br><code>delete from remembrances where name = 'POLICY_TEST_DELETE_ME';</code></p>
+
+<script>
+const SUPABASE_URL = 'https://tmnfqdmklbauznpoqrll.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_JSqT5FZkB-tTNR1dJxCMPQ_khoAbrzS';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+function set(id, ok, msg) {
+  const el = document.getElementById(id);
+  el.classList.remove('wait', 'pass', 'fail');
+  el.classList.add(ok ? 'pass' : 'fail');
+  el.querySelector('pre').textContent = (ok ? '✓ PASS — ' : '✗ FAIL — ') + msg;
+}
+
+document.getElementById('run').addEventListener('click', async () => {
+  // 1. Read approved
+  try {
+    const { data, error } = await sb.from('remembrances').select('name,status').eq('status','approved');
+    if (error) throw error;
+    set('t1', data.length >= 4, `got ${data.length} approved row(s); expected ≥ 4`);
+  } catch (e) { set('t1', false, e.message || String(e)); }
+
+  // 2. Insert pending (should succeed)
+  try {
+    const { error } = await sb.from('remembrances').insert({
+      name: 'POLICY_TEST_DELETE_ME',
+      message: 'pending insert test'
+    });
+    if (error) throw error;
+    set('t2', true, 'pending insert accepted');
+  } catch (e) { set('t2', false, e.message || String(e)); }
+
+  // 3. Insert approved (should be BLOCKED)
+  try {
+    const { error } = await sb.from('remembrances').insert({
+      name: 'POLICY_TEST_DELETE_ME',
+      message: 'should be rejected',
+      status: 'approved'
+    });
+    if (error) {
+      set('t3', true, 'correctly blocked: ' + error.message);
+    } else {
+      set('t3', false, 'self-approve was ALLOWED — RLS is broken!');
+    }
+  } catch (e) {
+    set('t3', true, 'correctly blocked: ' + (e.message || String(e)));
+  }
+
+  // 4. Read pending (should return 0 to anon, even though we just inserted one)
+  try {
+    const { data, error } = await sb.from('remembrances').select('name,status').eq('status','pending');
+    if (error) throw error;
+    set('t4', data.length === 0, `got ${data.length} pending row(s); expected 0 (anon must not see pending)`);
+  } catch (e) { set('t4', false, e.message || String(e)); }
+});
+</script>
+</body>
+</html>

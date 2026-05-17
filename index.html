@@ -656,6 +656,7 @@
   </style>
   <script data-goatcounter="https://drbbsingh.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -1146,6 +1147,9 @@
     <div class="gb-form-wrap">
       <p class="gb-form-heading">Leave a remembrance</p>
       <form class="gb-form" id="gb-form">
+        <input type="text" id="gb-website" name="website"
+               tabindex="-1" autocomplete="off" aria-hidden="true"
+               style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <div class="gb-row">
           <div class="gb-field">
             <label class="gb-label" for="gb-name">Your name</label>
@@ -1198,13 +1202,19 @@
       enEls.forEach(el => { el.hidden = isHindi; });
     });
 
-    // ── Guestbook ─────────────────────────────────────────
+    // ── Guestbook (Supabase) ──────────────────────────────
     (function () {
       'use strict';
 
-      var REPO = '1Brajesh/drbbsingh';
-      // Replace with the real fine-grained PAT (Issues: Write only) after Brajesh creates it
-      var SUBMISSION_TOKEN = 'github_pat_11BK4MEKI0' + 'QDN4Ll7JMQl4_oepv8t18KOseM48RXvlLIApuorLgTpILglKWoSz3yzX377YWZDXeqNkPa9W';
+      var SUPABASE_URL = 'https://tmnfqdmklbauznpoqrll.supabase.co';
+      var SUPABASE_KEY = 'sb_publishable_JSqT5FZkB-tTNR1dJxCMPQ_khoAbrzS';
+      var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      function formatYear(iso) {
+        if (!iso) return '';
+        var d = new Date(iso);
+        return isNaN(d) ? '' : String(d.getFullYear());
+      }
 
       // ── Render approved entries ──────────────────────────
       function buildEntry(e) {
@@ -1224,9 +1234,10 @@
 
         var conn = document.createElement('span');
         conn.className = 'gb-connection';
+        var year = formatYear(e.created_at);
         var connText = e.connection
-          ? e.connection + ' \u00B7 ' + e.date
-          : e.date;
+          ? e.connection + ' \u00B7 ' + year
+          : year;
         conn.appendChild(document.createTextNode(connText));
 
         attr.appendChild(name);
@@ -1238,10 +1249,12 @@
 
       var container = document.getElementById('gb-entries');
       if (container) {
-        fetch('remembrances.json?v=' + Date.now())
-          .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-          .then(function (data) {
-            var entries = Array.isArray(data) ? data : (data.entries || []);
+        sb.from('remembrances')
+          .select('name,connection,message,created_at')
+          .eq('status', 'approved')
+          .order('created_at', { ascending: true })
+          .then(function (res) {
+            var entries = (res && res.data) || [];
             if (!entries.length) {
               var empty = document.createElement('p');
               empty.className = 'gb-empty';
@@ -1252,11 +1265,10 @@
             entries.forEach(function (e) {
               container.appendChild(buildEntry(e));
             });
-          })
-          .catch(function () {});
+          });
       }
 
-      // ── Form submit → GitHub Issues API ─────────────────
+      // ── Form submit → Supabase insert ────────────────────
       var form = document.getElementById('gb-form');
       var submitBtn = document.getElementById('gb-submit');
       var errorEl = document.getElementById('gb-error');
@@ -1265,6 +1277,16 @@
       if (form) {
         form.addEventListener('submit', function (ev) {
           ev.preventDefault();
+
+          // Honeypot: bots fill hidden fields, humans don't.
+          var hp = document.getElementById('gb-website');
+          if (hp && hp.value) {
+            form.reset();
+            form.hidden = true;
+            if (thankyou) { thankyou.hidden = false; }
+            return;
+          }
+
           var name    = document.getElementById('gb-name').value.trim();
           var conn    = document.getElementById('gb-connection').value.trim();
           var message = document.getElementById('gb-message').value.trim();
@@ -1273,40 +1295,22 @@
           submitBtn.disabled = true;
           if (errorEl) { errorEl.hidden = true; }
 
-          var payload = { name: name, connection: conn, message: message };
-
-          fetch('https://api.github.com/repos/' + REPO + '/issues', {
-            method: 'POST',
-            headers: {
-              'Authorization': 'Bearer ' + SUBMISSION_TOKEN,
-              'Content-Type': 'application/json',
-              'Accept': 'application/vnd.github+json'
-            },
-            body: JSON.stringify({
-              title: 'Remembrance from ' + name,
-              body: JSON.stringify(payload),
-              labels: ['remembrance-pending']
-            })
-          })
-          .then(function (r) {
-            if (r.ok) {
-              form.reset();
+          sb.from('remembrances')
+            .insert({ name: name, connection: conn || null, message: message })
+            .then(function (res) {
               submitBtn.disabled = false;
+              if (res && res.error) {
+                if (errorEl) { errorEl.hidden = false; }
+                return;
+              }
+              form.reset();
               form.hidden = true;
               if (thankyou) { thankyou.hidden = false; }
               setTimeout(function () {
                 if (thankyou) { thankyou.hidden = true; }
                 form.hidden = false;
               }, 5000);
-            } else {
-              submitBtn.disabled = false;
-              if (errorEl) { errorEl.hidden = false; }
-            }
-          })
-          .catch(function () {
-            submitBtn.disabled = false;
-            if (errorEl) { errorEl.hidden = false; }
-          });
+            });
         });
       }
     }());
